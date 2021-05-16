@@ -9,7 +9,7 @@ export default function renderScreen(canvas, game, scoreTable, requestAnimationF
         }
     })
 
-    ctx.clearRect(0, 0, 30, 30)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     scoreTable.innerText = ''
     for (const playerId in game.state.players) {
         const player = game.state.players[playerId];
