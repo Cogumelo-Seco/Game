@@ -87,13 +87,12 @@ const Page = () => {
             </head>
             <body>
                 <canvas id="screen" width="30" height="30"></canvas>
-                <h2 id="scoreTable">Conectando com o servidor...</h2>
-
                 <button id="arrow-up" />
                 <p />
                 <button id="arrow-left" />
                 <button id="arrow-down" />
                 <button id="arrow-right" />
+                <h2 id="scoreTable">Conectando com o servidor...</h2>
             </body>
         </html>
     )
