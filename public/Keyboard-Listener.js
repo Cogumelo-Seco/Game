@@ -18,9 +18,13 @@ export default function createKeyboardListener() {
         }
     }
 
-    document.addEventListener('keydown', handleKeydown)
+    document.addEventListener('keydown', handleKeys);
+    document.getElementById('arrow-up').addEventListener("click", handlebuttons);
+    document.getElementById('arrow-down').addEventListener("click", handlebuttons);
+    document.getElementById('arrow-left').addEventListener("click", handlebuttons);
+    document.getElementById('arrow-right').addEventListener("click", handlebuttons);
 
-    function handleKeydown(event) {
+    function handleKeys(event) {
         const keyPressed = event.key
         const command = {
             type: 'move-player',
@@ -28,6 +32,19 @@ export default function createKeyboardListener() {
             keyPressed
         }
 
+        notifyAll(command)
+    }
+
+    function handlebuttons(event) {
+        if (event.toElement.id == 'arrow-up') var key = 'w'
+        if (event.toElement.id == 'arrow-down') var key = 's'
+        if (event.toElement.id == 'arrow-left') var key = 'a'
+        if (event.toElement.id == 'arrow-right') var key = 'd'
+        const command = {
+            type: 'move-player',
+            playerId: state.playerId,
+            keyPressed: key
+        }
         notifyAll(command)
     }
 

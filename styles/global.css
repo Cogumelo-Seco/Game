@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    background-color: #CCC;
 }
 
 #screen {
@@ -7,10 +8,44 @@ body {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
-    width: 500px;
-    height: 500px;
+    width: 40vw;
+    height: 40vw;
     display: none;
 }
-body {
-    background-color: #CCC;
+
+#arrow-left {
+    margin: 0px 15px 0px 0px; 
+    background: rgba(0, 0, 0, 0.398) url(../public/images/left.png) no-repeat center 0px / 100%;
+}
+
+#arrow-right {
+    margin: 0px 0px 0px 15px; 
+    background: rgba(0, 0, 0, 0.398) url(../public/images/right.png) no-repeat center 0px / 100%;
+}
+
+#arrow-up {
+    margin: 5px 0px 0px 0px;
+    background: rgba(0, 0, 0, 0.398) url(../public/images/up.png) no-repeat center 0px / 100%;
+}
+
+#arrow-down {
+    margin: 0; 
+    background: rgba(0, 0, 0, 0.398) url(../public/images/down.png) no-repeat center 0px / 100%;
+}
+
+button {
+    display: none;
+    vertical-align: middle;
+    width: 50px; 
+    height: 50px
+}
+
+@media screen and (max-width:450px) {
+    #screen {
+        width: 90%;
+        height: 90%;
+    }
+    button {
+        display: inline-block;
+    }
 }
