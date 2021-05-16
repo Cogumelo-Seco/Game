@@ -34,7 +34,6 @@ body {
 }
 
 button {
-    outline: none;
     display: none;
     vertical-align: middle;
     width: 50px; 
