@@ -13,7 +13,7 @@ export default function renderScreen(canvas, game, scoreTable, requestAnimationF
     scoreTable.innerText = ''
     for (const playerId in game.state.players) {
         const player = game.state.players[playerId];
-        scoreTable.innerText += `${player.nick}: ${player.score*13}\n`;
+        scoreTable.innerText += `${player.nick}: ${player.score}\n`;
 
         if (myPlayerId == playerId) {
             ctx.fillStyle = 'green';
