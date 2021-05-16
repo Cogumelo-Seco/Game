@@ -48,7 +48,7 @@ const Page = () => {
                     playerId: socket.id,
                     keyPressed
                 }
-                keyboardListener.notifyAll(command)
+                //keyboardListener.notifyAll(command)
             }, 1500)
         })
         socket.on('remove-fruit', (command) => {
