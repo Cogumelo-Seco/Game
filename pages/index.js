@@ -87,7 +87,7 @@ const Page = () => {
             </head>
             <body>
                 <h2 id="pingDisplay">?ms</h2>
-                <canvas id="screen" width="30" height="30"></canvas>
+                <canvas id="screen" width="50" height="50"></canvas>
                 <button id="arrow-up" />
                 <p />
                 <button id="arrow-left" />
