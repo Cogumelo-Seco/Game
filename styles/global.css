@@ -46,7 +46,15 @@ button {
     display: none;
     text-align: right;
 }
-
+#scoreTable1 {
+    color: #ffd700;
+}
+#scoreTable2 {
+    color: gray;
+}
+#scoreTable3 {
+    color: #cd7f32;
+}
 #scoreTable {
     margin-top: 40vh;
 }

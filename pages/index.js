@@ -31,7 +31,16 @@ const Page = () => {
             socket.emit('nick', nick || socket.id)
 
             keyboardListener.registerPlayerId(socket.id)
-            //keyboardListener.subscribe(game.movePlayer);
+
+            setInterval(() => {
+                keyboardListener.notifyAll({
+                    type: 'move-player',
+                    playerId: socket.id,
+                    ping: +new Date(),
+                    keyPressed: game.state.players[socket.id].direction
+                })
+            }, 2000)
+
             keyboardListener.subscribe((command) => {
                 socket.emit(command.type, command)
             });
@@ -78,6 +87,9 @@ const Page = () => {
                 <button id="arrow-left" />
                 <button id="arrow-down" />
                 <button id="arrow-right" />
+                <h2 id="scoreTable1" />
+                <h2 id="scoreTable2" />
+                <h2 id="scoreTable3" />
                 <h2 id="scoreTable">Conectando com o servidor...</h2>
             </body>
         </html>

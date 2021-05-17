@@ -73,7 +73,8 @@ export default function createGame() {
         const keyPressed = command.keyPressed.replace('ArrowUp', 'w').replace('ArrowDown', 's').replace('ArrowLeft', 'a').replace('ArrowRight', 'd')
         const moveFunction = acceptedMoves[keyPressed]
         if (!player) return;
-        if (moveFunction) moveFunction(player)
+        let ver = false
+        if (moveFunction) moveFunction(player) != false
 
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]
@@ -86,6 +87,7 @@ export default function createGame() {
         if (player.traces.length > player.score) {
             player.traces.splice(0, 1)
         }
+        return ver
     }
 
     function changePlayer(command) {

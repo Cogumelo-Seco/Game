@@ -1,8 +1,7 @@
 export default function createKeyboardListener() {
     const state = {
         observers: [],
-        playerId: null,
-        direction: 'w'
+        playerId: null
     }
 
     function registerPlayerId(playerId) {
@@ -27,25 +26,14 @@ export default function createKeyboardListener() {
 
     function handleKeys(event) {
         const keyPressed = event.key
-        state.direction = keyPressed
         const command = {
             type: 'move-player',
             playerId: state.playerId,
             ping: +new Date(),
             keyPressed
         }
-
         notifyAll(command)
     }
-
-    setInterval(() => {
-        notifyAll({
-            type: 'move-player',
-            playerId: state.playerId,
-            ping: +new Date(),
-            keyPressed: state.direction
-        })
-    }, 2000)
 
     function handlebuttons(event) {
         if (event.toElement.id == 'arrow-up') state.direction = 'w'

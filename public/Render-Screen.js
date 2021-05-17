@@ -1,5 +1,8 @@
 export default function renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame) {
     const ctx = canvas.getContext('2d')
+    const scoreTable1 = document.getElementById('scoreTable1');
+    const scoreTable2 = document.getElementById('scoreTable2');
+    const scoreTable3 = document.getElementById('scoreTable3');
 
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
@@ -10,18 +13,31 @@ export default function renderScreen(canvas, game, scoreTable, pingDisplay, requ
     })
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    scoreTable.innerText = ''
     for (const playerId in game.state.players) {
         const player = game.state.players[playerId];
-        scoreTable.innerText += `${player.nick}: ${player.score}\n`;
+
+        let arr = []
+        for (let i in game.state.players){
+            arr.push({ nick: game.state.players[i].nick, score: game.state.players[i].score})
+        }
+        arr = arr.slice().sort(function(a,b){return b-a})
+
+        scoreTable.innerText = ''
+        scoreTable1.innerText = ''
+        scoreTable2.innerText = ''
+        scoreTable3.innerText = ''
+        if (arr[0]) scoreTable1.innerText = `1° ${arr[0].nick}: ${arr[0].score}`
+        if (arr[1]) scoreTable2.innerText = `2° ${arr[1].nick}: ${arr[1].score}`
+        if (arr[2]) scoreTable3.innerText = `3° ${arr[2].nick}: ${arr[2].score}`
+        for (let i = 3; i < arr.length; i++) {
+            scoreTable.innerText += `${i+1}° ${arr[i].nick}: ${arr[i].score}\n`;
+        }
+
         pingDisplay.innerText = `${game.state.ping}ms`
 
         for (let i = 0; i < player.traces.length; i++) {
-            if (game.state.myID == playerId) {
-                ctx.fillStyle = 'green';
-            } else {
-                ctx.fillStyle = '#363636';
-            }
+            if (game.state.myID == playerId) ctx.fillStyle = 'green';
+            else ctx.fillStyle = '#363636';
             let trace = player.traces[i]
             ctx.globalAlpha = 0.7
             ctx.clearRect(trace.x, trace.y, 1, 1);
