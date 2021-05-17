@@ -18,9 +18,9 @@ export default function renderScreen(canvas, game, scoreTable, pingDisplay, requ
 
         let arr = []
         for (let i in game.state.players){
-            arr.push({ nick: game.state.players[i].nick, score: game.state.players[i].score})
+            arr.push({ score: game.state.players[i].score, nick: game.state.players[i].nick })
         }
-        arr = arr.slice().sort(function(a,b){return b-a})
+        arr = arr.slice().sort((a, b) => b.score-a.score)
 
         scoreTable.innerText = ''
         scoreTable1.innerText = ''
