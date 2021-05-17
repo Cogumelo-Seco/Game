@@ -2,6 +2,7 @@ export default function createKeyboardListener() {
     const state = {
         observers: [],
         playerId: null,
+        direction: 'w'
     }
 
     function registerPlayerId(playerId) {
@@ -26,6 +27,7 @@ export default function createKeyboardListener() {
 
     function handleKeys(event) {
         const keyPressed = event.key
+        state.direction = keyPressed
         const command = {
             type: 'move-player',
             playerId: state.playerId,
@@ -36,16 +38,25 @@ export default function createKeyboardListener() {
         notifyAll(command)
     }
 
+    setInterval(() => {
+        notifyAll({
+            type: 'move-player',
+            playerId: state.playerId,
+            ping: +new Date(),
+            keyPressed: state.direction
+        })
+    }, 2000)
+
     function handlebuttons(event) {
-        if (event.toElement.id == 'arrow-up') var key = 'w'
-        if (event.toElement.id == 'arrow-down') var key = 's'
-        if (event.toElement.id == 'arrow-left') var key = 'a'
-        if (event.toElement.id == 'arrow-right') var key = 'd'
+        if (event.toElement.id == 'arrow-up') state.direction = 'w'
+        if (event.toElement.id == 'arrow-down') state.direction = 's'
+        if (event.toElement.id == 'arrow-left') state.direction = 'a'
+        if (event.toElement.id == 'arrow-right') state.direction = 'd'
         const command = {
             type: 'move-player',
             playerId: state.playerId,
             ping: +new Date(),
-            keyPressed: key
+            keyPressed: state.direction
         }
         notifyAll(command)
     }

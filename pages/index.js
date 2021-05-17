@@ -10,7 +10,7 @@ const Page = () => {
         const scoreTable = document.getElementById('scoreTable');
         const pingDisplay = document.getElementById('pingDisplay');
 
-        const socket = io('a', {
+        const socket = io('https://Game.cogumeloseco1.repl.co', {
             withCredentials: true,
         })
 
@@ -19,7 +19,8 @@ const Page = () => {
 
         socket.on('connect', () => {
             let playerId = socket.id
-            renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame, playerId);
+            game.state.myID = playerId
+            renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame);
             canvas.style.display = 'inline-block'
             pingDisplay.style.display = 'inherit'
             scoreTable.style.margin = '0px'
@@ -30,7 +31,7 @@ const Page = () => {
             socket.emit('nick', nick || socket.id)
 
             keyboardListener.registerPlayerId(socket.id)
-            keyboardListener.subscribe(game.movePlayer);
+            //keyboardListener.subscribe(game.movePlayer);
             keyboardListener.subscribe((command) => {
                 socket.emit(command.type, command)
             });
@@ -38,14 +39,6 @@ const Page = () => {
         })
         socket.on('add-player', (command) => {
             game.addPlayer(command)
-            setInterval(() => {
-                keyboardListener.notifyAll({
-                    type: 'move-player',
-                    playerId: socket.id,
-                    ping: +new Date(),
-                    keyPressed: game.state.players[socket.id].direction
-                })
-            }, 2000)
         })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)
@@ -57,11 +50,7 @@ const Page = () => {
             game.removePlayer(command)
         })
         socket.on('move-player', (command) => {
-            const playerId = socket.id
-
-            if (playerId != command.playerId) {
-                game.movePlayer(command)
-            }
+            game.movePlayer(command)
         })
         socket.on('change-player', (command) => {
             game.changePlayer(command)

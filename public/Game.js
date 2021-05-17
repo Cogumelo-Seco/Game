@@ -33,11 +33,7 @@ export default function createGame() {
     function movePlayer(command) {
         notifyAll(command)
 
-        if (state.ping < 10) state.ping = '?'
-        if (command.ping) {
-            let ping = +new Date()-command.ping
-            if (ping > 10) state.ping = ping
-        }
+        if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
 
         const acceptedMoves = {
             w(player) {
