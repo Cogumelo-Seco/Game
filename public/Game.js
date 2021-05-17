@@ -1,5 +1,6 @@
 export default function createGame() {
     const state = {
+        ping: '?',
         players: {},
         fruits: {},
         screen: {
@@ -31,6 +32,11 @@ export default function createGame() {
 
     function movePlayer(command) {
         notifyAll(command)
+
+        if (command.ping) {
+            let ping = +new Date()-command.ping
+            state.ping = ping
+        }
 
         const acceptedMoves = {
             w(player) {

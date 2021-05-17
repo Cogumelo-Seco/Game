@@ -1,4 +1,4 @@
-export default function renderScreen(canvas, game, scoreTable, requestAnimationFrame, myPlayerId) {
+export default function renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame, myPlayerId) {
     const ctx = canvas.getContext('2d')
 
     game.subscribe((command) => {
@@ -14,6 +14,7 @@ export default function renderScreen(canvas, game, scoreTable, requestAnimationF
     for (const playerId in game.state.players) {
         const player = game.state.players[playerId];
         scoreTable.innerText += `${player.nick}: ${player.score}\n`;
+        pingDisplay.innerText = `${game.state.ping}ms`
 
         if (myPlayerId == playerId) {
             ctx.fillStyle = 'green';
@@ -41,6 +42,6 @@ export default function renderScreen(canvas, game, scoreTable, requestAnimationF
     }
 
     requestAnimationFrame(() => {
-        renderScreen(canvas, game, scoreTable, requestAnimationFrame, myPlayerId)
+        renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame, myPlayerId)
     })
 }

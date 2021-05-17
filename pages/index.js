@@ -8,12 +8,13 @@ const Page = () => {
     useEffect(() => {
         const canvas = document.getElementById('screen');
         const scoreTable = document.getElementById('scoreTable');
+        const pingDisplay = document.getElementById('pingDisplay');
 
         const socket = io('https://Game.cogumeloseco1.repl.co', {
             withCredentials: true,
-            extraHeaders: {
+            /*extraHeaders: {
                 "my-custom-header": "abcd"
-            }
+            }*/
         })
 
         const game = createGame();
@@ -21,8 +22,9 @@ const Page = () => {
 
         socket.on('connect', () => {
             let playerId = socket.id
-            renderScreen(canvas, game, scoreTable, requestAnimationFrame, playerId);
+            renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame, playerId);
             canvas.style.display = "inline-block"
+            pingDisplay.style.display = "inherit"
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
         })
         socket.on('setup', (state) => {
@@ -86,6 +88,7 @@ const Page = () => {
                 <title>Game</title>
             </head>
             <body>
+                <h2 id="pingDisplay">?ms</h2>
                 <canvas id="screen" width="30" height="30"></canvas>
                 <button id="arrow-up" />
                 <p />
