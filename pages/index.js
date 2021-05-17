@@ -11,10 +11,7 @@ const Page = () => {
         const pingDisplay = document.getElementById('pingDisplay');
 
         const socket = io('https://Game.cogumeloseco1.repl.co', {
-            withCredentials: true,
-            /*extraHeaders: {
-                "my-custom-header": "abcd"
-            }*/
+            withCredentials: false,
         })
 
         const game = createGame();
@@ -51,7 +48,7 @@ const Page = () => {
                     keyPressed
                 }
                 keyboardListener.notifyAll(command)
-            }, 1500)
+            }, 2000)
         })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)

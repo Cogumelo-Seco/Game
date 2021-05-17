@@ -33,11 +33,8 @@ export default function createGame() {
     function movePlayer(command) {
         notifyAll(command)
 
-        if (command.ping) {
-            let ping = +new Date()-command.ping
-            state.ping = ping
-        }
-
+        if (command.ping) state.ping = +new Date()-command.ping
+        
         const acceptedMoves = {
             w(player) {
                 if (player.traces.find((t) => t.x == player.x && t.y == player.y-1 && player.direction == 's')) return;
