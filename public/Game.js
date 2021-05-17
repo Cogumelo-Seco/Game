@@ -1,6 +1,6 @@
 export default function createGame() {
     const state = {
-        ping: '?',
+        ping: 0,
         players: {},
         fruits: {},
         screen: {
