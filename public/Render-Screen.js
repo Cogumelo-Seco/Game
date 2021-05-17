@@ -16,17 +16,14 @@ export default function renderScreen(canvas, game, scoreTable, pingDisplay, requ
         scoreTable.innerText += `${player.nick}: ${player.score}\n`;
         pingDisplay.innerText = `${game.state.ping}ms`
 
-        if (myPlayerId == playerId) {
-            ctx.fillStyle = 'green';
-            ctx.fillRect(player.x, player.y, 1, 1);
-        } else {
-            ctx.fillStyle = '#363636';
-            ctx.fillRect(player.x, player.y, 1, 1);
-        }
-
         for (let i = 0; i < player.traces.length; i++) {
+            if (myPlayerId == playerId) {
+                ctx.fillStyle = 'green';
+            } else {
+                ctx.fillStyle = '#363636';
+            }
             let trace = player.traces[i]
-            ctx.globalAlpha = 0.8
+            ctx.globalAlpha = 0.7
             ctx.clearRect(trace.x, trace.y, 1, 1);
             ctx.fillRect(trace.x, trace.y, 1, 1);
             ctx.globalAlpha = 1

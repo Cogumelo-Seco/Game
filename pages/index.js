@@ -10,7 +10,7 @@ const Page = () => {
         const scoreTable = document.getElementById('scoreTable');
         const pingDisplay = document.getElementById('pingDisplay');
 
-        const socket = io('https://Game.cogumeloseco1.repl.co', {
+        const socket = io('a', {
             withCredentials: true,
         })
 
@@ -20,8 +20,9 @@ const Page = () => {
         socket.on('connect', () => {
             let playerId = socket.id
             renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame, playerId);
-            canvas.style.display = "inline-block"
-            pingDisplay.style.display = "inherit"
+            canvas.style.display = 'inline-block'
+            pingDisplay.style.display = 'inherit'
+            scoreTable.style.margin = '0px'
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
         })
         socket.on('setup', (state) => {
@@ -38,17 +39,12 @@ const Page = () => {
         socket.on('add-player', (command) => {
             game.addPlayer(command)
             setInterval(() => {
-                if (game.state.players[socket.id].direction == 'w') var  keyPressed = 'w'
-                if (game.state.players[socket.id].direction == 's') var  keyPressed = 's'
-                if (game.state.players[socket.id].direction == 'a') var  keyPressed = 'a'
-                if (game.state.players[socket.id].direction == 'd') var  keyPressed = 'd'
-                const command = {
+                keyboardListener.notifyAll({
                     type: 'move-player',
                     playerId: socket.id,
                     ping: +new Date(),
-                    keyPressed
-                }
-                keyboardListener.notifyAll(command)
+                    keyPressed: game.state.players[socket.id].direction
+                })
             }, 2000)
         })
         socket.on('remove-fruit', (command) => {
