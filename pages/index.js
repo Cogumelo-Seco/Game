@@ -45,6 +45,7 @@ const Page = () => {
                 const command = {
                     type: 'move-player',
                     playerId: socket.id,
+                    ping: +new Date(),
                     keyPressed
                 }
                 keyboardListener.notifyAll(command)

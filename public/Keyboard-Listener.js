@@ -29,6 +29,7 @@ export default function createKeyboardListener() {
         const command = {
             type: 'move-player',
             playerId: state.playerId,
+            ping: +new Date(),
             keyPressed
         }
 
@@ -43,6 +44,7 @@ export default function createKeyboardListener() {
         const command = {
             type: 'move-player',
             playerId: state.playerId,
+            ping: +new Date(),
             keyPressed: key
         }
         notifyAll(command)
