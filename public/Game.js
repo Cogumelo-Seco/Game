@@ -95,7 +95,7 @@ export default function createGame() {
     function changePlayer(command) {
         const player = state.players[command.playerId]
         player.score = command.score
-        player.traces = command.traces
+        player.traces = command.traces || player.traces
 
         notifyAll({
             type: 'change-player',
