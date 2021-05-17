@@ -11,7 +11,7 @@ const Page = () => {
         const pingDisplay = document.getElementById('pingDisplay');
 
         const socket = io('https://Game.cogumeloseco1.repl.co', {
-            withCredentials: false,
+            withCredentials: true,
         })
 
         const game = createGame();
