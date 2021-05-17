@@ -37,7 +37,7 @@ const Page = () => {
         })
         socket.on('add-player', (command) => {
             game.addPlayer(command)
-            setInterval(() => {
+            /*setInterval(() => {
                 if (game.state.players[socket.id].direction == 'w') var  keyPressed = 'w'
                 if (game.state.players[socket.id].direction == 's') var  keyPressed = 's'
                 if (game.state.players[socket.id].direction == 'a') var  keyPressed = 'a'
@@ -49,7 +49,7 @@ const Page = () => {
                     keyPressed
                 }
                 keyboardListener.notifyAll(command)
-            }, 2000)
+            }, 2000)*/
         })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)
