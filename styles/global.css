@@ -10,8 +10,8 @@ body {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
-    width: 40vw;
-    height: 40vw;
+    width: 500px;
+    height: 500px;
     display: none;
 }
 
@@ -59,7 +59,7 @@ button {
     margin-top: 40vh;
 }
 
-@media screen and (max-width:450px) {
+@media screen and (max-width:570px) {
     #screen {
         width: 90%;
         height: 90%;
