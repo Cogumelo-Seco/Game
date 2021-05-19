@@ -26,11 +26,11 @@ body {
     bottom: 0;
 }
 #send-button {
+    outline: none;
     margin-left: 82%;
     position: absolute;
     bottom: 0px;
     border: 1px solid #696969;
-
     background: rgb(0, 185, 252) url(../public/images/send-button.png) no-repeat center 0px / 100%;
     width: 40px;
     height: 22px;
@@ -97,10 +97,11 @@ body {
 
 #pingDisplay {
     display: none;
-    text-align: right;
+    float: right;
 }
 
 #timer {
+    display: none;
     text-align: center;
 }
 

@@ -22,6 +22,7 @@ const Page = () => {
             renderScreen(canvas, game, pingDisplay, requestAnimationFrame);
             canvas.style.display = 'inline-block';
             document.getElementById('connecting').style.display = 'none';
+            document.getElementById('timer').style.display = 'inline-block';
             pingDisplay.style.display = 'inherit';
             scoreTable.style.margin = '0px'
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
@@ -88,22 +89,22 @@ const Page = () => {
             </head>
             <body>
                 <button id="chat-button" />
-                <h2 id="pingDisplay">?ms</h2>
-                <h2 id="timer">0</h2>
+                <h2 id="timer">00:00</h2>
+                <h2 id="pingDisplay" title="Ping">?ms</h2>
                 <p />
                 <div id="chat">
                     <a id="chat-content" />
                     <p/>
                     <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
-                    <button id="send-button" />
+                    <button id="send-button" title="Enviar mensagem" />
                 </div>
 
                 <canvas id="screen" width="50" height="50" />
 
                 <div id="scoreTable">
-                    <a id="p1" />
-                    <a id="p2" />
-                    <a id="p3" />
+                    <a id="p1" title="Primeiro" />
+                    <a id="p2" title="Segundo" />
+                    <a id="p3" title="Terceiro" />
                     <a id="p4" />
                 </div>
                 

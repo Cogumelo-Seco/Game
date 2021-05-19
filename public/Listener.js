@@ -90,12 +90,11 @@ export default function createListener(socket) {
     }
 
     function handlebuttons(event) {
-        if (state.message) return;
+        state.message = false
         if (event.toElement.id == 'arrow-up') state.direction = 'w'
         if (event.toElement.id == 'arrow-down') state.direction = 's'
         if (event.toElement.id == 'arrow-left') state.direction = 'a'
         if (event.toElement.id == 'arrow-right') state.direction = 'd'
-        state.message = false
         const command = {
             type: 'move-player',
             playerId: state.playerId,
