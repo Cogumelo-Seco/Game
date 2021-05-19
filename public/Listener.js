@@ -1,4 +1,4 @@
-export default function createKeyboardListener(socket) {
+export default function createListener(socket) {
     const state = {
         observers: [],
         message: false,
@@ -14,6 +14,7 @@ export default function createKeyboardListener(socket) {
     }
 
     function notifyAll(command) {
+        console.log(state.observers.length)
         for (const observerFunction of state.observers) {
             observerFunction(command)
         }

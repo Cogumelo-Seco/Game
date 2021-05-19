@@ -1,5 +1,5 @@
 import createGame from '../public/Game.js';
-import createKeyboardListener from '../public/Listener.js';
+import createListener from '../public/Listener.js';
 import renderScreen from '../public/Render-Screen.js';
 import io from 'socket.io-client';
 import React, { useEffect } from 'react';
@@ -14,7 +14,7 @@ const Page = () => {
         })
 
         const game = createGame();
-        const keyboardListener = createKeyboardListener();
+        const Listener = createListener();
 
         socket.on('connect', () => {
             let playerId = socket.id
@@ -30,10 +30,10 @@ const Page = () => {
             let nick = prompt('Escolha seu nick')
             socket.emit('nick', nick || socket.id.substring(0, 10))
 
-            keyboardListener.registerPlayerId(socket.id)
+            Listener.registerPlayerId(socket.id)
 
             setInterval(() => {
-                keyboardListener.notifyAll({
+                Listener.notifyAll({
                     type: 'move-player',
                     auto: true,
                     playerId: socket.id,
@@ -42,7 +42,7 @@ const Page = () => {
                 })
             }, 2000)
 
-            keyboardListener.subscribe((command) => {
+            Listener.subscribe((command) => {
                 socket.emit(command.type, command)
             });
             game.setState(state)
