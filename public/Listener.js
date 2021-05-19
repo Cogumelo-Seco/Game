@@ -64,7 +64,7 @@ export default function createKeyboardListener(socket) {
                 for (let i = 0; i < splitWords.length;i++) {
                     let splitLetters = splitWords[i].split('')
                     for (let i = 0; i < splitLetters.length;i++) {
-                        if (!/[A-Za-z0-9.,;:´`^~"'+-=%$&*#@!ãõôéóñç-]/.test(splitLetters[i])) splitLetters[i] = ''
+                        if (!/[A-Za-z0-9.,;:´`^~"'+-=%$&*#@!-°º()?/áéíóúãõâêîôûç]/.test(splitLetters[i])) splitLetters[i] = ''
                     }
                     splitWords[i] = splitLetters.join('')
                 }

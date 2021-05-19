@@ -33,11 +33,11 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         scoreTable1.innerText = ''
         scoreTable2.innerText = ''
         scoreTable3.innerText = ''
-        if (arr[0]) scoreTable1.innerText = `1° ${arr[0].nick}: ${arr[0].score}`
-        if (arr[1]) scoreTable2.innerText = `2° ${arr[1].nick}: ${arr[1].score}`
-        if (arr[2]) scoreTable3.innerText = `3° ${arr[2].nick}: ${arr[2].score}`
+        if (arr[0]) scoreTable1.innerText = `1º ${arr[0].nick}: ${arr[0].score}`
+        if (arr[1]) scoreTable2.innerText = `2º ${arr[1].nick}: ${arr[1].score}`
+        if (arr[2]) scoreTable3.innerText = `3º ${arr[2].nick}: ${arr[2].score}`
         for (let i = 3; i < arr.length; i++) {
-            scoreTable4.innerText += `${i+1}° ${arr[i].nick}: ${arr[i].score}\n`;
+            scoreTable4.innerText += `${i+1}º ${arr[i].nick}: ${arr[i].score}\n`;
         }
 
         pingDisplay.innerText = `${game.state.ping}ms`
