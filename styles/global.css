@@ -51,6 +51,11 @@ body {
     display: inline-block;
 }
 
+#chat-content {
+    position: absolute;
+    bottom: 25px;
+}
+
 #arrow-left {
     margin: 0px 15px 0px 0px; 
     background: rgba(0, 0, 0, 0.398) url(../public/images/left.png) no-repeat center 0px / 100%;

@@ -33,9 +33,9 @@ export default function createGame() {
 
     function message(command) {
         notifyAll(command)
-        if (state.messages.length > 31) state.messages.splice(-1 ,1)
+        if (state.messages.length > 31) state.messages.splice(0 ,1)
         command.nick = state.players[command.playerId].nick
-        state.messages.unshift({ nick: command.nick, content: command.content })
+        state.messages.push({ nick: command.nick, content: command.content })
     }
 
     function movePlayer(command) {
