@@ -34,16 +34,6 @@ export default function createGame() {
     function message(command) {
         notifyAll(command)
         if (state.messages.length > 31) state.messages.splice(0 ,1)
-        command.nick = state.players[command.playerId].nick
-        let splitWords = command.content.split(' ')
-		for (let i = 0; i < splitWords.length;i++) {
-			let splitLetters = splitWords[i].split('')
-			for (let i = 0; i < splitLetters.length;i++) {
-				if (!/[A-Za-z0-9]/.test(splitLetters[i])) splitLetters[i] = ''
-			}
-			splitWords[i] = splitLetters.join('')
-		}
-        command.content = splitWords.join(' ').substring(0, 15)
         state.messages.push({ nick: command.nick, content: command.content })
     }
 

@@ -59,6 +59,18 @@ export default function createKeyboardListener(socket) {
     function handleKeys(event) {
         if (state.message) {
             if (event.key == 'Enter' && messageBox.value.trim()) {
+                let msg;
+                msg = messageBox.value.trim()
+                let splitWords = msg.split(' ')
+                for (let i = 0; i < splitWords.length;i++) {
+                    let splitLetters = splitWords[i].split('')
+                    for (let i = 0; i < splitLetters.length;i++) {
+                        if (!/[A-Za-z0-9]/.test(splitLetters[i])) splitLetters[i] = ''
+                    }
+                    splitWords[i] = splitLetters.join('')
+                }
+                msg = splitWords.join(' ').substring(0, 15)
+                if (!command.content.trim()) return;
                 notifyAll({
                     type: 'message',
                     playerId: state.playerId,
