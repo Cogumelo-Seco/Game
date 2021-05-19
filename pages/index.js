@@ -35,6 +35,7 @@ const Page = () => {
             setInterval(() => {
                 keyboardListener.notifyAll({
                     type: 'move-player',
+                    auto: true,
                     playerId: socket.id,
                     ping: +new Date(),
                     keyPressed: game.state.players[socket.id].direction

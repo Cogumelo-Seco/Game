@@ -74,12 +74,13 @@ export default function createGame() {
             }
         }
 
-        const player = state.players[command.playerId];
+        let player = state.players[command.playerId];
         const keyPressed = command.keyPressed.replace('ArrowUp', 'w').replace('ArrowDown', 's').replace('ArrowLeft', 'a').replace('ArrowRight', 'd')
         const moveFunction = acceptedMoves[keyPressed]
-        if (!player) return;
-        let ver = false
-        if (moveFunction) moveFunction(player) != false
+        
+        if (command.auto && command.keyPressed != player.direction || !player) return;
+
+        if (moveFunction) moveFunction(player)
 
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]
@@ -92,7 +93,6 @@ export default function createGame() {
         if (player.traces.length > player.score) {
             player.traces.splice(0, 1)
         }
-        return ver
     }
 
     function changePlayer(command) {

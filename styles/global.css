@@ -19,8 +19,9 @@ body {
     outline: none;
     text-decoration: none;
     border: none;
+    border-top: 1px solid #696969;
     position: absolute;
-    height: 20px;
+    height: 19px;
     width: 82%;
     bottom: 0;
 }
@@ -28,7 +29,7 @@ body {
     margin-left: 82%;
     position: absolute;
     bottom: 0px;
-    border: none;
+    border: 1px solid #696969;
 
     background: rgb(0, 185, 252) url(../public/images/send-button.png) no-repeat center 0px / 100%;
     width: 40px;
@@ -144,6 +145,13 @@ body {
     }
     #chat {
         display: none;
+        width: 90%;
+    }
+    #send-button {
+        margin-left: 86%
+    }
+    #message-box {
+        width: 85%;
     }
     #chat-button {
         display: inline-block;
