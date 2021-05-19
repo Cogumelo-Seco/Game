@@ -5,7 +5,12 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     const scoreTable3 = document.getElementById('p3');
     const scoreTable4 = document.getElementById('p4');
     const chat = document.getElementById('chat-content')
-    
+
+    const timer = document.getElementById('timer')
+    let seconds = ("00" +  Math.floor(game.state.time % 60)).slice(-2)
+    let minutes = ("00" +  Math.floor(game.state.time / 60) % 60).slice(-2)
+    timer.innerText = `${minutes}:${seconds}`
+
     chat.innerText = ''
     for (let i = 0; i < game.state.messages.length; i++) {
         chat.innerText += `⠀${game.state.messages[i].nick}: ${game.state.messages[i].content}\n`

@@ -14,7 +14,6 @@ export default function createListener(socket) {
     }
 
     function notifyAll(command) {
-        console.log(state.observers.length)
         for (const observerFunction of state.observers) {
             observerFunction(command)
         }

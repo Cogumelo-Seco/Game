@@ -100,6 +100,10 @@ body {
     text-align: right;
 }
 
+#timer {
+    text-align: center;
+}
+
 #scoreTable {
     font-size: 13px;
     text-align: center;

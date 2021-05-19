@@ -71,6 +71,9 @@ const Page = () => {
         socket.on('message', (command) => {
             game.message(command)
         })
+        socket.on('newTime', (time) => {
+            game.state.time = time
+        })
     }, [])
 
     return (
@@ -86,6 +89,7 @@ const Page = () => {
             <body>
                 <button id="chat-button" />
                 <h2 id="pingDisplay">?ms</h2>
+                <h2 id="timer">0</h2>
                 <p />
                 <div id="chat">
                     <a id="chat-content" />
