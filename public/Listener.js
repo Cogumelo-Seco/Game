@@ -1,6 +1,7 @@
-export default function createKeyboardListener() {
+export default function createKeyboardListener(socket) {
     const state = {
         observers: [],
+        message: false,
         playerId: null
     }
 
@@ -19,12 +20,54 @@ export default function createKeyboardListener() {
     }
 
     document.addEventListener('keydown', handleKeys);
+    document.getElementById('send-button').addEventListener("click", send);
+    document.getElementById('chat-button').addEventListener("click", chat);
     document.getElementById('arrow-up').addEventListener("click", handlebuttons);
     document.getElementById('arrow-down').addEventListener("click", handlebuttons);
     document.getElementById('arrow-left').addEventListener("click", handlebuttons);
     document.getElementById('arrow-right').addEventListener("click", handlebuttons);
+    document.getElementById('message-box').addEventListener('focus', onMessage);
+    document.getElementById('screen').addEventListener('click', offMessage);
+    const messageBox = document.getElementById('message-box')
+
+    function chat() {
+        if (state.message) {
+            state.message = false
+            document.getElementById('chat').style.display = 'none'
+        } else {
+            state.message = true
+            document.getElementById('chat').style.display = 'inline-block'
+        }
+    }
+    function onMessage() {
+        state.message = true
+    }
+    function offMessage() {
+        state.message = false
+    }
+
+    function send() {
+        if (!messageBox.value.trim()) return;
+        notifyAll({
+            type: 'message',
+            playerId: state.playerId,
+            content: messageBox.value.trim(),
+        })
+        messageBox.value = ''
+    }
 
     function handleKeys(event) {
+        if (state.message) {
+            if (event.key == 'Enter' && messageBox.value.trim()) {
+                notifyAll({
+                    type: 'message',
+                    playerId: state.playerId,
+                    content: messageBox.value.trim(),
+                })
+                messageBox.value = ''
+            }
+            return;
+        }
         const keyPressed = event.key
         const command = {
             type: 'move-player',
@@ -36,6 +79,7 @@ export default function createKeyboardListener() {
     }
 
     function handlebuttons(event) {
+        if (state.message) return;
         if (event.toElement.id == 'arrow-up') state.direction = 'w'
         if (event.toElement.id == 'arrow-down') state.direction = 's'
         if (event.toElement.id == 'arrow-left') state.direction = 'a'

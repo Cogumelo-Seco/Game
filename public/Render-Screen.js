@@ -1,8 +1,15 @@
-export default function renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame) {
+export default function renderScreen(canvas, game, pingDisplay, requestAnimationFrame) {
     const ctx = canvas.getContext('2d')
-    const scoreTable1 = document.getElementById('scoreTable1');
-    const scoreTable2 = document.getElementById('scoreTable2');
-    const scoreTable3 = document.getElementById('scoreTable3');
+    const scoreTable1 = document.getElementById('p1');
+    const scoreTable2 = document.getElementById('p2');
+    const scoreTable3 = document.getElementById('p3');
+    const scoreTable4 = document.getElementById('p4');
+    const chat = document.getElementById('chat-content')
+    
+    chat.innerText = ''
+    for (let i = 0; i < game.state.messages.length; i++) {
+        chat.innerText += `⠀${game.state.messages[i].nick}: ${game.state.messages[i].content}\n`
+    }
 
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
@@ -22,15 +29,24 @@ export default function renderScreen(canvas, game, scoreTable, pingDisplay, requ
         }
         arr = arr.slice().sort((a, b) => b.score-a.score)
 
-        scoreTable.innerText = ''
+        scoreTable4.innerText = ''
         scoreTable1.innerText = ''
         scoreTable2.innerText = ''
         scoreTable3.innerText = ''
-        if (arr[0]) scoreTable1.innerText = `1° ${arr[0].nick}: ${arr[0].score}`
-        if (arr[1]) scoreTable2.innerText = `2° ${arr[1].nick}: ${arr[1].score}`
-        if (arr[2]) scoreTable3.innerText = `3° ${arr[2].nick}: ${arr[2].score}`
+        if (arr[0]) {
+            scoreTable1.innerText = `1° ${arr[0].nick}: ${arr[0].score}`
+            scoreTable1.style.display = 'block'
+        }
+        if (arr[1]) {
+            scoreTable2.innerText = `2° ${arr[1].nick}: ${arr[1].score}`
+            scoreTable2.style.display = 'block'
+        }
+        if (arr[2]) {
+            scoreTable3.innerText = `3° ${arr[2].nick}: ${arr[2].score}`
+            scoreTable3.style.display = 'block'
+        }
         for (let i = 3; i < arr.length; i++) {
-            scoreTable.innerText += `${i+1}° ${arr[i].nick}: ${arr[i].score}\n`;
+            scoreTable4.innerText += `${i+1}° ${arr[i].nick}: ${arr[i].score}\n`;
         }
 
         pingDisplay.innerText = `${game.state.ping}ms`
@@ -55,6 +71,6 @@ export default function renderScreen(canvas, game, scoreTable, pingDisplay, requ
     }
 
     requestAnimationFrame(() => {
-        renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame)
+        renderScreen(canvas, game, pingDisplay, requestAnimationFrame)
     })
 }

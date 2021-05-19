@@ -1,5 +1,5 @@
 import createGame from '../public/Game.js';
-import createKeyboardListener from '../public/Keyboard-Listener.js';
+import createKeyboardListener from '../public/Listener.js';
 import renderScreen from '../public/Render-Screen.js';
 import io from 'socket.io-client';
 import React, { useEffect } from 'react';
@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 const Page = () => {
     useEffect(() => {
         const canvas = document.getElementById('screen');
-        const scoreTable = document.getElementById('scoreTable');
         const pingDisplay = document.getElementById('pingDisplay');
 
         const socket = io('https://Game.cogumeloseco1.repl.co', {
@@ -20,15 +19,18 @@ const Page = () => {
         socket.on('connect', () => {
             let playerId = socket.id
             game.state.myID = playerId
-            renderScreen(canvas, game, scoreTable, pingDisplay, requestAnimationFrame);
-            canvas.style.display = 'inline-block'
-            pingDisplay.style.display = 'inherit'
+            renderScreen(canvas, game, pingDisplay, requestAnimationFrame);
+            canvas.style.display = 'inline-block';
+            document.getElementById('chat').style.display = 'inline-block';
+            document.getElementById('scoreTable').style.display = 'inline-block';
+            document.getElementById('connecting').style.display = 'none';
+            pingDisplay.style.display = 'inherit';
             scoreTable.style.margin = '0px'
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
         })
         socket.on('setup', (state) => {
             let nick = prompt('Escolha seu nick')
-            socket.emit('nick', nick || socket.id)
+            socket.emit('nick', nick || socket.id.substring(0, 10))
 
             keyboardListener.registerPlayerId(socket.id)
 
@@ -67,6 +69,9 @@ const Page = () => {
         socket.on('clear-fruits', (command) => {
             game.clearFruits(command)
         })
+        socket.on('message', (command) => {
+            game.message(command)
+        })
     }, [])
 
     return (
@@ -80,17 +85,31 @@ const Page = () => {
                 <title>Game</title>
             </head>
             <body>
+                <button id="chat-button" />
                 <h2 id="pingDisplay">?ms</h2>
-                <canvas id="screen" width="50" height="50"></canvas>
-                <button id="arrow-up" />
                 <p />
-                <button id="arrow-left" />
-                <button id="arrow-down" />
-                <button id="arrow-right" />
-                <h2 id="scoreTable1" />
-                <h2 id="scoreTable2" />
-                <h2 id="scoreTable3" />
-                <h2 id="scoreTable">Conectando com o servidor...</h2>
+                <div id="chat">
+                    <a id="chat-content" />
+                    <p/>
+                    <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
+                    <button id="send-button" />
+                </div>
+
+                <canvas id="screen" width="50" height="50" />
+
+                <div id="scoreTable">
+                    <a id="p1" />
+                    <a id="p2" />
+                    <a id="p3" />
+                    <a id="p4" />
+                </div>
+                
+                <button className="arrows-buttons" id="arrow-up" />
+                <p />
+                <button className="arrows-buttons" id="arrow-left" />
+                <button className="arrows-buttons" id="arrow-down" />
+                <button className="arrows-buttons" id="arrow-right" />
+                <h2 id="connecting">Conectando com o servidor...</h2>
             </body>
         </html>
     )

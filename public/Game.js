@@ -1,6 +1,7 @@
 export default function createGame() {
     const state = {
         ping: '?',
+        messages: [],
         players: {},
         fruits: {},
         screen: {
@@ -28,6 +29,13 @@ export default function createGame() {
 
     function setState(newState) {
         Object.assign(state, newState)
+    }
+
+    function message(command) {
+        notifyAll(command)
+        if (state.messages.length > 31) state.messages.splice(-1 ,1)
+        command.nick = state.players[command.playerId].nick
+        state.messages.unshift({ nick: command.nick, content: command.content })
     }
 
     function movePlayer(command) {
@@ -63,9 +71,6 @@ export default function createGame() {
                 else player.x += 1
                 player.direction = 'd'
                 player.traces.push({ x: player.x, y: player.y })
-            },
-            e() {
-                console.log(state)
             }
         }
 
@@ -104,8 +109,8 @@ export default function createGame() {
     }
 
     function addFruit(command) {
-        const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height);
-        const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width);
+        const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height)+1;
+        const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width)+1;
         const fruitId = Math.random().toString(36).substring(2)
 
         state.fruits[fruitId] = {
@@ -140,8 +145,8 @@ export default function createGame() {
         })
     }
     function addPlayer(command) {
-        const playerX = command.x || Math.floor(Math.random()*state.screen.height);
-        const playerY = command.y || Math.floor(Math.random()*state.screen.width);
+        const playerX = command.x || Math.floor(Math.random()*state.screen.height)+1;
+        const playerY = command.y || Math.floor(Math.random()*state.screen.width)+1;
         const playerId = command.playerId
         let nick = command['nick']
 
@@ -186,6 +191,7 @@ export default function createGame() {
         subscribe,
         start,
         changePlayer,
-        clearFruits
+        clearFruits,
+        message
     }
 }
