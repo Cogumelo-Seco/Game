@@ -21,7 +21,7 @@ body {
     border: none;
     position: absolute;
     height: 20px;
-    width: 81%;
+    width: 100%;
     bottom: 0;
 }
 #send-button {
@@ -48,7 +48,7 @@ body {
     overflow: hidden;
     width: 200px;
     height: 500px;
-    display: none;
+    display: inline-block;
 }
 
 #arrow-left {
@@ -102,24 +102,24 @@ body {
     overflow: auto;
     width: 200px;
     height: 500px;
-    display: none;
+    display: inline-block;
 }
 #p1 {
     border-top: 5px solid #ffa600;
     border-bottom: 5px solid #ffa600;;
-    display: none;
+    display: block;
     background-color: #ffa600;
     height: 15px;
     width: 100%;
 }
 #p2 {
-    display: none;
+    display: block;
     background-color: gray;
     height: 15px;
     width: 100%;
 }
 #p3 {
-    display: none;
+    display: block;
     background-color: #cd7f32;
     height: 15px;
     width: 100%;

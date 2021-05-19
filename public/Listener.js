@@ -68,6 +68,7 @@ export default function createKeyboardListener(socket) {
             }
             return;
         }
+        document.getElementById('chat').style.display = 'inline-block';
         const keyPressed = event.key
         const command = {
             type: 'move-player',
@@ -84,6 +85,7 @@ export default function createKeyboardListener(socket) {
         if (event.toElement.id == 'arrow-down') state.direction = 's'
         if (event.toElement.id == 'arrow-left') state.direction = 'a'
         if (event.toElement.id == 'arrow-right') state.direction = 'd'
+        state.message = false
         const command = {
             type: 'move-player',
             playerId: state.playerId,

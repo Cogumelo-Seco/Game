@@ -21,8 +21,6 @@ const Page = () => {
             game.state.myID = playerId
             renderScreen(canvas, game, pingDisplay, requestAnimationFrame);
             canvas.style.display = 'inline-block';
-            document.getElementById('chat').style.display = 'inline-block';
-            document.getElementById('scoreTable').style.display = 'inline-block';
             document.getElementById('connecting').style.display = 'none';
             pingDisplay.style.display = 'inherit';
             scoreTable.style.margin = '0px'
