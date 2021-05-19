@@ -135,15 +135,7 @@ export default function createGame() {
 
         delete state.fruits[fruitId]
     }
-    function clearFruits(command) {
-        for (const fruitId in state.fruits) {
-            delete state.fruits[fruitId];
-        }
 
-        notifyAll({
-            type: 'clear-fruits',
-        })
-    }
     function addPlayer(command) {
         const playerX = command.x || Math.floor(Math.random()*state.screen.height)+1;
         const playerY = command.y || Math.floor(Math.random()*state.screen.width)+1;
@@ -180,6 +172,15 @@ export default function createGame() {
         delete state.players[playerId]
     }
 
+    function resetGame(command) {
+        state.fruits = {}
+        state.messages = []
+
+        notifyAll({
+            type: 'reset-game',
+        })
+    }
+
     return {
         movePlayer,
         addPlayer,
@@ -191,7 +192,7 @@ export default function createGame() {
         subscribe,
         start,
         changePlayer,
-        clearFruits,
+        resetGame,
         message
     }
 }

@@ -64,8 +64,8 @@ const Page = () => {
         socket.on('change-player', (command) => {
             game.changePlayer(command)
         })
-        socket.on('clear-fruits', (command) => {
-            game.clearFruits(command)
+        socket.on('reset-game', (command) => {
+            game.resetGame(command)
         })
         socket.on('message', (command) => {
             game.message(command)
