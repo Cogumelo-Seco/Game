@@ -6,6 +6,21 @@ import React, { useEffect } from 'react';
 
 const Page = () => {
     useEffect(() => {
+        let song = new Audio('/songs/music.mp3');
+        const musicButton = document.getElementById('music-button');
+        musicButton.addEventListener('click', PlayStop);
+
+        function PlayStop() {
+            song.loop = true;
+            if (song.played.length == 0 || song.paused) {
+                musicButton.innerText = 'Música 🔊'
+                song.play();
+            } else {
+                musicButton.innerText = 'Música 🔇'
+                song.pause()
+            }
+        }
+
         const canvas = document.getElementById('screen');
         const pingDisplay = document.getElementById('pingDisplay');
 
@@ -75,6 +90,11 @@ const Page = () => {
         socket.on('newTime', (time) => {
             game.state.time = time
         })
+        socket.on('song', (command) => {
+            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
+            else var song = new Audio('/songs/up-100.mp3');
+            song.play()
+        })
     }, [])
 
     return (
@@ -98,7 +118,6 @@ const Page = () => {
                     <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
                     <button id="send-button" title="Enviar mensagem" />
                 </div>
-
                 <canvas id="screen" width="50" height="50" />
 
                 <div id="scoreTable">
@@ -114,6 +133,8 @@ const Page = () => {
                 <button className="arrows-buttons" id="arrow-down" />
                 <button className="arrows-buttons" id="arrow-right" />
                 <h2 id="connecting">Conectando com o servidor...</h2>
+
+                <button id="music-button">Música 🔇</button>
             </body>
         </html>
     )

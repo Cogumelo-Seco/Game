@@ -26,7 +26,6 @@ body {
     bottom: 0;
 }
 #send-button {
-    outline: none;
     margin-left: 82%;
     position: absolute;
     bottom: 0px;
@@ -57,28 +56,32 @@ body {
     bottom: 25px;
 }
 
+button {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.200);
+}
+
 #arrow-left {
     margin: 0px 15px 0px 0px; 
-    background: rgba(0, 0, 0, 0.398) url(../public/images/left.png) no-repeat center 0px / 100%;
+    background: url(../public/images/left.png) no-repeat center 0px / 100%;
 }
 
 #arrow-right {
     margin: 0px 0px 0px 15px; 
-    background: rgba(0, 0, 0, 0.398) url(../public/images/right.png) no-repeat center 0px / 100%;
+    background: url(../public/images/right.png) no-repeat center 0px / 100%;
 }
 
 #arrow-up {
     margin: 5px 0px 0px 0px;
-    background: rgba(0, 0, 0, 0.398) url(../public/images/up.png) no-repeat center 0px / 100%;
+    background: url(../public/images/up.png) no-repeat center 0px / 100%;
 }
 
 #arrow-down {
     margin: 0; 
-    background: rgba(0, 0, 0, 0.398) url(../public/images/down.png) no-repeat center 0px / 100%;
+    background: url(../public/images/down.png) no-repeat center 0px / 100%;
 }
 
 .arrows-buttons {
-    outline: none;
     display: none;
     vertical-align: middle;
     width: 50px; 
@@ -86,13 +89,12 @@ body {
 }
 
 #chat-button {
-    outline: none;
     display: none;
     margin: 7px;
     width: 50px; 
     height: 50px;
     float: left;
-    background: rgba(0, 0, 0, 0.398) url(../public/images/chat.png) no-repeat center 0px / 100%;
+    background: url(../public/images/chat.png) no-repeat center 0px / 100%;
 }
 
 #pingDisplay {

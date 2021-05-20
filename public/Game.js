@@ -48,28 +48,28 @@ export default function createGame() {
             w(player) {
                 if (player.traces.find((t) => t.x == player.x && t.y == player.y-1 && player.direction == 's')) return;
                 if (player.y <= 0) player.y = state.screen.width-1
-                else player.y -= 1
+                else player.y--
                 player.direction = 'w'
                 player.traces.push({ x: player.x, y: player.y })
             },
             s(player) {
                 if (player.traces.find((t) => t.x == player.x && t.y == player.y+1 && player.direction == 'w')) return;
                 if (player.y >= state.screen.width-1) player.y = 0
-                else player.y += 1
+                else player.y++
                 player.direction = 's'
                 player.traces.push({ x: player.x, y: player.y })
             },
             a(player) {
                 if (player.traces.find((t) => t.x == player.x-1 && t.y == player.y && player.direction == 'd')) return;
                 if (player.x <= 0) player.x = state.screen.height-1
-                else player.x -= 1
+                else player.x--
                 player.direction = 'a'
                 player.traces.push({ x: player.x, y: player.y })
             },
             d(player) {
                 if (player.traces.find((t) => t.x == player.x+1 && t.y == player.y && player.direction == 'a')) return;
                 if (player.x >= state.screen.height-1) player.x = 0
-                else player.x += 1
+                else player.x++
                 player.direction = 'd'
                 player.traces.push({ x: player.x, y: player.y })
             }
@@ -85,10 +85,14 @@ export default function createGame() {
 
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]
-
+            let up100 = false;
             if (fruit.x == player.x && fruit.y == player.y) {
-                player.score += 1
-                removeFruit({ fruitId })
+                player.score++
+                if (player.score%50 == 0) up100 = true;
+                removeFruit({ 
+                    up100,
+                    fruitId 
+                })
             }
         }
         if (player.traces.length > player.score) {
@@ -134,6 +138,13 @@ export default function createGame() {
             fruitId: fruitId,
         })
 
+        if (command.up100) var song = 'up100'
+        else var song = 'up'
+        notifyAll({
+            type: 'song',
+            song
+        })
+        
         delete state.fruits[fruitId]
     }
 
