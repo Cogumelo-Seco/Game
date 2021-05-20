@@ -133,7 +133,7 @@ const Page = () => {
                 <button className="arrows-buttons" id="arrow-down" />
                 <button className="arrows-buttons" id="arrow-right" />
                 <h2 id="connecting">Conectando com o servidor...</h2>
-
+                <p />
                 <button id="music-button">Música 🔇</button>
             </body>
         </html>

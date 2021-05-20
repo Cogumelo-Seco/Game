@@ -59,27 +59,26 @@ body {
 
 button {
     outline: none;
-    background-color: rgba(0, 0, 0, 0.200);
 }
 
 #arrow-left {
     margin: 0px 15px 0px 0px; 
-    background: url(../public/images/left.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.200) url(../public/images/left.png) no-repeat center 0px / 100%;
 }
 
 #arrow-right {
     margin: 0px 0px 0px 15px; 
-    background: url(../public/images/right.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.200) url(../public/images/right.png) no-repeat center 0px / 100%;
 }
 
 #arrow-up {
     margin: 5px 0px 0px 0px;
-    background: url(../public/images/up.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.200) url(../public/images/up.png) no-repeat center 0px / 100%;
 }
 
 #arrow-down {
     margin: 0; 
-    background: url(../public/images/down.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.200) url(../public/images/down.png) no-repeat center 0px / 100%;
 }
 
 .arrows-buttons {
@@ -89,13 +88,17 @@ button {
     height: 50px
 }
 
+#music-button {
+    background-color: rgba(0, 0, 0, 0.200);
+}
+
 #chat-button {
     display: none;
     margin: 7px;
     width: 50px; 
     height: 50px;
     float: left;
-    background: url(../public/images/chat.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.200) url(../public/images/chat.png) no-repeat center 0px / 100%;
 }
 
 #pingDisplay {
