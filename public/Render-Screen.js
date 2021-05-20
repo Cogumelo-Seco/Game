@@ -54,8 +54,8 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         if (arr[0]) {
             scoreTable1.innerText = `1º ${arr[0].nick}: ${arr[0].score}`
             player = game.state.players[arr[0].playerId]
-            for (let i = 0; i < player.traces.length; i+=2) {
-                ctx.fillStyle = '#ffa600';
+            for (let i = 0; i < player.traces.length; i++) {
+                ctx.fillStyle = '#c07d00';
                 let trace = player.traces[i]
                 ctx.globalAlpha = 0.7
                 ctx.clearRect(trace.x, trace.y, 1, 1);
