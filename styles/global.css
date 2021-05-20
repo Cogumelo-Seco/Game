@@ -40,7 +40,6 @@ body {
 }
 
 #chat {
-    word-wrap: break-word; 
     font-size: 11px;
     text-align: left;
     position: relative;
@@ -48,10 +47,12 @@ body {
     overflow: hidden;
     width: 200px;
     height: 500px;
+    word-wrap: break-word; 
     display: inline-block;
 }
 
 #chat-content {
+    font-family: 'Arial Black', Arial, Helvetica, sans-serif;
     position: absolute;
     bottom: 25px;
 }

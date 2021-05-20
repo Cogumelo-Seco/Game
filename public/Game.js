@@ -23,6 +23,7 @@ export default function createGame() {
     }
 
     function notifyAll(command) {
+        if (observers.length > 10) observers.splice(0)
         for (const observerFunction of observers) {
             observerFunction(command)
         }
@@ -41,7 +42,6 @@ export default function createGame() {
 
     function movePlayer(command) {
         notifyAll(command)
-
         if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
 
         const acceptedMoves = {

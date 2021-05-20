@@ -68,7 +68,7 @@ export default function createListener(socket) {
                     }
                     splitWords[i] = splitLetters.join('')
                 }
-                msg = splitWords.join(' ').substring(0, 15)
+                msg = splitWords.join(' ')
                 if (msg.trim()) notifyAll({
                     type: 'message',
                     playerId: state.playerId,

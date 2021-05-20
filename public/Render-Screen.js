@@ -12,8 +12,20 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     timer.innerText = `${minutes}:${seconds}`
 
     chat.innerText = ''
+
     for (let i = 0; i < game.state.messages.length; i++) {
-        chat.innerText += `⠀${game.state.messages[i].nick}: ${game.state.messages[i].content}\n`
+        let content = '';
+        let count = 0;
+        game.state.messages[i].content.split('').map(l => {
+            if (count > 25) {
+                count = 0
+                content += `${l}\n`
+            } else {
+                count++
+                content += l
+            }
+        });
+        chat.innerText += `⠀${game.state.messages[i].nick}:\n${content}\n`
     }
 
     game.subscribe((command) => {
