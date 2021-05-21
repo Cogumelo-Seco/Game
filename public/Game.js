@@ -114,8 +114,8 @@ export default function createGame() {
     }
 
     function addFruit(command) {
-        const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height)+1;
-        const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width)+1;
+        const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height);
+        const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width);
         const fruitId = Math.random().toString(36).substring(2)
 
         state.fruits[fruitId] = {
@@ -149,8 +149,8 @@ export default function createGame() {
     }
 
     function addPlayer(command) {
-        const playerX = command.x || Math.floor(Math.random()*state.screen.height)+1;
-        const playerY = command.y || Math.floor(Math.random()*state.screen.width)+1;
+        const playerX = command.x || Math.floor(Math.random()*state.screen.height);
+        const playerY = command.y || Math.floor(Math.random()*state.screen.width);
         const playerId = command.playerId
         let nick = command['nick']
 
