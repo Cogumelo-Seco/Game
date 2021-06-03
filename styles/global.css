@@ -52,9 +52,12 @@ body {
 }
 
 #chat-content {
-    font-family: 'Arial Black', Arial, Helvetica, sans-serif;
-    position: absolute;
-    bottom: 25px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    width: 95%;
+    height: 93%;
+    border: 5px solid rgba(0, 0, 0, 0);
 }
 
 button {

@@ -113,11 +113,12 @@ const Page = () => {
                 <h2 id="pingDisplay" title="Ping">?ms</h2>
                 <p />
                 <div id="chat">
-                    <a id="chat-content" />
+                    <canvas id="chat-content" width="2000" height="4000" />
                     <p/>
                     <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
                     <button id="send-button" title="Enviar mensagem" />
                 </div>
+
                 <canvas id="screen" width="50" height="50" />
 
                 <div id="scoreTable">

@@ -37,7 +37,7 @@ export default function createGame() {
         notifyAll(command)
         if (state.messages.length > 31) state.messages.splice(0 ,1)
         command.nick = state.players[command.playerId].nick
-        if (command.content.trim()) state.messages.push({ nick: command.nick, content: command.content })
+        if (command.content.trim()) state.messages.unshift({ nick: command.nick, content: command.content })
     }
 
     function movePlayer(command) {
@@ -45,6 +45,9 @@ export default function createGame() {
         if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
 
         const acceptedMoves = {
+            e() {
+                state.messages = []
+            },
             w(player) {
                 if (player.traces.find((t) => t.x == player.x && t.y == player.y-1 && player.direction == 's')) return;
                 if (player.y <= 0) player.y = state.screen.width-1
