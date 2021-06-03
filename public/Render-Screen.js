@@ -15,7 +15,7 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     let y = -110
     chat.clearRect(0, 0, chatCanvas.width, chatCanvas.height)
     for (let i = 0; i < game.state.messages.length; i++) {
-        chat.font = `bold 140px Sans-serif`;
+        chat.font = `bold 140px Arial Black`;
         chat.fillStyle = 'black'
 
         y += 200
