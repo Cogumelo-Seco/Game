@@ -12,13 +12,13 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     let minutes = ("00" +  Math.floor(game.state.time / 60) % 60).slice(-2)
     timer.innerText = `${minutes}:${seconds}`
 
-    let y = -130
+    let y = -110
     chat.clearRect(0, 0, chatCanvas.width, chatCanvas.height)
     for (let i = 0; i < game.state.messages.length; i++) {
         chat.font = `bold 140px Sans-serif`;
         chat.fillStyle = 'black'
 
-        y += 140
+        y += 200
         let content = '';
         let count = 0;
 
