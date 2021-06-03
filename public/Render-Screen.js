@@ -23,7 +23,7 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         let count = 0;
 
         game.state.messages[i].content.split('').map(l => {
-            if (count > 16) {
+            if (count > 15) {
                 count = 0
                 content += `${l}\n`
             } else {
