@@ -12,34 +12,6 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     let minutes = ("00" +  Math.floor(game.state.time / 60) % 60).slice(-2)
     timer.innerText = `${minutes}:${seconds}`
 
-    let y = -110
-    chat.clearRect(0, 0, chatCanvas.width, chatCanvas.height)
-    for (let i = 0; i < game.state.messages.length; i++) {
-        chat.font = `bold 140px Arial Black`;
-        chat.fillStyle = 'black'
-
-        y += 200
-        let content = '';
-        let count = 0;
-
-        game.state.messages[i].content.split('').map(l => {
-            if (count > 15) {
-                count = 0
-                content += `${l}\n`
-            } else {
-                count++
-                content += l
-            }
-        });
-        let lines = content.split('\n');
-        for (let a = lines.length-1; a >= 0; a--) {
-            chat.fillText(lines[a], 0, (chatCanvas.height-y))
-            y += 140
-        }
-        chat.fillStyle = 'rgb(0, 147, 201)',
-        chat.fillText(`${game.state.messages[i].nick}: `, 0, chatCanvas.height-y)
-    }
-
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
         for (let i = 0; i < command.traces.length; i++) {
@@ -94,6 +66,37 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         if (arr[2]) scoreTable3.innerText = `3º ${arr[2].nick}: ${arr[2].score}`
         for (let i = 3; i < arr.length; i++) {
             scoreTable4.innerText += `${i+1}º ${arr[i].nick}: ${arr[i].score}\n`;
+        }
+
+        let y = -110
+        chat.clearRect(0, 0, chatCanvas.width, chatCanvas.height)
+        for (let i = 0; i < game.state.messages.length; i++) {
+            chat.font = `bold 140px Arial Black`;
+            chat.fillStyle = 'black'
+
+            y += 200
+            let content = '';
+            let count = 0;
+
+            game.state.messages[i].content.split('').map(l => {
+                if (count > 15) {
+                    count = 0
+                    content += `${l}\n`
+                } else {
+                    count++
+                    content += l
+                }
+            });
+            let lines = content.split('\n');
+            for (let a = lines.length-1; a >= 0; a--) {
+                chat.fillText(lines[a], 0, (chatCanvas.height-y))
+                y += 140
+            }
+            chat.fillStyle = 'rgb(0, 147, 201)';
+            if (arr[0] && arr[0].nick == game.state.messages[i].nick) chat.fillStyle = '#ffa600';
+            if (arr[1] && arr[1].nick == game.state.messages[i].nick) chat.fillStyle = 'gray';
+            if (arr[2] && arr[2].nick == game.state.messages[i].nick) chat.fillStyle = '#cd7f32';
+            chat.fillText(`${game.state.messages[i].nick}: `, 0, chatCanvas.height-y)
         }
     }
 
