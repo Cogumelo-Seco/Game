@@ -1,4 +1,4 @@
-export default function createGame() {
+function createGame() {
     const state = {
         ping: '?',
         time: 0,
@@ -6,16 +6,15 @@ export default function createGame() {
         players: {},
         fruits: {},
         screen: {
-            width: 50,
-            height: 50
+            width: 100,
+            height: 100
         }
     }
 
     const observers = []
 
     function start(interval) {
-        if (!interval) interval = 3000
-        setInterval(addFruit, interval)
+        setInterval(addFruit, interval || 3000)
     }
 
     function subscribe(observerFunction) {
@@ -33,21 +32,23 @@ export default function createGame() {
         Object.assign(state, newState)
     }
 
+    function ping(command) {
+        notifyAll(command)
+        if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
+    }
+
     function message(command) {
         notifyAll(command)
         if (state.messages.length > 31) state.messages.splice(0 ,1)
-        command.nick = state.players[command.playerId].nick
-        if (command.content.trim()) state.messages.unshift({ nick: command.nick, content: command.content })
+        if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
+        if (command.content.trim()) state.messages.unshift(command)
     }
 
     function movePlayer(command) {
+        if (!command.keyPressed) return;
         notifyAll(command)
-        if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
 
         const acceptedMoves = {
-            e() {
-                state.messages = []
-            },
             w(player) {
                 if (player.traces.find((t) => t.x == player.x && t.y == player.y-1 && player.direction == 's')) return;
                 if (player.y <= 0) player.y = state.screen.width-1
@@ -89,11 +90,12 @@ export default function createGame() {
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]
             let up100 = false;
-            if (fruit.x == player.x && fruit.y == player.y) {
+            if (player.x == fruit.x && player.y == fruit.y) {
                 player.score++
                 if (player.score%50 == 0) up100 = true;
                 removeFruit({ 
                     up100,
+                    playerId: command.playerId,
                     fruitId 
                 })
             }
@@ -120,6 +122,7 @@ export default function createGame() {
         const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height);
         const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width);
         const fruitId = Math.random().toString(36).substring(2)
+        if (state.fruits[fruitId]) return addFruit(command)
 
         state.fruits[fruitId] = {
             x: fruitX,
@@ -135,16 +138,14 @@ export default function createGame() {
     }
     function removeFruit(command) {
         let fruitId = command.fruitId
-
-        notifyAll({
-            type: 'remove-fruit',
-            fruitId: fruitId,
-        })
+        let playerId = command.playerId
 
         if (command.up100) var song = 'up100'
         else var song = 'up'
         notifyAll({
-            type: 'song',
+            type: 'remove-fruit',
+            fruitId,
+            playerId,
             song
         })
         
@@ -187,7 +188,7 @@ export default function createGame() {
         delete state.players[playerId]
     }
 
-    function resetGame(command) {
+    function resetGame() {
         state.fruits = {}
         state.messages = []
 
@@ -208,6 +209,9 @@ export default function createGame() {
         start,
         changePlayer,
         resetGame,
+        ping,
         message
     }
 }
+
+export default createGame

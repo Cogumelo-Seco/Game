@@ -1,4 +1,4 @@
-export default function createListener(socket) {
+export default function createListener() {
     const state = {
         observers: [],
         message: false,
@@ -47,43 +47,23 @@ export default function createListener(socket) {
     }
 
     function send() {
-        if (!messageBox.value.trim()) return;
+        let content = messageBox.value.replace(/\s+/g, ' ')
+        if (!content) return;
         notifyAll({
             type: 'message',
             playerId: state.playerId,
-            content: messageBox.value.trim(),
+            content,
         })
         messageBox.value = ''
     }
 
     function handleKeys(event) {
-        if (state.message) {
-            if (event.key == 'Enter' && messageBox.value.trim()) {
-                let msg = messageBox.value.trim()
-                let splitWords = msg.split(' ')
-                for (let i = 0; i < splitWords.length;i++) {
-                    let splitLetters = splitWords[i].split('')
-                    for (let i = 0; i < splitLetters.length;i++) {
-                        if (!/[A-Za-z0-9.,;:´`^~"'+-=%$&*#@!-°º()?/áéíóúãõâêîôûç]/.test(splitLetters[i])) splitLetters[i] = ''
-                    }
-                    splitWords[i] = splitLetters.join('')
-                }
-                msg = splitWords.join(' ')
-                if (msg.trim()) notifyAll({
-                    type: 'message',
-                    playerId: state.playerId,
-                    content: msg.trim(),
-                })
-                messageBox.value = ''
-            }
-            return;
-        }
+        if (state.message && event.key == 'Enter' && messageBox.value.trim()) return send()
         document.getElementById('chat').style.display = 'inline-block';
         const keyPressed = event.key
         const command = {
             type: 'move-player',
             playerId: state.playerId,
-            ping: +new Date(),
             keyPressed
         }
         notifyAll(command)
@@ -98,7 +78,6 @@ export default function createListener(socket) {
         const command = {
             type: 'move-player',
             playerId: state.playerId,
-            ping: +new Date(),
             keyPressed: state.direction
         }
         notifyAll(command)

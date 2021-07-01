@@ -42,32 +42,44 @@ const Page = () => {
             scoreTable.style.margin = '0px'
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
         })
+        socket.on('gameOver', (command) => {
+            if (command.playerId != socket.id) return;
+            alert(`Você Perdeu, seu score máximo foi ${command.score}`)
+        })
         socket.on('setup', (state) => {
             let nick = prompt('Escolha seu nick')
-            socket.emit('nick', nick || socket.id.substring(0, 10))
+            socket.emit('nick', nick || socket.id)
 
             Listener.registerPlayerId(socket.id)
-
-            setInterval(() => {
-                Listener.notifyAll({
-                    type: 'move-player',
-                    auto: true,
-                    playerId: socket.id,
-                    ping: +new Date(),
-                    keyPressed: game.state.players[socket.id].direction
-                })
-            }, 2000)
-
+            Listener.subscribe((command) => game.movePlayer(command));
             Listener.subscribe((command) => {
                 socket.emit(command.type, command)
             });
             game.setState(state)
+
+            setInterval(() => {
+                if (game.state.players[socket.id]) Listener.notifyAll({
+                    type: 'move-player',
+                    auto: true,
+                    playerId: socket.id,
+                    keyPressed: game.state.players[socket.id].direction
+                })
+                socket.emit('ping', { ping: +new Date(), playerId: socket.id })
+            }, 2000)
+        })
+        socket.on('ping', (command) => {
+            game.ping(command)
         })
         socket.on('add-player', (command) => {
             game.addPlayer(command)
         })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)
+
+            if (command.playerId != socket.id) return;
+            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
+            else var song = new Audio('/songs/up-100.mp3');
+            song.play()
         })
         socket.on('add-fruit', (command) => {
             game.addFruit(command)
@@ -76,7 +88,7 @@ const Page = () => {
             game.removePlayer(command)
         })
         socket.on('move-player', (command) => {
-            game.movePlayer(command)
+            if (command.playerId != socket.id) game.movePlayer(command)
         })
         socket.on('change-player', (command) => {
             game.changePlayer(command)
@@ -89,11 +101,6 @@ const Page = () => {
         })
         socket.on('newTime', (time) => {
             game.state.time = time
-        })
-        socket.on('song', (command) => {
-            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
-            else var song = new Audio('/songs/up-100.mp3');
-            song.play()
         })
     }, [])
 

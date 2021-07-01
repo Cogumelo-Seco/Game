@@ -10,7 +10,8 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
     const timer = document.getElementById('timer')
     let seconds = ("00" +  Math.floor(game.state.time % 60)).slice(-2)
     let minutes = ("00" +  Math.floor(game.state.time / 60) % 60).slice(-2)
-    timer.innerText = `${minutes}:${seconds}`
+    if (minutes == '00') timer.innerText = `${seconds}s`
+    else timer.innerText = `${minutes}:${seconds}`
 
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
@@ -20,21 +21,37 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         }
     })
 
+    const myPlayer = game.state.players[game.state.myID]
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     for (const playerId in game.state.players) {
-        const player = game.state.players[playerId];
+        const player = game.state.players[playerId];        
 
         pingDisplay.innerText = `${game.state.ping}ms`
 
-        for (let i = 0; i < player.traces.length; i++) {
-            if (game.state.myID == playerId) ctx.fillStyle = 'green';
-            else ctx.fillStyle = '#363636';
-            let trace = player.traces[i]
-            ctx.globalAlpha = 0.7
-            ctx.clearRect(trace.x, trace.y, 1, 1);
-            ctx.fillRect(trace.x, trace.y, 1, 1);
+        ctx.fillStyle = '#dd6565';
+        ctx.globalAlpha = 1
+        if (myPlayer) {
+            ctx.fillRect(0, 0, (0-myPlayer.x)+(50/2), canvas.height)
+            ctx.fillRect(50, 0, (50-myPlayer.x)+(50/2), canvas.height)
+            ctx.fillRect(0, 0, canvas.width, (0-myPlayer.y)+(50/2))
+            ctx.fillRect(0, 50, canvas.width, (50-myPlayer.y)+(50/2))
+        }
+
+        function renderPlayer(x, y, trace, color, color2) {
+            ctx.fillStyle = color;
+            if (trace) {
+                ctx.globalAlpha = 0.7
+                ctx.clearRect((trace.x-myPlayer.x)+(50/2), (trace.y-myPlayer.y)+(50/2), 1, 1);
+                ctx.fillRect((trace.x-myPlayer.x)+(50/2), (trace.y-myPlayer.y)+(50/2), 1, 1);
+            }
             ctx.globalAlpha = 1
-            ctx.fillRect(player.x, player.y, 1, 1);
+            ctx.fillRect(x, y, 1, 1);
+        }
+
+        for (let i = 0; i < player.traces.length; i++) {
+            let trace = player.traces[i]
+            if (game.state.myID == playerId) renderPlayer((50/2), (50/2), trace, 'green');
+            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(50/2), (player.y-myPlayer.y)+(50/2), trace, '#363636');
         }
 
         let arr = []
@@ -50,17 +67,8 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         if (arr[0]) {
             scoreTable1.innerText = `1º ${arr[0].nick}: ${arr[0].score}`
             player = game.state.players[arr[0].playerId]
-            for (let i = 0; i < player.traces.length; i++) {
-                ctx.fillStyle = '#c07d00';
-                let trace = player.traces[i]
-                ctx.globalAlpha = 0.7
-                ctx.clearRect(trace.x, trace.y, 1, 1);
-                ctx.fillRect(trace.x, trace.y, 1, 1);
-                if (game.state.myID == arr[0].playerId) ctx.fillStyle = 'green';
-                else ctx.fillStyle = '#363636';
-                ctx.globalAlpha = 1
-                ctx.fillRect(player.x, player.y, 1, 1);
-            }
+            if (game.state.myID == arr[0].playerId) renderPlayer((50/2), (50/2), null, '#e19200');
+            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(50/2), (player.y-myPlayer.y)+(50/2), null, '#e19200');
         }
         if (arr[1]) scoreTable2.innerText = `2º ${arr[1].nick}: ${arr[1].score}`
         if (arr[2]) scoreTable3.innerText = `3º ${arr[2].nick}: ${arr[2].score}`
@@ -71,15 +79,16 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         let y = -110
         chat.clearRect(0, 0, chatCanvas.width, chatCanvas.height)
         for (let i = 0; i < game.state.messages.length; i++) {
-            chat.font = `bold 140px Arial Black`;
+            chat.font = `bold 120px Arial Black`;
             chat.fillStyle = 'black'
+            if (game.state.messages[i].system) chat.fillStyle = 'gray'
 
             y += 200
             let content = '';
             let count = 0;
 
             game.state.messages[i].content.split('').map(l => {
-                if (count > 15) {
+                if (count >= 20 && l == ' ') {
                     count = 0
                     content += `${l}\n`
                 } else {
@@ -92,19 +101,23 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
                 chat.fillText(lines[a], 0, (chatCanvas.height-y))
                 y += 140
             }
+            chat.font = `bold 140px Arial Black`;
             chat.fillStyle = 'rgb(0, 147, 201)';
             if (arr[0] && arr[0].nick == game.state.messages[i].nick) chat.fillStyle = '#ffa600';
             if (arr[1] && arr[1].nick == game.state.messages[i].nick) chat.fillStyle = 'gray';
             if (arr[2] && arr[2].nick == game.state.messages[i].nick) chat.fillStyle = '#cd7f32';
+            if (game.state.messages[i].system) chat.fillStyle = game.state.messages[i].color
             chat.fillText(`${game.state.messages[i].nick}: `, 0, chatCanvas.height-y)
         }
     }
 
     for (const fruitId in game.state.fruits) {
-        const fruit = game.state.fruits[fruitId];
-        ctx.fillStyle = 'red';
-        ctx.globalAlpha = 0.5
-        ctx.fillRect(fruit.x, fruit.y, 1, 1);
+        if (myPlayer) {
+            const fruit = game.state.fruits[fruitId];
+            ctx.fillStyle = 'red';
+            ctx.globalAlpha = 0.5
+            ctx.fillRect(fruit.x-myPlayer.x+(50/2), fruit.y-myPlayer.y+(50/2), 1, 1);
+        }
     }
 
     requestAnimationFrame(() => {
