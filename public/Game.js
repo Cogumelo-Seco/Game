@@ -107,14 +107,13 @@ function createGame() {
 
     function changePlayer(command) {
         const player = state.players[command.playerId]
-        player.score = command.score
-        player.traces = command.traces || player.traces
+        const score = command.score || player.score
+        player.score = score
 
         notifyAll({
             type: 'change-player',
             playerId: command.playerId,
-            score: command.score,
-            traces: command.traces
+            score: score
         })
     }
 
@@ -164,7 +163,7 @@ function createGame() {
             nick: nick,
             direction: 'w',
             traces: [ { x: playerX, y: playerY } ],
-            score: 1
+            score: 5
         }
 
         notifyAll({
