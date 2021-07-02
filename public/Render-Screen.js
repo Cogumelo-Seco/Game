@@ -28,21 +28,33 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
 
         pingDisplay.innerText = `${game.state.ping}ms`
 
-        ctx.fillStyle = '#dd6565';
-        ctx.globalAlpha = 1
         if (myPlayer) {
-            ctx.fillRect(0, 0, (0-myPlayer.x)+(50/2), canvas.height)
-            ctx.fillRect(50, 0, (50-myPlayer.x)+(50/2), canvas.height)
-            ctx.fillRect(0, 0, canvas.width, (0-myPlayer.y)+(50/2))
-            ctx.fillRect(0, 50, canvas.width, (50-myPlayer.y)+(50/2))
+            ctx.fillStyle = 'gray';
+            ctx.globalAlpha = 0.03
+            for (let x = (Number.parseInt(canvas.height/2))-myPlayer.x; x < canvas.width+canvas.height; x += 2) {
+                for (let y = (Number.parseInt(canvas.height/2))-myPlayer.y; y < canvas.width+canvas.height; y += 2) {
+                    ctx.fillRect(x, y, 1, 1)
+                }
+            }
+            for (let x = (Number.parseInt(canvas.height/2))-myPlayer.x; x < canvas.width+canvas.height; x += 3) {
+                for (let y = (Number.parseInt(canvas.height/2))-myPlayer.y; y < canvas.width+canvas.height; y += 3) {
+                    ctx.fillRect(x, y, 1, 1)
+                }
+            }
+            ctx.fillStyle = '#dd6565';
+            ctx.globalAlpha = 1
+            ctx.fillRect(0, (Number.parseInt(canvas.height/2))-myPlayer.y, canvas.width*2, -canvas.height*2);
+            ctx.fillRect(0, (Number.parseInt(canvas.height/2)+game.state.screen.height)-myPlayer.y, canvas.width*2, canvas.height*2);
+            ctx.fillRect((Number.parseInt(canvas.width/2))-myPlayer.x, 0, -canvas.width*2, canvas.height*2);
+            ctx.fillRect((Number.parseInt(canvas.width/2)+game.state.screen.width)-myPlayer.x, 0, canvas.width*2, canvas.height*2);
         }
 
         function renderPlayer(x, y, trace, color, color2) {
             ctx.fillStyle = color;
             if (trace) {
                 ctx.globalAlpha = 0.7
-                ctx.clearRect((trace.x-myPlayer.x)+(50/2), (trace.y-myPlayer.y)+(50/2), 1, 1);
-                ctx.fillRect((trace.x-myPlayer.x)+(50/2), (trace.y-myPlayer.y)+(50/2), 1, 1);
+                ctx.clearRect((trace.x-myPlayer.x)+(Number.parseInt(canvas.width/2)), (trace.y-myPlayer.y)+(Number.parseInt(canvas.height/2)), 1, 1);
+                ctx.fillRect((trace.x-myPlayer.x)+(Number.parseInt(canvas.width/2)), (trace.y-myPlayer.y)+(Number.parseInt(canvas.height/2)), 1, 1);
             }
             ctx.globalAlpha = 1
             ctx.fillRect(x, y, 1, 1);
@@ -50,8 +62,8 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
 
         for (let i = 0; i < player.traces.length; i++) {
             let trace = player.traces[i]
-            if (game.state.myID == playerId) renderPlayer((50/2), (50/2), trace, 'green');
-            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(50/2), (player.y-myPlayer.y)+(50/2), trace, '#363636');
+            if (game.state.myID == playerId) renderPlayer((Number.parseInt(canvas.width/2)), (Number.parseInt(canvas.height/2)), trace, 'green');
+            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(Number.parseInt(canvas.width/2)), (player.y-myPlayer.y)+(Number.parseInt(canvas.height/2)), trace, '#363636');
         }
 
         let arr = []
@@ -67,8 +79,8 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
         if (arr[0]) {
             scoreTable1.innerText = `1º ${arr[0].nick}: ${arr[0].score}`
             player = game.state.players[arr[0].playerId]
-            if (game.state.myID == arr[0].playerId) renderPlayer((50/2), (50/2), null, '#e19200');
-            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(50/2), (player.y-myPlayer.y)+(50/2), null, '#e19200');
+            if (game.state.myID == arr[0].playerId) renderPlayer((Number.parseInt(canvas.width/2)), (Number.parseInt(canvas.height/2)), null, '#e19200');
+            else if (myPlayer) renderPlayer((player.x-myPlayer.x)+(Number.parseInt(canvas.width/2)), (player.y-myPlayer.y)+(Number.parseInt(canvas.height/2)), null, '#e19200');
         }
         if (arr[1]) scoreTable2.innerText = `2º ${arr[1].nick}: ${arr[1].score}`
         if (arr[2]) scoreTable3.innerText = `3º ${arr[2].nick}: ${arr[2].score}`
@@ -116,7 +128,7 @@ export default function renderScreen(canvas, game, pingDisplay, requestAnimation
             const fruit = game.state.fruits[fruitId];
             ctx.fillStyle = 'red';
             ctx.globalAlpha = 0.5
-            ctx.fillRect(fruit.x-myPlayer.x+(50/2), fruit.y-myPlayer.y+(50/2), 1, 1);
+            ctx.fillRect(fruit.x-myPlayer.x+(Number.parseInt(canvas.width/2)), fruit.y-myPlayer.y+(Number.parseInt(canvas.height/2)), 1, 1);
         }
     }
 

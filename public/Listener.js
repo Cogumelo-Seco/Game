@@ -57,10 +57,28 @@ export default function createListener() {
         messageBox.value = ''
     }
 
+    function zoom(key) {
+        const canvas = document.getElementById('screen');
+
+        if (key == '+' && canvas.width >= 20) {
+            canvas.width--
+            canvas.height--
+        } else if (key == '-' && canvas.width <= 150) {
+            canvas.width++
+            canvas.height++
+        }
+    }
+
     function handleKeys(event) {
-        if (state.message && event.key == 'Enter' && messageBox.value.trim()) return send()
-        document.getElementById('chat').style.display = 'inline-block';
         const keyPressed = event.key
+
+        // Send Message
+        if (state.message && keyPressed == 'Enter' && messageBox.value.trim()) return send()
+
+        // Zoom
+        zoom(keyPressed)
+
+        // Move Player
         const command = {
             type: 'move-player',
             playerId: state.playerId,
