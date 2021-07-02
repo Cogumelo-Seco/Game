@@ -89,12 +89,12 @@ function createGame() {
 
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]
-            let up100 = false;
+            let up1 = false;
             if (player.x == fruit.x && player.y == fruit.y) {
                 player.score++
-                if (player.score%50 == 0) up100 = true;
+                if (player.score%50 == 0) up1 = true;
                 removeFruit({ 
-                    up100,
+                    up1,
                     playerId: command.playerId,
                     fruitId 
                 })
@@ -138,12 +138,16 @@ function createGame() {
     function removeFruit(command) {
         let fruitId = command.fruitId
         let playerId = command.playerId
-
-        if (command.up100) var song = 'up100'
+        if (command.up1) var song = 'up100'
         else var song = 'up'
+
         notifyAll({
             type: 'remove-fruit',
             fruitId,
+            playerId
+        })
+        notifyAll({
+            type: 'song',
             playerId,
             song
         })
@@ -163,7 +167,7 @@ function createGame() {
             nick: nick,
             direction: 'w',
             traces: [ { x: playerX, y: playerY } ],
-            score: 5
+            score: 1
         }
 
         notifyAll({
@@ -197,6 +201,7 @@ function createGame() {
     }
 
     return {
+		notifyAll,
         movePlayer,
         addPlayer,
         removePlayer,

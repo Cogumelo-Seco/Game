@@ -75,11 +75,6 @@ const Page = () => {
         })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)
-
-            if (command.playerId != socket.id) return;
-            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
-            else var song = new Audio('/songs/up-100.mp3');
-            song.play()
         })
         socket.on('add-fruit', (command) => {
             game.addFruit(command)
@@ -101,6 +96,13 @@ const Page = () => {
         })
         socket.on('newTime', (time) => {
             game.state.time = time
+        })
+        socket.on('song', (command) => {
+            if (command.playerId != socket.id) return;
+            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
+            else if (command.song == 'kill') var song = new Audio('/songs/kill.mp3');
+            else var song = new Audio('/songs/up+.mp3');
+            song.play()
         })
     }, [])
 
