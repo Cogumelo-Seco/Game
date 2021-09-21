@@ -1,13 +1,13 @@
-import createGame from '../public/Game.js';
-import createListener from '../public/Listener.js';
-import renderScreen from '../public/Render-Screen.js';
+import createGame from '../public/Game/Game.js';
+import createListener from '../public/Game/Listener.js';
+import renderScreen from '../public/Game/RenderScreen/index.js';
 import io from 'socket.io-client';
 import React, { useEffect } from 'react';
 
 const Page = () => {
     useEffect(() => {
         let song = new Audio('/songs/music.mp3');
-        const musicButton = document.getElementById('music-button');
+        /*const musicButton = document.getElementById('music-button');
         musicButton.addEventListener('click', PlayStop);
 
         function PlayStop() {
@@ -19,32 +19,32 @@ const Page = () => {
                 musicButton.innerText = 'Música 🔇'
                 song.pause()
             }
-        }
+        }*/
 
         const canvas = document.getElementById('screen');
-        const pingDisplay = document.getElementById('pingDisplay');
 
         const socket = io('https://Game.cogumeloseco1.repl.co', {
             withCredentials: true,
         })
 
-        const game = createGame();
+        const game = createGame(socket);
         const Listener = createListener();
 
         socket.on('connect', () => {
             let playerId = socket.id
             game.state.myID = playerId
-            renderScreen(canvas, game, pingDisplay, requestAnimationFrame);
+            renderScreen(canvas, game, requestAnimationFrame, Listener);
             canvas.style.display = 'inline-block';
-            document.getElementById('connecting').style.display = 'none';
+            //document.getElementById('connecting').style.display = 'none';
             document.getElementById('timer').style.display = 'inline-block';
-            pingDisplay.style.display = 'inherit';
-            scoreTable.style.margin = '0px'
+            //pingDisplay.style.display = 'inherit';
+            //scoreTable.style.margin = '0px'
             console.log(`Player conectado ao servidor, ID: ${playerId}`)
         })
         socket.on('gameOver', (command) => {
             if (command.playerId != socket.id) return;
             alert(`Você Perdeu, seu score máximo foi ${command.score}`)
+            game.state.myID = Object.entries(game.state.players)[0][0]
         })
         socket.on('setup', (state) => {
             let nick = prompt('Escolha seu nick')
@@ -53,6 +53,9 @@ const Page = () => {
             Listener.registerPlayerId(socket.id)
             Listener.subscribe((command) => game.movePlayer(command));
             Listener.subscribe((command) => {
+                socket.emit(command.type, command)
+            });
+            game.subscribe((command) => {
                 socket.emit(command.type, command)
             });
             game.setState(state)
@@ -73,6 +76,9 @@ const Page = () => {
         socket.on('add-player', (command) => {
             game.addPlayer(command)
         })
+        socket.on('add-bot', (command) => {
+            game.addBot(command)
+        })
         socket.on('remove-fruit', (command) => {
             game.removeFruit(command)
         })
@@ -84,6 +90,9 @@ const Page = () => {
         })
         socket.on('move-player', (command) => {
             if (command.playerId != socket.id) game.movePlayer(command)
+        })
+        socket.on('move-bot', (command) => {
+            game.moveBot(command)
         })
         socket.on('change-player', (command) => {
             game.changePlayer(command)
@@ -109,15 +118,41 @@ const Page = () => {
     return (
         <html lang="pt-BR">
             <head>
-                
+            <title>Game</title>
+
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <script src="/socket.io/socket.io.js"></script>
-                <title>Game</title>
+
+                <link rel="stylesheet" href="/css/game/animations.css" />
+                <link rel="stylesheet" href="/css/game/game.css" />                
             </head>
             <body>
-                <button id="chat-button" />
+                <header id="header-screen">
+                    <button id="chat-button" />
+
+                    <div id="chat">
+                        <div id="chat-content" />
+                        <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
+                        <button id="send-button" title="Enviar mensagem" />
+                    </div>
+
+                    <table id="scoreTable" />
+                    <div id="timer">00:00</div>
+                    <div id="playerScore" />
+                    <div id="pingDisplay" title="Ping">?ms</div>
+                </header>
+
+                <section>
+                    <canvas id="screen" width="50" height="50" />
+                </section>
+                
+            </body>
+        </html>
+    )
+}
+/*
+<button id="chat-button" />
                 <h2 id="timer">00:00</h2>
                 <h2 id="pingDisplay" title="Ping">?ms</h2>
                 <p />
@@ -127,9 +162,6 @@ const Page = () => {
                     <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
                     <button id="send-button" title="Enviar mensagem" />
                 </div>
-
-                <canvas id="screen" width="50" height="50" />
-
                 <div id="scoreTable">
                     <a id="p1" title="Primeiro" />
                     <a id="p2" title="Segundo" />
@@ -144,10 +176,5 @@ const Page = () => {
                 <button className="arrows-buttons" id="arrow-right" />
                 <h2 id="connecting">Conectando com o servidor...</h2>
                 <p />
-                <button id="music-button">Música 🔇</button>
-            </body>
-        </html>
-    )
-}
-
+                <button id="music-button">Música 🔇</button>*/
 export default Page
