@@ -37,6 +37,11 @@ export default function createListener() {
         const messageBox = document.getElementById('message-box')
         const keyPressed = event.key
 
+        // Send Message
+        if (state.onChat && keyPressed == 'Enter' && messageBox.value.trim()) chatFunctions.send(state, notifyAll)
+
+        if (state.onChat) return;
+
         // Abrir e feixar a tabela de score
         if (keyPressed == 'f') {
             let scoreTable = document.getElementById('scoreTable')
@@ -44,14 +49,10 @@ export default function createListener() {
             else scoreTable.style.display = 'none'
         }
 
-        // Send Message
-        if (state.onChat && keyPressed == 'Enter' && messageBox.value.trim()) chatFunctions.send(state, notifyAll)
-
         // Zoom
         zoom(keyPressed)
 
         // Move Player
-        if (state.onChat) return
         if (state.oldKeyPressed == keyPressed ? +new Date()-state.cooldown > 50 : true) {
             state.cooldown = +new Date()
             state.oldKeyPressed = keyPressed
