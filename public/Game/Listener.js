@@ -1,4 +1,4 @@
-import chat from './chat.js';
+import chat from './Chat.js';
 
 export default function createListener() {
     const state = {
