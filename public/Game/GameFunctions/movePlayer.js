@@ -2,16 +2,26 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     if (!command.keyPressed) return;
     notifyAll(command)
 
-    //if (!command.auto) state.time = (+new Date())+120000
-
     const acceptedKeys = require('./acceptedKeys')
 
     let player = state.players[command.playerId];
-    const keyPressed = command.keyPressed
-        .replace('ArrowUp', 'w')
-        .replace('ArrowDown', 's')
-        .replace('ArrowLeft', 'a')
-        .replace('ArrowRight', 'd')
+    let keyPressed = command.keyPressed
+
+    switch(keyPressed) {
+        case 'ArrowUp':
+            keyPressed = 'w'
+            break
+        case 'ArrowDown':
+            keyPressed = 's'
+            break
+        case 'ArrowLeft':
+            keyPressed = 'a'
+            break
+        case 'ArrowRight':
+            keyPressed = 'd'
+            break
+    }
+
     const moveFunction = acceptedKeys[keyPressed]
     
     if (!player || command.auto && command.keyPressed != player.direction) return;
@@ -26,8 +36,8 @@ module.exports = (command, state, notifyAll, removeFruit) => {
             player.score++
 
             if (command.playerId == state.myID) {
-                if (player.score%50 == 0) var song = new Audio('/songs/up+.mp3');
-                else var song = new Audio('/songs/up.mp3');
+                let song = new Audio('/songs/up.mp3');
+                if (player.score%50 == 0) song = new Audio('/songs/up+.mp3');
                 song.play()
             }
 

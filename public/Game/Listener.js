@@ -36,11 +36,10 @@ export default function createListener() {
     function handleKeys(event) {
         const keyPressed = event.key
 
-        //game.state.time = (+new Date())+time
-
         chatFunctions.keyPressed(keyPressed, state, notifyAll)
         
         if (state.onChat) return;
+        alert(keyPressed)
         // Abrir e feixar a tabela de score
         if (keyPressed == '*') {
             let scoreTable = document.getElementById('scoreTable')

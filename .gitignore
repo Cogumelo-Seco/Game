@@ -4,3 +4,4 @@ package-lock.json
 .next/
 Commit.bat
 .env
+ngrok.exe
