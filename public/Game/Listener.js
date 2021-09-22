@@ -22,8 +22,7 @@ export default function createListener() {
 
     const chatFunctions = chat(state, notifyAll)
 
-    //document.addEventListener('keydown', handleKeys);
-    document.addEventListener('keypress', handleKeys)
+    document.addEventListener('keydown', handleKeys)
     /*document.getElementById('arrow-up').addEventListener("click", handlebuttons);
     document.getElementById('arrow-down').addEventListener("click", handlebuttons);
     document.getElementById('arrow-left').addEventListener("click", handlebuttons);
@@ -34,22 +33,24 @@ export default function createListener() {
         else if (key == '+' && state.zoom < 70) state.zoom++           
     }
 
+    function scoreTable(key) {
+        if (key == '*') {
+            let scoreTable = document.getElementById('scoreTable')
+            if (scoreTable.style.display == 'none') scoreTable.style.display = 'table'
+            else scoreTable.style.display = 'none'
+        }
+    }
+
     function handleKeys(event) {
         const keyPressed = event.key
 
         chatFunctions.keyPressed(keyPressed, state, notifyAll)
         
         if (state.onChat) return;
-        alert(keyPressed)
-        // Abrir e feixar a tabela de score
-        if (keyPressed == '*') {
-            let scoreTable = document.getElementById('scoreTable')
-            if (scoreTable.style.display == 'none') scoreTable.style.display = 'table'
-            else scoreTable.style.display = 'none'
-        }
-
+        
         // Zoom
         zoom(keyPressed)
+        scoreTable(keyPressed)
 
         // Move Player
         if (state.oldKeyPressed == keyPressed ? +new Date()-state.cooldown > 50 : true) {

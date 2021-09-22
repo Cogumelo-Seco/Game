@@ -31,7 +31,9 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)        
     }
 
-    requestAnimationFrame(() => {
+    let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
+
+    rAF(() => {
         renderScreen(canvas, game, requestAnimationFrame, Listener)
     })
 }
