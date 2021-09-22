@@ -2,6 +2,9 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     canvas.width = window.innerWidth/Listener.state.zoom;
     canvas.height = window.innerHeight/Listener.state.zoom;
 
+    let fps = Number(game.state.fps.split('-')[0])
+    game.state.fps = `${fps + 1}-${game.state.fps.split('-')[1]}`
+
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 

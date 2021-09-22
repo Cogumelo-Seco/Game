@@ -22,12 +22,16 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]
-        let up1 = false;
         if (player.x == fruit.x && player.y == fruit.y) {
             player.score++
-            if (player.score%50 == 0) up1 = true;
+
+            if (command.playerId == state.myID) {
+                if (player.score%50 == 0) var song = new Audio('/songs/up+.mp3');
+                else var song = new Audio('/songs/up.mp3');
+                song.play()
+            }
+
             removeFruit({ 
-                up1,
                 playerId: command.playerId,
                 fruitId 
             })

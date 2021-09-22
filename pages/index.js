@@ -63,6 +63,7 @@ const Page = () => {
                 })
                 socket.emit('ping', { ping: +new Date(), playerId: socket.id })
             }, 1000)
+            setInterval(() => socket.emit('revalidatePlayer'), 20000)
             PageFunctions(game, canvas, socket, Listener)
         })
         socket.on('ping', (command) => game.ping(command))
@@ -71,21 +72,20 @@ const Page = () => {
         socket.on('add-bot', (command) => game.addBot(command))
         socket.on('remove-fruit', (command) => game.removeFruit(command))
         socket.on('add-fruit', (command) => game.addFruit(command))
-        socket.on('remove-player', (command) => game.removePlayer(command))
-        socket.on('move-player', (command) => {
-            if (command.playerId != socket.id) game.movePlayer(command)
-        })
+        socket.on('remove-player', (command) => game.removePlayer(command))        
         socket.on('move-bot', (command) => game.moveBot(command))
         socket.on('change-player', (command) => game.changePlayer(command))
         socket.on('reset-game', (command) => game.resetGame(command))
         socket.on('message', (command) => game.message(command))
+        socket.on('revalidatePlayer', (command) => game.revalidatePlayer(command))           
+        socket.on('move-player', (command) => {
+            if (command.playerId != socket.id) game.movePlayer(command)
+        });
         socket.on('song', (command) => {
             if (command.playerId != socket.id) return;
-            if (command.song == 'up') var song = new Audio('/songs/up.mp3');
-            else if (command.song == 'kill') var song = new Audio('/songs/kill.mp3');
-            else var song = new Audio('/songs/up+.mp3');
-            song.play()
-        })
+            if (command.song == 'kill') var song = new Audio('/songs/kill.mp3');
+            song?.play()
+        });
     }, [])
 
     return (
@@ -120,7 +120,8 @@ const Page = () => {
                         <p id="scoreOfSelectedPlayer" />
                     </div>
 
-                    <div id="playerScore">Score: 0</div>
+                    <div id="playerScore">Score: ?</div>
+                    <div id="fpsDisplay">?FPS</div>
                     <div id="pingDisplay">?ms</div>
                 </header>
 

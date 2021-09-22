@@ -1,6 +1,12 @@
 module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
     const myPlayer = game.state.players[game.state.myID]
 
+    const fpsDisplay = document.getElementById('fpsDisplay');
+    if (+new Date()-game.state.fps.split('-')[1] > 1000) {
+        fpsDisplay.innerText = `${game.state.fps.split('-')[0]}FPS`
+        game.state.fps = `0-${+new Date()}`
+    }
+
     const pingDisplay = document.getElementById('pingDisplay');
     pingDisplay.innerText = `${game.state.ping}ms`
 

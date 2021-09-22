@@ -33,6 +33,15 @@ header div#pingDisplay {
     bottom: 5px;
 }
 
+header div#fpsDisplay {
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
+    position: absolute;
+    right: 5px;
+    bottom: 35px;
+}
+
 header div#playerScore {
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
