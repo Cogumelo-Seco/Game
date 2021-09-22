@@ -22,7 +22,8 @@ export default function createListener() {
 
     const chatFunctions = chat(state, notifyAll)
 
-    document.addEventListener('keydown', handleKeys);
+    //document.addEventListener('keydown', handleKeys);
+    document.addEventListener('keypress', handleKeys)
     /*document.getElementById('arrow-up').addEventListener("click", handlebuttons);
     document.getElementById('arrow-down').addEventListener("click", handlebuttons);
     document.getElementById('arrow-left').addEventListener("click", handlebuttons);
