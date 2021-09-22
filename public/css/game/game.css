@@ -3,6 +3,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    color: white;
     background-color: #CCC;
 }
 
@@ -16,17 +17,26 @@ header {
 /* Textos informativos */
 
 header div#timer {
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
     position: absolute;
-    top: 15px;
+    top: 5px;
 }
 
 header div#pingDisplay {
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
     position: absolute;
     right: 5px;
     bottom: 5px;
 }
 
 header div#playerScore {
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
     position: absolute;
     left: 5px;
     bottom: 5px;
@@ -38,6 +48,7 @@ header table#scoreTable {
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     width: 200px;
+    margin: 5px;
     float: right;
     table-layout: fixed;
     border-collapse: collapse;
@@ -45,11 +56,15 @@ header table#scoreTable {
 
 header table#scoreTable th#Name {
     color: rgb(243, 243, 243);
+    border-bottom: solid black 1px;
+    padding: 5px;
     text-align: left;
 }
 
 header table#scoreTable th#Score {
     color: rgb(255, 196, 48);
+    border-bottom: solid black 1px;
+    padding: 5px;
     width: 28px;
     text-align: right;
 }
@@ -60,16 +75,12 @@ header button#chat-button {
     cursor: pointer;
     border: solid black 1px;
     border-radius: 5px;
-    margin: 7px;
+    margin: 5px;
     width: 40px; 
     height: 40px;
     float: left;
     background: rgb(242, 242, 242) url(/images/chat.png) no-repeat center 0px / 100%;
     transition: all 0.5s;
-}
-
-header button#chat-button:hover {
-    background-color: rgb(255, 255, 255);
 }
 
 header div#chat {
@@ -78,7 +89,7 @@ header div#chat {
     float: left;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
-    width: 20vw;
+    width: 250px;
     height: 60vh;
 }
 
@@ -122,6 +133,45 @@ header div#chat button#send-button {
 
 header div#chat button#send-button:hover {
     background-color: rgb(0, 166, 226);
+}
+
+/* Setas de seleção de players a espectar */
+
+header div#playerViewSelection {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    color: white;
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    bottom: 20vh;
+}
+
+header div#playerViewSelection button.observedPlayerSelectionArrows {
+    border: solid black 2px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+header div#playerViewSelection button.observedPlayerSelectionArrows.left {
+    background: rgb(242, 242, 242) url(/images/Arrows/leftArrow.png) no-repeat center 0px / 100%;
+    float: left;
+    margin-left: 35%;
+}
+
+header div#playerViewSelection button.observedPlayerSelectionArrows.right {
+    background: rgb(242, 242, 242) url(/images/Arrows/rightArrow.png) no-repeat center 0px / 100%;
+    float: right;
+    margin-right: 35%;
+}
+
+header div#playerViewSelection p#scoreOfSelectedPlayer {
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    width: 100px;
+    margin: 0 auto;
 }
 
 /* Canvas/Jogo */

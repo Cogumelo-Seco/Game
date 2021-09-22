@@ -1,8 +1,24 @@
 module.exports = (command, state, notifyAll) => {
-    const playerX = command.x || Math.floor(Math.random()*state.screen.height);
-    const playerY = command.y || Math.floor(Math.random()*state.screen.width);
     const playerId = command.playerId
     let nick = command['nick']
+
+    let playerX = command.x
+    let playerY = command.y
+
+    function generatePlayerPosition() {
+        let X = Math.floor(Math.random()*state.screen.height);
+        let Y = Math.floor(Math.random()*state.screen.width);
+		playerX = X
+		playerY = Y
+        
+        for (let i in state.players) {
+            let player = state.players[i]
+			let traces = player.traces
+			if (traces.find((t) => t.x == X && t.y == Y)) generatePlayerPosition()
+        }
+    }
+
+    if (!playerX || !playerY) generatePlayerPosition()
 
     state.players[playerId] = {
         x: playerX,

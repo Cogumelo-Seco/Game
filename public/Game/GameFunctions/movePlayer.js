@@ -2,6 +2,8 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     if (!command.keyPressed) return;
     notifyAll(command)
 
+    //if (!command.auto) state.time = (+new Date())+120000
+
     const acceptedKeys = require('./acceptedKeys')
 
     let player = state.players[command.playerId];

@@ -1,6 +1,6 @@
 import createGame from '../public/Game/Game.js';
 import createListener from '../public/Game/Listener.js';
-import renderScreen from '../public/Game/RenderScreen/index.js';
+import PageFunctions from '../public/Game/PageFunctions/index.js';
 import io from 'socket.io-client';
 import React, { useEffect } from 'react';
 
@@ -31,24 +31,17 @@ const Page = () => {
         const Listener = createListener();
 
         socket.on('connect', () => {
-            let playerId = socket.id
-            game.state.myID = playerId
-            renderScreen(canvas, game, requestAnimationFrame, Listener);
-            canvas.style.display = 'inline-block';
-            //document.getElementById('connecting').style.display = 'none';
-            document.getElementById('timer').style.display = 'inline-block';
-            //pingDisplay.style.display = 'inherit';
-            //scoreTable.style.margin = '0px'
-            console.log(`Player conectado ao servidor, ID: ${playerId}`)
+            
         })
         socket.on('gameOver', (command) => {
             if (command.playerId != socket.id) return;
-            alert(`Você Perdeu, seu score máximo foi ${command.score}`)
-            game.state.myID = Object.entries(game.state.players)[0][0]
+            game.dead = true;
+            game.state.myID = Object.keys(game.state.players)[game.state.observedNumber]
+            alert(`Você Perdeu, seu score máximo foi ${command.score}`)            
         })
         socket.on('setup', (state) => {
             let nick = prompt('Escolha seu nick')
-            socket.emit('nick', nick || socket.id)
+            socket.emit('nick', nick)
 
             Listener.registerPlayerId(socket.id)
             Listener.subscribe((command) => game.movePlayer(command));
@@ -58,6 +51,7 @@ const Page = () => {
             game.subscribe((command) => {
                 socket.emit(command.type, command)
             });
+            state.time = +new Date()+state.time
             game.setState(state)
 
             setInterval(() => {
@@ -68,44 +62,23 @@ const Page = () => {
                     keyPressed: game.state.players[socket.id].direction
                 })
                 socket.emit('ping', { ping: +new Date(), playerId: socket.id })
-            }, 2000)
+            }, 1000)
+            PageFunctions(game, canvas, socket, Listener)
         })
-        socket.on('ping', (command) => {
-            game.ping(command)
-        })
-        socket.on('add-player', (command) => {
-            game.addPlayer(command)
-        })
-        socket.on('add-bot', (command) => {
-            game.addBot(command)
-        })
-        socket.on('remove-fruit', (command) => {
-            game.removeFruit(command)
-        })
-        socket.on('add-fruit', (command) => {
-            game.addFruit(command)
-        })
-        socket.on('remove-player', (command) => {
-            game.removePlayer(command)
-        })
+        socket.on('ping', (command) => game.ping(command))
+        socket.on('newTime', (time) => game.state.time = +new Date()+time)
+        socket.on('add-player', (command) => game.addPlayer(command))
+        socket.on('add-bot', (command) => game.addBot(command))
+        socket.on('remove-fruit', (command) => game.removeFruit(command))
+        socket.on('add-fruit', (command) => game.addFruit(command))
+        socket.on('remove-player', (command) => game.removePlayer(command))
         socket.on('move-player', (command) => {
             if (command.playerId != socket.id) game.movePlayer(command)
         })
-        socket.on('move-bot', (command) => {
-            game.moveBot(command)
-        })
-        socket.on('change-player', (command) => {
-            game.changePlayer(command)
-        })
-        socket.on('reset-game', (command) => {
-            game.resetGame(command)
-        })
-        socket.on('message', (command) => {
-            game.message(command)
-        })
-        socket.on('newTime', (time) => {
-            game.state.time = time
-        })
+        socket.on('move-bot', (command) => game.moveBot(command))
+        socket.on('change-player', (command) => game.changePlayer(command))
+        socket.on('reset-game', (command) => game.resetGame(command))
+        socket.on('message', (command) => game.message(command))
         socket.on('song', (command) => {
             if (command.playerId != socket.id) return;
             if (command.song == 'up') var song = new Audio('/songs/up.mp3');
@@ -139,12 +112,20 @@ const Page = () => {
 
                     <table id="scoreTable" />
                     <div id="timer">00:00</div>
-                    <div id="playerScore" />
-                    <div id="pingDisplay" title="Ping">?ms</div>
+
+                    <div id="playerViewSelection">
+                        <button className="observedPlayerSelectionArrows left" />                        
+                        <button className="observedPlayerSelectionArrows right" />
+                        <p id="nameOfSelectedPlayer" />
+                        <p id="scoreOfSelectedPlayer" />
+                    </div>
+
+                    <div id="playerScore">Score: 0</div>
+                    <div id="pingDisplay">?ms</div>
                 </header>
 
                 <section>
-                    <canvas id="screen" width="50" height="50" />
+                    <canvas id="screen" />
                 </section>
                 
             </body>

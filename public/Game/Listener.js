@@ -34,16 +34,15 @@ export default function createListener() {
     }
 
     function handleKeys(event) {
-        const messageBox = document.getElementById('message-box')
         const keyPressed = event.key
 
-        // Send Message
-        if (state.onChat && keyPressed == 'Enter' && messageBox.value.trim()) chatFunctions.send(state, notifyAll)
+        //game.state.time = (+new Date())+time
 
+        chatFunctions.keyPressed(keyPressed, state, notifyAll)
+        
         if (state.onChat) return;
-
         // Abrir e feixar a tabela de score
-        if (keyPressed == 'f') {
+        if (keyPressed == '*') {
             let scoreTable = document.getElementById('scoreTable')
             if (scoreTable.style.display == 'none') scoreTable.style.display = 'table'
             else scoreTable.style.display = 'none'

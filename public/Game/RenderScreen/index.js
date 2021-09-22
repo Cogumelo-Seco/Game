@@ -25,6 +25,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderChat')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderScoreTable')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
+        require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)        
     }
 
     requestAnimationFrame(() => {

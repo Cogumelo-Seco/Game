@@ -1,7 +1,10 @@
 function createGame() {
     const state = {
         ping: '?',
-        time: 0,
+        time: NaN,
+		serverTime: 120000,
+        dead: false,
+        observedNumber: 0,
         messages: [],
         players: {},
         fruits: {},
@@ -32,7 +35,6 @@ function createGame() {
     const changePlayer = (command) => getGameFunction('changePlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
     const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
-	const botArtificialIntelligence = (command) => getGameFunction('botArtificialIntelligence')(command, state, notifyAll, removeFruit)
 
     const setState = (newState) => Object.assign(state, newState)
 
@@ -42,13 +44,21 @@ function createGame() {
     }
 
     const message = (command) => {
+        command.read = false
         notifyAll(command)
-        if (state.messages.length >= 8) state.messages.splice(0 ,1)
+        let messages = []
+        for (let i in state.messages) {
+            let message = state.messages[i]
+            let filter = messages.filter((m) => m.nick == message.nick && m.content == message.content)
+            if (!filter[0]) messages.push(message)
+        }
+        state.messages = messages
+        if (state.messages.length >= 9) state.messages.splice(0 ,1)
         if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
         if (command.content.trim()) state.messages.push(command)
     }
 
-	const start = (interval) => setInterval(addFruit, interval || 2000)
+	const start = (interval) => setInterval(addFruit, interval || 1000)
 
     const resetGame = () => {
         state.fruits = {}
@@ -74,8 +84,7 @@ function createGame() {
         ping,
         message,
         addBot,
-        moveBot,
-		botArtificialIntelligence
+        moveBot
     }
 }
 
