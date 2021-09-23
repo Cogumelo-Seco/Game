@@ -1,6 +1,7 @@
 module.exports = (command, state, notifyAll, removeFruit) => {
-    if (!command.keyPressed) return;
-    notifyAll(command)
+    if (!command || !command.keyPressed) return;
+	command.verify = state.myID
+    if (!command.verify) notifyAll(command)
 
     const acceptedKeys = require('./acceptedKeys')
 

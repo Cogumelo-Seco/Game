@@ -36,7 +36,6 @@ function createGame() {
     const changePlayer = (command) => getGameFunction('changePlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
     const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
-    const revalidatePlayer = (command) => getGameFunction('revalidatePlayer')(command, state, notifyAll, removeFruit)    
 
     const setState = (newState) => Object.assign(state, newState)
 
@@ -86,8 +85,7 @@ function createGame() {
         ping,
         message,
         addBot,
-        moveBot,
-        revalidatePlayer
+        moveBot
     }
 }
 

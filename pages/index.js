@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 
 const Page = () => {
     useEffect(() => {
-        let song = new Audio('/songs/music.mp3');
+        //let song = new Audio('/songs/music.mp3');
         /*const musicButton = document.getElementById('music-button');
         musicButton.addEventListener('click', PlayStop);
 
@@ -36,7 +36,7 @@ const Page = () => {
         socket.on('gameOver', (command) => {
             if (command.playerId != socket.id) return;
             game.dead = true;
-            game.state.myID = Object.keys(game.state.players)[game.state.observedNumber]
+            game.state.myID = Object.keys(game.state.players)[0]
             alert(`Você Perdeu, seu score máximo foi ${command.score}`)            
         })
         socket.on('setup', (state) => {
@@ -61,9 +61,8 @@ const Page = () => {
                     playerId: socket.id,
                     keyPressed: game.state.players[socket.id].direction
                 })
-                socket.emit('ping', { ping: +new Date(), playerId: socket.id })
+                socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })
             }, 1000)
-            setInterval(() => socket.emit('revalidatePlayer'), 20000)
             PageFunctions(game, canvas, socket, Listener)
         })
         socket.on('ping', (command) => game.ping(command))

@@ -7,12 +7,12 @@ module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
 
     for (let x = (Number.parseInt(canvas.height/2))-myPlayer.x; x < canvas.width+canvas.height; x += 2) {
         for (let y = (Number.parseInt(canvas.height/2))-myPlayer.y; y < canvas.width+canvas.height; y += 2) {
-            ctx.fillRect(x, y, 1, 1)
+            if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) ctx.fillRect(x, y, 1, 1)
         }
     }
     for (let x = (Number.parseInt(canvas.height/2))-myPlayer.x; x < canvas.width+canvas.height; x += 3) {
         for (let y = (Number.parseInt(canvas.height/2))-myPlayer.y; y < canvas.width+canvas.height; y += 3) {
-            ctx.fillRect(x, y, 1, 1)
+            if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) ctx.fillRect(x, y, 1, 1)
         }
     }
 
