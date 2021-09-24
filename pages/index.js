@@ -46,6 +46,8 @@ const Page = () => {
                         <li id="playGame">Jogar</li>
                         <li>Opções</li>
                     </ul>
+
+                    <div id="ownerName">Power by: Cogumelo</div>
                 </section>
 
                 <canvas id="backgroundCanvas" />             

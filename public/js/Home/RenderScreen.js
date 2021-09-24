@@ -34,6 +34,7 @@ export default function renderScreen(canvas, page) {
 
     for (const fruitId in page.state.fruits) {
         const fruit = page.state.fruits[fruitId];
+        if (fruit.x > canvas.width || fruit.y > canvas.height) delete page.state.fruits[fruitId]
         ctx.fillStyle = 'red';
         ctx.globalAlpha = 0.5
         ctx.fillRect(fruit.x, fruit.y, 1, 1);
