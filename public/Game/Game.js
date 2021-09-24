@@ -4,8 +4,8 @@ function createGame() {
         ping: '?',
         time: NaN,
 		serverTime: 120000,
-        dead: false,
         observedNumber: 0,
+        observedPlayerId: null,
         messages: [],
         players: {},
         fruits: {},
@@ -34,6 +34,7 @@ function createGame() {
     const removePlayer = (command) => getGameFunction('removePlayer')(command, state, notifyAll)
     const removeFruit = (command) => getGameFunction('removeFruit')(command, state, notifyAll)
     const changePlayer = (command) => getGameFunction('changePlayer')(command, state, notifyAll)
+    const deadPlayer = (command) => getGameFunction('deadPlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
     const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
 
@@ -85,7 +86,8 @@ function createGame() {
         ping,
         message,
         addBot,
-        moveBot
+        moveBot,
+        deadPlayer
     }
 }
 

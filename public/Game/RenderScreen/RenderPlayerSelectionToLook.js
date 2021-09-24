@@ -1,8 +1,10 @@
 module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
-    if (game.dead) {
+    const myPlayer = game.state.players[game.state.myID]
+
+    if (myPlayer.dead) {
         document.getElementById('playerViewSelection').style.display = 'block'
 
-        const player = game.state.players[game.state.myID]
+        const player = game.state.players[game.state.observedPlayerId]
 
         const myPlayerScore = document.getElementById('playerScore')
         const playerName = document.getElementById('nameOfSelectedPlayer')

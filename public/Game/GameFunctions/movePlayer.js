@@ -25,7 +25,7 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 
     const moveFunction = acceptedKeys[keyPressed]
     
-    if (!player || command.auto && command.keyPressed != player.direction) return;
+    if (!player || player.dead || command.auto && command.keyPressed != player.direction) return;
 
     if (moveFunction) moveFunction(player, state)
 

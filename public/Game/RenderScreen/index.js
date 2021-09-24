@@ -21,7 +21,11 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         scoreArr.push({ score: game.state.players[i].score, nick: game.state.players[i].nick, playerId: i })
     scoreArr = scoreArr.slice().sort((a, b) => b.score-a.score)
 
-    if (game.state.players[game.state.myID]) {        
+    const myPlayer = game.state.players[game.state.myID]
+
+    if (myPlayer && myPlayer.dead && !game.state.players[game.state.observedPlayerId]) game.state.myID = Object.keys(game.state.players)[0]
+
+    if (myPlayer && myPlayer.dead && game.state.players[game.state.observedPlayerId] || myPlayer) {        
         require('./RenderBackgroundAndBoundaries')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderPlayers')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderFruits')(canvas, game, requestAnimationFrame, Listener, scoreArr)
@@ -29,7 +33,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderScoreTable')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-    } else if (game.dead) game.state.myID = Object.keys(game.state.players)[0]
+    }
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 

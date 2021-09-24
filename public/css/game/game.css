@@ -92,6 +92,21 @@ header button#chat-button {
     transition: all 0.5s;
 }
 
+header div#unreadMessageCounter {
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    left: 33px;
+    top: 0px;
+    width: 18px; 
+    height: 18px;
+    color: black;
+    background-color: rgb(242, 242, 242);
+    border-radius: 100%;
+    border: solid black 1px;
+}
+
 header div#chat {
     display: none;
     position: relative;
@@ -150,7 +165,7 @@ header div#playerViewSelection {
     display: none;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
-    color: white;
+    color: rgb(242, 242, 242);
     position: absolute;
     height: 50px;
     width: 100%;
@@ -179,8 +194,9 @@ header div#playerViewSelection button.observedPlayerSelectionArrows.right {
 header div#playerViewSelection p#scoreOfSelectedPlayer {
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
+    border-top: none;
     width: 100px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 /* Canvas/Jogo */

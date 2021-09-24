@@ -1,5 +1,6 @@
 module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
-    const myPlayer = game.state.players[game.state.myID]
+    let player = game.state.players[game.state.myID]
+    if (player.dead) player = game.state.players[game.state.observedPlayerId]
 
     const fpsDisplay = document.getElementById('fpsDisplay');
     if (+new Date()-game.state.fps.split('-')[1] > 1000) {
@@ -11,7 +12,7 @@ module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
     pingDisplay.innerText = `${game.state.ping}ms`
 
     const playerScore = document.getElementById('playerScore');
-    if (!game.dead) playerScore.innerText = `Score: ${myPlayer.score}`
+    if (!player.dead) playerScore.innerText = `Score: ${player.score}`
 
     if (game.state.time) {
         const timer = document.getElementById('timer')

@@ -25,6 +25,7 @@ module.exports = (command, state, notifyAll) => {
         y: playerY,
         nick: nick,
         bot: false,
+        dead: false,
         direction: 'w',
         traces: [ { x: playerX, y: playerY } ],
         score: 1
