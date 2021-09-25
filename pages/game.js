@@ -2,11 +2,15 @@ import createGame from '../public/js/Game/Game.js';
 import createListener from '../public/js/Game/Listener.js';
 import PageFunctions from '../public/js/Game/PageFunctions/index.js';
 import io from 'socket.io-client';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
 const Game = (props) => {
+    const router = useRouter()
+
     useEffect(() => {
+        const data = require('../public/js/data.js')
         //let song = new Audio('/songs/music.mp3');
         /*const musicButton = document.getElementById('music-button');
         musicButton.addEventListener('click', PlayStop);
@@ -24,16 +28,13 @@ const Game = (props) => {
 
         const canvas = document.getElementById('screen');
 
-        const socket = io(props.SERVER, {
-            withCredentials: true,
-        })
+        if (!data.socket) return router.push('/servers')
+        const socket = data.socket;
 
         const game = createGame(socket);
         const Listener = createListener();
 
-        socket.on('connect', () => {
-            
-        })
+        socket.emit('getStup')
         socket.on('gameOver', (command) => {
             if (command.playerId != socket.id) return;
             game.state.observedPlayerId = Object.keys(game.state.players)[0]
@@ -101,7 +102,9 @@ const Game = (props) => {
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>
             <body>
-                <header id="header-screen">                    
+                <header id="header-screen">    
+                    <div id="loadingCircle" />
+
                     <button id="chat-button" />
                     <div id="unreadMessageCounter" />
 

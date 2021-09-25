@@ -1,7 +1,9 @@
 module.exports = (command, state, notifyAll, removeFruit) => {
     if (!command || !command.keyPressed) return;
 	command.verify = state.myID
+    command.serverId = state.serverId
     if (!command.verify) notifyAll(command)
+	if (command.serverId != state.serverId) return
 
     const acceptedKeys = require('./acceptedKeys')
 
@@ -23,7 +25,8 @@ module.exports = (command, state, notifyAll, removeFruit) => {
             bot.score++
             removeFruit({ 
                 playerId: command.playerId,
-                fruitId 
+                fruitId,
+				serverId: state.serverId 
             })
         }
     }

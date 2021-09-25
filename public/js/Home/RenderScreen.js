@@ -1,8 +1,8 @@
 export default function renderScreen(canvas, page) {
     canvas.width = window.innerWidth/10;
     canvas.height = window.innerHeight/10;
-    page.state.screen.width = window.innerWidth/10;
-    page.state.screen.height = window.innerHeight/10;
+    page.state.screen.width = canvas.width
+    page.state.screen.height = canvas.height
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     

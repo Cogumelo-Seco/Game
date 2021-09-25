@@ -19,8 +19,10 @@ function App({ Component, pageProps }) {
                 <link rel="manifest" href="/favicons/site.webmanifest" />
                 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#f03434" />
 
-                <link rel="stylesheet" href="/css/reset.css" />
+                <link rel="stylesheet" href="/css/reset.css" />             
                 <link rel="stylesheet" type="text/css" href="/css/nprogress.css" />
+                <link rel="stylesheet" href="/css/global.css" />
+                <link rel="stylesheet" href="/css/globalAnimations.css" />   
             </Head>
             <nav>
                 <style jsx>{`

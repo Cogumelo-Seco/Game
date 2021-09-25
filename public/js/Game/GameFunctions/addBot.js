@@ -1,4 +1,5 @@
 module.exports = (command, state, notifyAll) => {
+    if (command.serverId != state.serverId) return
     const playerX = command.x || Math.floor(Math.random()*state.screen.height);
     const playerY = command.y || Math.floor(Math.random()*state.screen.width);
     const botId = command.botId
@@ -19,7 +20,8 @@ module.exports = (command, state, notifyAll) => {
         botId: botId,
         nick: nick,
         x: playerX,
-        y: playerY
+        y: playerY,
+		serverId: state.serverId
     });
 
     return state.players[botId]

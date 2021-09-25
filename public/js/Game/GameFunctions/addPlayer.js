@@ -1,4 +1,5 @@
 module.exports = (command, state, notifyAll) => {
+	if (command.serverId != state.serverId) return
     const playerId = command.playerId
     let nick = command['nick']
 
@@ -36,6 +37,7 @@ module.exports = (command, state, notifyAll) => {
         playerId: playerId,
         nick: nick,
         x: playerX,
-        y: playerY
+        y: playerY,
+		serverId: state.serverId
     });
 }

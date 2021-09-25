@@ -1,8 +1,9 @@
 module.exports = (command, state, notifyAll) => {
-    const fruitX = command ? command.x : Math.floor(Math.random()*state.screen.height);
-    const fruitY = command ? command.y : Math.floor(Math.random()*state.screen.width);
+	if (command.serverId != state.serverId) return
+    const fruitX = command ? command.x || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.height);
+    const fruitY = command ? command.y || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.width);
     const fruitId = Math.random().toString(36).substring(2)
-    if (state.fruits[fruitId]) return addFruit(command)
+    if (state.fruits[fruitId]) return
 
     state.fruits[fruitId] = {
         x: fruitX,
@@ -13,6 +14,7 @@ module.exports = (command, state, notifyAll) => {
         type: 'add-fruit',
         fruitId: fruitId,
         x: fruitX,
-        y: fruitY
+        y: fruitY,
+		serverId: state.serverId
     });
 }

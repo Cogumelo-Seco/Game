@@ -46,6 +46,7 @@ function createGame() {
     }
 
     const message = (command) => {
+        if (command.serverId != state.serverId) return
         command.read = false
         notifyAll(command)
         let messages = []
@@ -60,7 +61,22 @@ function createGame() {
         if (command.content.trim()) state.messages.push(command)
     }
 
-	const start = (interval) => setInterval(addFruit, interval || 1000)
+	const start = (game, sockets, serverAddBot) => {
+		setInterval(() => addFruit({ serverId: game.state.serverId }), 1000)
+
+		game.state.time = game.state.serverTime
+		setInterval(() => {
+			game.state.time -= 1000
+			if (game.state.time <= 0) {
+				game.state.time = game.state.serverTime
+				game.resetGame()
+			}
+		}, 1000)
+
+		for (let botNumber = 0;botNumber < 5; botNumber++) {
+			serverAddBot(game, sockets, botNumber, 0)
+		}
+	}
 
     const resetGame = () => {
         state.fruits = {}

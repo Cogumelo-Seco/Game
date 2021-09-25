@@ -8,7 +8,7 @@ const Page = () => {
     const router = useRouter()
 
     useEffect(() => {
-        document.getElementById('playGame').addEventListener('click', () => router.push('/game'))
+        document.getElementById('playGame').addEventListener('click', () => router.push('/servers'))
 
         const canvas = document.getElementById('backgroundCanvas')
         canvas.width = window.innerWidth/10;
@@ -43,7 +43,7 @@ const Page = () => {
                     <h1 id="gameName">100 Nome</h1>
 
                     <ul>
-                        <li id="playGame">Jogar</li>
+                        <li id="playGame">Servidores</li>
                         <li>Opções</li>
                     </ul>
 

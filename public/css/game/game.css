@@ -17,14 +17,18 @@ header {
 /* Textos informativos */
 
 header div#timer {
-    background-color: rgba(0, 0, 0, 0.658);
-    border: solid black 2px;
-    padding: 2px;
+    display: none;
     position: absolute;
     top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
 }
 
 header div#pingDisplay {
+    display: none;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     padding: 2px;
@@ -34,6 +38,7 @@ header div#pingDisplay {
 }
 
 header div#fpsDisplay {
+    display: none;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     padding: 2px;
@@ -43,6 +48,7 @@ header div#fpsDisplay {
 }
 
 header div#playerScore {
+    display: none;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     padding: 2px;
@@ -61,6 +67,7 @@ header table#scoreTable {
     float: right;
     table-layout: fixed;
     border-collapse: collapse;
+    animation: openScoreTable 0.2s ease forwards;
 }
 
 header table#scoreTable th#Name {
@@ -75,12 +82,13 @@ header table#scoreTable th#Score {
     border-bottom: solid black 1px;
     padding: 5px;
     width: 28px;
-    text-align: right;
+    text-align: right;    
 }
 
 /* Chat */
 
 header button#chat-button {
+    display: none;
     cursor: pointer;
     border: solid black 1px;
     border-radius: 5px;
@@ -116,6 +124,7 @@ header div#chat {
     border: solid black 2px;
     width: 250px;
     height: 60vh;
+    animation: openChat 0.2s ease forwards;
 }
 
 header div#chat div#chat-content {

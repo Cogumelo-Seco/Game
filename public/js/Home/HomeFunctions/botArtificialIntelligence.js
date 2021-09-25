@@ -35,29 +35,25 @@ module.exports = (command, state) => {
                 }
                 break
             }
-        }            
+        }
 
         switch(direction) {
             case 'w':
-                if (bot.direction == 's') return
                 if (bot.y <= 1) return bot.direction = 'a';
                 else bot.y--
                 bot.direction = 'w'
                 break
             case 'a':
-                if (bot.direction == 'd') return
                 if (bot.x <= 1) return bot.direction = 's';
                 else bot.x--
                 bot.direction = 'a'
                 break
             case 's':
-                if (bot.direction == 'w') return
-                if (bot.y >= state.screen.width-2) return bot.direction = 'd';
+                if (bot.y >= state.screen.height-2) return bot.direction = 'd';
                 else bot.y++
                 bot.direction = 's'
                 break
             case 'd':
-                if (bot.direction == 'a') return
                 if (bot.x >= state.screen.width-2) return bot.direction = 'w';
                 else bot.x++
                 bot.direction = 'd'

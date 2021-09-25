@@ -1,0 +1,21 @@
+@keyframes openChat {
+    from {
+        transform: translateX(-300px);
+        opacity: 0;
+    } 
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes openScoreTable {
+    from {
+        transform: translateX(300px);
+        opacity: 0;
+    } 
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

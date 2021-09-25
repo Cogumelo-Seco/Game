@@ -1,7 +1,9 @@
 module.exports = (command, state, notifyAll, removeFruit) => {
     if (!command.keyPressed) return;
     command.verify = state.myID
+	command.serverId = state.serverId
     if (!command.verify) notifyAll(command)
+    if (command.serverId != state.serverId) return
 
     const acceptedKeys = require('./acceptedKeys')
 
@@ -10,22 +12,26 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 
     switch(keyPressed) {
         case 'ArrowUp':
-            keyPressed = 'w'
+            if (player.y <= 0) return player.direction = 'a';
+            else keyPressed = 'w'
             break
         case 'ArrowDown':
-            keyPressed = 's'
+            if (player.y >= state.screen.width-1) return player.direction = 'd';
+            else keyPressed = 's'
             break
         case 'ArrowLeft':
-            keyPressed = 'a'
+            if (player.x <= 0) return player.direction = 's';
+            else keyPressed = 'a'
             break
         case 'ArrowRight':
-            keyPressed = 'd'
+            if (player.x >= state.screen.height-1) return player.direction = 'w';
+            else keyPressed = 'd'
             break
     }
 
     const moveFunction = acceptedKeys[keyPressed]
     
-    if (!player || player.dead || command.auto && command.keyPressed != player.direction) return;
+    if (!player || command.auto && command.keyPressed != player.direction) return;
 
     if (moveFunction) moveFunction(player, state)
 
@@ -44,7 +50,8 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 
             removeFruit({ 
                 playerId: command.playerId,
-                fruitId 
+                fruitId,
+				serverId: state.serverId 
             })
         }
     }

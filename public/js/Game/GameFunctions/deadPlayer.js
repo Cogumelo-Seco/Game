@@ -1,4 +1,5 @@
 module.exports = (command, state, notifyAll) => {
+    if (command.serverId != state.serverId) return
     const player = state.players[command.playerId]
     if (!player) return;
     player.dead = true
@@ -6,5 +7,6 @@ module.exports = (command, state, notifyAll) => {
     notifyAll({
         type: 'deadPlayer',
         playerId: command.playerId,
+		serverId: state.serverId
     })
 }
