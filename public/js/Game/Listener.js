@@ -1,4 +1,5 @@
-import chat from './Chat.js';
+import chat from './Listener/Chat.js';
+import Joystick from './Listener/Joystick.js';
 
 export default function createListener() {
     const state = {
@@ -7,7 +8,13 @@ export default function createListener() {
         playerId: null,
         zoom: 10,
         cooldown: 0,
-        oldKeyPressed: '?'
+        keys: {
+            w: { cooldown: 0 },
+            a: { cooldown: 0 },
+            s: { cooldown: 0 },
+            d: { cooldown: 0 },
+        },
+        mobile: false
     }
 
     const registerPlayerId = (playerId) => state.playerId = playerId
@@ -20,13 +27,12 @@ export default function createListener() {
         }
     }
 
+    if (navigator.userAgentData != undefined && navigator.userAgentData.mobile) state.mobile = true
+
     const chatFunctions = chat(state, notifyAll)
+    Joystick(state, handleKeys)
 
     document.addEventListener('keydown', handleKeys)
-    /*document.getElementById('arrow-up').addEventListener("click", handlebuttons);
-    document.getElementById('arrow-down').addEventListener("click", handlebuttons);
-    document.getElementById('arrow-left').addEventListener("click", handlebuttons);
-    document.getElementById('arrow-right').addEventListener("click", handlebuttons);*/
 
     function zoom(key) {
         if (key == '-' && state.zoom > 5) state.zoom--
@@ -41,21 +47,37 @@ export default function createListener() {
         }
     }
 
-    function handleKeys(event) {
-        const keyPressed = event.key
+    function handleKeys(event, sensitivity) {
+        let keyPressed = event.key
+        sensitivity = sensitivity ? 1050-sensitivity : 50
 
         chatFunctions.keyPressed(keyPressed, state, notifyAll)
         
         if (state.onChat) return;
-        
-        // Zoom
+
         zoom(keyPressed)
         scoreTable(keyPressed)
 
         // Move Player
-        if (state.oldKeyPressed == keyPressed ? +new Date()-state.cooldown > 50 : true) {
-            state.cooldown = +new Date()
-            state.oldKeyPressed = keyPressed
+        function getMoveKey(keyPressed) {
+            switch(keyPressed) {
+                case 'ArrowUp':
+                    keyPressed = 'w'
+                    break
+                case 'ArrowDown':
+                    keyPressed = 's'
+                    break
+                case 'ArrowLeft':
+                    keyPressed = 'a'
+                    break
+                case 'ArrowRight':
+                    keyPressed = 'd'
+                    break
+            }
+            return keyPressed
+        }
+        if (state.keys[getMoveKey(keyPressed)] && +new Date()-state.keys[getMoveKey(keyPressed)].cooldown > sensitivity) {
+            state.keys[getMoveKey(keyPressed)].cooldown = +new Date()
 
             notifyAll({
                 type: 'move-player',
@@ -63,20 +85,6 @@ export default function createListener() {
                 keyPressed
             })
         }
-    }
-
-    function handlebuttons(event) {
-        state.onChat = false
-        if (event.toElement.id == 'arrow-up') state.direction = 'w'
-        if (event.toElement.id == 'arrow-down') state.direction = 's'
-        if (event.toElement.id == 'arrow-left') state.direction = 'a'
-        if (event.toElement.id == 'arrow-right') state.direction = 'd'
-        const command = {
-            type: 'move-player',
-            playerId: state.playerId,
-            keyPressed: state.direction
-        }
-        notifyAll(command)
     }
 
     return {

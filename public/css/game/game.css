@@ -199,9 +199,33 @@ header div#playerViewSelection p#scoreOfSelectedPlayer {
     margin: 20px auto;
 }
 
+/* joystick */
+
+header div#joystickContent {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 128px;
+    height: 128px;
+    border: solid black 2px;
+    border-radius: 100%;
+    background-color: rgba(0, 0, 0, 0.658);
+}
+
+header div#joystickContent div#joystick {
+    position: absolute;
+    left: 32px;
+    top: 32px;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.836);
+    border-radius: 100%;
+}
+
 /* Canvas/Jogo */
 
-#screen {
+canvas#screen {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;

@@ -1,0 +1,9 @@
+@media screen and (max-width:597px) {
+    header button#chat-button {
+        display: none;
+    }
+
+    header div#timer {
+        left: 5px;
+    }
+}

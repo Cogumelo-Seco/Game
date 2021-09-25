@@ -1,11 +1,11 @@
-import createGame from '../public/Game/Game.js';
-import createListener from '../public/Game/Listener.js';
-import PageFunctions from '../public/Game/PageFunctions/index.js';
+import createGame from '../public/js/Game/Game.js';
+import createListener from '../public/js/Game/Listener.js';
+import PageFunctions from '../public/js/Game/PageFunctions/index.js';
 import io from 'socket.io-client';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
-const Game = () => {
+const Game = (props) => {
     useEffect(() => {
         //let song = new Audio('/songs/music.mp3');
         /*const musicButton = document.getElementById('music-button');
@@ -24,7 +24,7 @@ const Game = () => {
 
         const canvas = document.getElementById('screen');
 
-        const socket = io('https://Game.cogumeloseco1.repl.co', {
+        const socket = io(props.SERVER, {
             withCredentials: true,
         })
 
@@ -95,9 +95,10 @@ const Game = () => {
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+                
                 <link rel="stylesheet" href="/css/game/animations.css" />
-                <link rel="stylesheet" href="/css/game/game.css" />                
+                <link rel="stylesheet" href="/css/game/game.css" />
+                <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>
             <body>
                 <header id="header-screen">                    
@@ -120,6 +121,10 @@ const Game = () => {
                         <p id="scoreOfSelectedPlayer" />
                     </div>
 
+                    <div id="joystickContent">
+                        <div id="joystick" />
+                    </div>
+
                     <div id="playerScore">Score: ?</div>
                     <div id="fpsDisplay">?FPS</div>
                     <div id="pingDisplay">?ms</div>
@@ -135,28 +140,39 @@ const Game = () => {
 }
 /*
 <button id="chat-button" />
-                <h2 id="timer">00:00</h2>
-                <h2 id="pingDisplay" title="Ping">?ms</h2>
-                <p />
-                <div id="chat">
-                    <canvas id="chat-content" width="2000" height="4000" />
-                    <p/>
-                    <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
-                    <button id="send-button" title="Enviar mensagem" />
-                </div>
-                <div id="scoreTable">
-                    <a id="p1" title="Primeiro" />
-                    <a id="p2" title="Segundo" />
-                    <a id="p3" title="Terceiro" />
-                    <a id="p4" />
-                </div>
-                
-                <button className="arrows-buttons" id="arrow-up" />
-                <p />
-                <button className="arrows-buttons" id="arrow-left" />
-                <button className="arrows-buttons" id="arrow-down" />
-                <button className="arrows-buttons" id="arrow-right" />
-                <h2 id="connecting">Conectando com o servidor...</h2>
-                <p />
-                <button id="music-button">Música 🔇</button>*/
+<h2 id="timer">00:00</h2>
+<h2 id="pingDisplay" title="Ping">?ms</h2>
+<p />
+<div id="chat">
+    <canvas id="chat-content" width="2000" height="4000" />
+    <p/>
+    <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
+    <button id="send-button" title="Enviar mensagem" />
+</div>
+<div id="scoreTable">
+    <a id="p1" title="Primeiro" />
+    <a id="p2" title="Segundo" />
+    <a id="p3" title="Terceiro" />
+    <a id="p4" />
+</div>
+
+<button className="arrows-buttons" id="arrow-up" />
+<p />
+<button className="arrows-buttons" id="arrow-left" />
+<button className="arrows-buttons" id="arrow-down" />
+<button className="arrows-buttons" id="arrow-right" />
+<h2 id="connecting">Conectando com o servidor...</h2>
+<p />
+<button id="music-button">Música 🔇</button>*/
+export async function getStaticProps() {
+    const SERVER = process.env.SERVER
+
+    return {
+        props: {
+            SERVER,
+        },
+        revalidate: 1800
+    }
+}
+
 export default Game

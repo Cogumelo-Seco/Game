@@ -18,6 +18,7 @@ export default function renderScreen(canvas, page) {
         if (bot.x > canvas.width || bot.y > canvas.height) {
             bot.x = 5
             bot.y = 5
+            bot.traces = [{ x: bot.x, y: bot.y}]
         }
 
         ctx.fillStyle = '#363636'

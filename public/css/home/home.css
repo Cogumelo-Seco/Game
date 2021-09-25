@@ -49,6 +49,7 @@ section ul {
 
 section ul li {
     border: solid black 2px;
+    border-radius: 10px;
     cursor: pointer;
     background-color: rgba(158, 92, 92, 0.637);
     margin: 10px 0;

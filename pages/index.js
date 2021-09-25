@@ -29,7 +29,7 @@ const Page = () => {
     return (
         <html lang="pt-BR">
             <Head>
-                <title>Game</title>
+                <title>Home</title>
 
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />

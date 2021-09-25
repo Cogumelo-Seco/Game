@@ -4,6 +4,8 @@ module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
     const unreadMessageCounter = document.getElementById('unreadMessageCounter')
     const chat = document.getElementById('chat')
 
+    if (window.innerWidth <= 597) return
+
     chatContent.innerHTML = ''
     let messages = []
     for (let i in game.state.messages) {
