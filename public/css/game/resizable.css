@@ -1,5 +1,6 @@
 @media screen and (max-width:597px) {
-    header button#chat-button {
+    header button#chat-button,
+    header div#unreadMessageCounter {
         display: none;
     }
 

@@ -4,6 +4,7 @@ module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
     const unreadMessageCounter = document.getElementById('unreadMessageCounter')
     const chat = document.getElementById('chat')
 
+    unreadMessageCounter.style.display = 'none'
     if (window.innerWidth <= 597) return
 
     chatContent.innerHTML = ''
@@ -44,5 +45,5 @@ module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
     if (unreadMessages > 0) {
         unreadMessageCounter.style.display = 'flex'
         unreadMessageCounter.innerText = unreadMessages
-    } else unreadMessageCounter.style.display = 'none'
+    }
 }
