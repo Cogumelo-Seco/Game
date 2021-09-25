@@ -108,6 +108,7 @@ header div#unreadMessageCounter {
 }
 
 header div#chat {
+    z-index: 1;
     display: none;
     position: relative;
     float: left;
