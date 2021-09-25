@@ -9,6 +9,7 @@ const Page = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        document.getElementById('returnButton').addEventListener('click', () => router.push('/'))
 
         const canvas = document.getElementById('backgroundCanvas')
         canvas.width = window.innerWidth/10;
@@ -83,6 +84,9 @@ const Page = (props) => {
                     <div id="serverList">
                         <div id="loadingCircle" />
                     </div>
+
+                    <button id="returnButton">Voltar</button>
+                    <div id="ownerName">Power by: Cogumelo</div>
                 </section>
 
                 <canvas id="backgroundCanvas" /> 

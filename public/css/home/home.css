@@ -36,7 +36,7 @@ section h1#gameName {
 section div#ownerName {
     position: absolute;
     bottom: 8px;
-    left: 10px;
+    right: 10px;
 }
 
 section ul {    

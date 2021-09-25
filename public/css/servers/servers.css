@@ -64,3 +64,24 @@ section div#serverList div#server p#Name {
 section div#serverList div#server p#PlayerCount {
     right: 15px;
 }
+
+section button#returnButton {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    transition: all 0.5s;
+}
+
+section button#returnButton:hover {
+    background-color: rgba(36, 36, 36, 0.658);
+}
+
+section div#ownerName {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: black;
+}
