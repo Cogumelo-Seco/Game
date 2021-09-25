@@ -27,7 +27,7 @@ export default function createListener() {
         }
     }
 
-    if (navigator.userAgentData != undefined && navigator.userAgentData.mobile) state.mobile = true
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
     const chatFunctions = chat(state, notifyAll)
     Joystick(state, handleKeys)
