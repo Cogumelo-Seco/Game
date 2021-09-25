@@ -6,4 +6,9 @@
     header div#timer {
         left: 5px;
     }
+
+    header div#playerViewSelection button.observedPlayerSelectionArrows.left,
+    header div#playerViewSelection button.observedPlayerSelectionArrows.right {
+        margin: 0;
+    }
 }

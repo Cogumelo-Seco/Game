@@ -169,7 +169,7 @@ header div#playerViewSelection {
     position: absolute;
     height: 50px;
     width: 100%;
-    bottom: 20vh;
+    bottom: 30vh;
 }
 
 header div#playerViewSelection button.observedPlayerSelectionArrows {
