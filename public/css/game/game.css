@@ -60,14 +60,32 @@ header div#playerScore {
 /* Tabela de colocação */
 
 header table#scoreTable {
+    position: fixed;
+    right: 10px;
+    top: 5px;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     width: 200px;
-    margin: 5px;
-    float: right;
     table-layout: fixed;
     border-collapse: collapse;
     animation: openScoreTable 0.2s ease forwards;
+}
+
+header button#scoreTable-button {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 5px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    width: 10px;
+    height: 50px;
+    transition: all 0.5s;
+}
+
+header button#scoreTable-button:hover {
+    background-color: rgba(36, 36, 36, 0.658);
 }
 
 header table#scoreTable th#Name {
@@ -82,13 +100,12 @@ header table#scoreTable th#Score {
     border-bottom: solid black 1px;
     padding: 5px;
     width: 28px;
-    text-align: right;    
+    text-align: right;   
 }
 
 /* Chat */
 
 header button#chat-button {
-    display: none;
     cursor: pointer;
     border: solid black 1px;
     border-radius: 5px;
@@ -233,9 +250,26 @@ header div#joystickContent div#joystick {
     border-radius: 100%;
 }
 
+/* Mimi mapa */
+
+header canvas#miniMap {
+    display: none;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    position: fixed;
+    transform: translateY(50%);
+    left: 10px;
+    bottom: 50%;
+    border: solid black 2px;
+    width: 130px;
+    height: 130px;
+}
+
 /* Canvas/Jogo */
 
-canvas#screen {
+section canvas#screen {
+    display: none;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
@@ -243,8 +277,7 @@ canvas#screen {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
-    display: none;
+    height: 100%;    
 }
 /*
 #message-box {

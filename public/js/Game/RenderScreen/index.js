@@ -23,7 +23,16 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
 
     const myPlayer = game.state.players[game.state.myID]
 
-    if (myPlayer && myPlayer.dead && !game.state.players[game.state.observedPlayerId]) game.state.myID = Object.keys(game.state.players)[0]
+    if (game.state.players[game.state.observedPlayerId] && game.state.players[game.state.observedPlayerId].dead) {
+        let players = []
+        for (let i in game.state.players) {
+            if (game.state.players[i] && !game.state.players[i].dead) players.push(i)
+        }
+        game.state.observedNumber++
+        if (game.state.observedNumber > players.length-1) game.state.observedNumber = 0
+        game.state.observedPlayerId = players[game.state.observedNumber]
+    }
+    if (myPlayer && myPlayer.dead && !game.state.players[game.state.observedPlayerId]) game.state.observedPlayerId = Object.keys(game.state.players)[0]
 
     if (myPlayer && myPlayer.dead && game.state.players[game.state.observedPlayerId] || myPlayer) {        
         require('./RenderBackgroundAndBoundaries')(canvas, game, requestAnimationFrame, Listener, scoreArr)
@@ -31,6 +40,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderFruits')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderChat')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderScoreTable')(canvas, game, requestAnimationFrame, Listener, scoreArr)
+        require('./RenderMiniMap')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)
     }

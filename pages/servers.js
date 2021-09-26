@@ -1,3 +1,4 @@
+import data from '../public/js/data.js';
 import createPage from '../public/js/Home/Home.js';
 import render from '../public/js/Home/RenderScreen.js';
 import { useRouter } from 'next/router';
@@ -46,6 +47,7 @@ const Page = (props) => {
                 server.innerHTML = `
                     <p id="Name">${i}</p>
                     <p id="PlayerCount">${servers[i].players}/${servers[i].maxPlayers}</p>
+                    <p id="GameSize">${servers[i].gameSize}X${servers[i].gameSize}</p>
                 `
                 server.addEventListener('click', () => joinServer(i))
                 serverList.appendChild(server)

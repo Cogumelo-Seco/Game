@@ -1,3 +1,4 @@
+import data from '../public/js/data.js';
 import createGame from '../public/js/Game/Game.js';
 import createListener from '../public/js/Game/Listener.js';
 import PageFunctions from '../public/js/Game/PageFunctions/index.js';
@@ -10,31 +11,25 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
-        const data = require('../public/js/data.js')
-        //let song = new Audio('/songs/music.mp3');
-        /*const musicButton = document.getElementById('music-button');
-        musicButton.addEventListener('click', PlayStop);
-
-        function PlayStop() {
-            song.loop = true;
-            if (song.played.length == 0 || song.paused) {
-                musicButton.innerText = 'Música 🔊'
-                song.play();
-            } else {
-                musicButton.innerText = 'Música 🔇'
-                song.pause()
-            }
-        }*/
+        const debug = false
 
         const canvas = document.getElementById('screen');
+        let socket = null
 
-        if (!data.socket) return router.push('/servers')
-        const socket = data.socket;
+        if (!debug) {
+            if (!data.socket) return router.push('/servers')
+            socket = data.socket;
+            socket.emit('getSetup')
+        } else {
+            socket = io(props.SERVER, {
+                withCredentials: true,
+            })
+            socket.emit('getSetup', true)
+        }
 
         const game = createGame(socket);
         const Listener = createListener();
 
-        socket.emit('getStup')
         socket.on('gameOver', (command) => {
             if (command.playerId != socket.id) return;
             game.state.observedPlayerId = Object.keys(game.state.players)[0]
@@ -108,6 +103,8 @@ const Game = (props) => {
                     <button id="chat-button" />
                     <div id="unreadMessageCounter" />
 
+                    <canvas id="miniMap" />
+
                     <div id="chat">
                         <div id="chat-content" />
                         <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
@@ -115,6 +112,7 @@ const Game = (props) => {
                     </div>
 
                     <table id="scoreTable" />
+                    <button id="scoreTable-button" />
                     <div id="timer">00:00</div>
 
                     <div id="playerViewSelection">

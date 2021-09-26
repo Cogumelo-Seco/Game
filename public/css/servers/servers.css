@@ -53,7 +53,7 @@ section div#serverList div#server:hover {
     background-color: rgba(145, 145, 145, 0.658);
 }
 
-section div#serverList div#server p {
+section div#serverList div#server p {    
     position: absolute;
 }
 
@@ -62,11 +62,15 @@ section div#serverList div#server p#Name {
 }
 
 section div#serverList div#server p#PlayerCount {
+    right: 100px;
+}
+
+section div#serverList div#server p#GameSize {
     right: 15px;
 }
 
 section button#returnButton {
-    position: absolute;
+    position: fixed;
     bottom: 8px;
     left: 10px;
     color: white;

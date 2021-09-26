@@ -73,7 +73,7 @@ function createGame() {
 			}
 		}, 1000)
 
-		for (let botNumber = 0;botNumber < 5; botNumber++) {
+		for (let botNumber = 0;botNumber < game.botCount; botNumber++) {
 			serverAddBot(game, sockets, botNumber, 0)
 		}
 	}
