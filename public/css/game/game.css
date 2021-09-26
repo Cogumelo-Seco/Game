@@ -106,13 +106,14 @@ header table#scoreTable th#Score {
 /* Chat */
 
 header button#chat-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
     cursor: pointer;
     border: solid black 1px;
     border-radius: 5px;
-    margin: 5px;
     width: 40px; 
     height: 40px;
-    float: left;
     background: rgb(242, 242, 242) url(/images/chat.png) no-repeat center 0px / 100%;
     transition: all 0.5s;
 }
@@ -133,10 +134,9 @@ header div#unreadMessageCounter {
 }
 
 header div#chat {
-    z-index: 1;
     display: none;
-    position: relative;
-    float: left;
+    position: absolute;
+    left: 50px;    
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     width: 250px;

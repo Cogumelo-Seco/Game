@@ -15,6 +15,7 @@ function Function(game, canvas, socket, Listener) {
 
     require('./observedPlayerSelectionArrows')(game)
     require('./scoreTableButton')(game)
+    require('./mobileSettings')(game, Listener)
 }
 
 module.exports = Function

@@ -16,9 +16,6 @@
 
     header table#scoreTable {
         width: 140px;
-    }
-
-    header table#scoreTable th {
         font-size: 10px;
     }
 
