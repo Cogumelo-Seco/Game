@@ -1,4 +1,4 @@
-module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr) => {
     const chatContent = document.getElementById('chat-content')
     const chatButton = document.getElementById('chat-button')
     const unreadMessageCounter = document.getElementById('unreadMessageCounter')

@@ -1,4 +1,4 @@
-module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr) => {
     const myPlayer = game.state.players[game.state.myID]
 
     if (myPlayer.dead) {

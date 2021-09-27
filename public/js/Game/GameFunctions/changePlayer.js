@@ -4,6 +4,7 @@ module.exports = (command, state, notifyAll) => {
     const score = command.score || player.score
     const traces = command.traces || player.traces
     player.score = score
+    player.traces = traces
 
     notifyAll({
         type: 'change-player',

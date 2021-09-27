@@ -1,4 +1,4 @@
-module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr) => {
     let player = game.state.players[game.state.myID]
     if (player.dead) player = game.state.players[game.state.observedPlayerId]
     const ctx = canvas.getContext('2d')

@@ -35,14 +35,13 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     if (myPlayer && myPlayer.dead && !game.state.players[game.state.observedPlayerId]) game.state.observedPlayerId = Object.keys(game.state.players)[0]
 
     if (myPlayer && myPlayer.dead && game.state.players[game.state.observedPlayerId] || myPlayer) {        
-        require('./RenderBackgroundAndBoundaries')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderPlayers')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderFruits')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderChat')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderScoreTable')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        //require('./RenderMiniMap')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)
+        require('./RenderBackgroundAndBoundaries')(canvas, game, Listener, scoreArr)
+        require('./RenderPlayers')(canvas, game, Listener, scoreArr)
+        require('./RenderFruits')(canvas, game, Listener, scoreArr)
+        require('./RenderChat')(canvas, game, Listener, scoreArr)
+        require('./RenderScoreTable')(canvas, game, Listener, scoreArr)
+        require('./RenderInformationTexts')(canvas, game, Listener, scoreArr)
+        require('./RenderPlayerSelectionToLook')(canvas, game, Listener, scoreArr)
     }
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;

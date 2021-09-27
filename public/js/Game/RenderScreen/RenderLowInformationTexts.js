@@ -1,4 +1,4 @@
-module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr) => {
     const fpsDisplay = document.getElementById('fpsDisplay');
     if (+new Date()-game.state.fps.split('-')[1] > 1000) {
         fpsDisplay.innerText = `${game.state.fps.split('-')[0]}FPS`

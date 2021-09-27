@@ -9,9 +9,7 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 
     let bot = state.players[command.botId];
     if (!bot || !bot.bot) return;
-    
-    bot.x = command.x || bot.x
-    bot.y = command.y || bot.y
+
     const keyPressed = command.keyPressed
     const moveFunction = acceptedKeys[keyPressed]
 

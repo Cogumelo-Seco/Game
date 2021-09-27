@@ -17,51 +17,77 @@ module.exports = (command, state) => {
             const fruit = state.fruits[fruitId]
             if (fruit.x == bot.x) {
                 if (fruit.y <= bot.y) {
-                    if (bot.traces.find((t) => t.x == bot.x && t.y == bot.y-1)) direction = generateRandomDirection('w')
+                    if (direction == 's') direction = generateRandomDirection('w')
                     else direction = 'w'
                 } else {
-                    if (bot.traces.find((t) => t.x == bot.x && t.y == bot.y+1)) direction = generateRandomDirection('s')
+                    if (direction == 'w') direction = generateRandomDirection('s')
                     else direction = 's'
                 }
                 break
             }
             if (fruit.y == bot.y) {
                 if (fruit.x <= bot.x) {
-                    if (bot.traces.find((t) => t.x == bot.x-1 && t.y == bot.y)) direction = generateRandomDirection('a')
+                    if (direction == 'd') direction = generateRandomDirection('a')
                     else direction = 'a'
                 } else {
-                    if (bot.traces.find((t) => t.x == bot.x+1 && t.y == bot.y)) direction = generateRandomDirection('d')
+                    if (direction == 'a') direction = generateRandomDirection('d')
                     else direction = 'd'
                 }
                 break
             }
         }
 
-        switch(direction) {
-            case 'w':
-                if (bot.y <= 1) return bot.direction = 'a';
-                else bot.y--
+        let acceptedKeys = {
+            w(bot, state) {
+                if (bot.direction == 's') return false
+                if (bot.y <= 1) {
+                    bot.direction = 'a'
+                    return false
+                }
+                bot.y--
                 bot.direction = 'w'
-                break
-            case 'a':
-                if (bot.x <= 1) return bot.direction = 's';
-                else bot.x--
-                bot.direction = 'a'
-                break
-            case 's':
-                if (bot.y >= state.screen.height-2) return bot.direction = 'd';
-                else bot.y++
+                return true
+            },
+            s(bot, state) {
+                if (bot.direction == 'w') return false
+                if (bot.y >= state.screen.width-2) {
+                    bot.direction = 'd';
+                    return false
+                } 
+                bot.y++
                 bot.direction = 's'
-                break
-            case 'd':
-                if (bot.x >= state.screen.width-2) return bot.direction = 'w';
-                else bot.x++
+                return true
+            },
+            a(bot, state) {
+                if (bot.direction == 'd') return false
+                if (bot.x <= 1) {
+                    bot.direction = 's';
+                    return false
+                }
+                bot.x--
+                bot.direction = 'a'
+                return true
+            },
+            d(bot, state) {
+                if (bot.direction == 'a') return false
+                if (bot.x >= state.screen.height-2) {
+                    bot.direction = 'w';
+                    return false
+                }
+                bot.x++
                 bot.direction = 'd'
-                break
+                return true
+            }
         }
-        
-        bot.traces.push({ x: bot.x, y: bot.y })
-        if (bot.traces.length > bot.score) bot.traces.splice(0, 1)
+
+        const moveFunction = acceptedKeys[direction]
+
+        if (moveFunction) {
+            let move = moveFunction(bot, state)
+            if (move) bot.traces.unshift({ x: bot.x, y: bot.y })
+        }
+
+        if (bot.traces.length-1 > bot.score || bot.traces.length >= 1000) bot.traces.splice(bot.traces.length-1, 1)
 
         for (const fruitId in state.fruits) {
             const fruit = state.fruits[fruitId]

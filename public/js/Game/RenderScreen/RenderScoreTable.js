@@ -1,4 +1,4 @@
-module.exports = (canvas, game, requestAnimationFrame, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr) => {
     scoreTable.innerHTML = ''
     for (let i in scoreArr) {
         let player = document.createElement('tr');

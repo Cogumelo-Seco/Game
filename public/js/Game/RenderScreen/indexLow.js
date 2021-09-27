@@ -10,11 +10,11 @@ export default function renderLow(canvas, game, requestAnimationFrame, Listener)
     const myPlayer = game.state.players[game.state.myID]
 
     if (myPlayer && myPlayer.dead && game.state.players[game.state.observedPlayerId] || myPlayer) {        
-        require('./RenderLowMiniMap')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderLowInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
+        require('./RenderLowMiniMap')(canvas, game, Listener, scoreArr)
+        require('./RenderLowInformationTexts')(canvas, game, Listener, scoreArr)
     }
 
     setTimeout(() => {
         renderLow(canvas, game, requestAnimationFrame, Listener)
-    }, 1000)
+    }, 500)
 }

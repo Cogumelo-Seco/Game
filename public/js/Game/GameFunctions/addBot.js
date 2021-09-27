@@ -1,17 +1,17 @@
 module.exports = (command, state, notifyAll) => {
     if (command.serverId != state.serverId) return
-    const playerX = command.x || Math.floor(Math.random()*state.screen.height);
-    const playerY = command.y || Math.floor(Math.random()*state.screen.width);
+    const botX = command.x || Math.floor(Math.random()*state.screen.height);
+    const botY = command.y || Math.floor(Math.random()*state.screen.width);
     const botId = command.botId
     let nick = command['nick']
 
     state.players[botId] = {
         bot: true,
-        x: playerX,
-        y: playerY,
+        x: botX,
+        y: botY,
         nick: nick,
         direction: 'w',
-        traces: [ { x: playerX, y: playerY } ],
+        traces: [ { x: botX, y: botY } ],
         score: 1
     }
 
@@ -19,8 +19,8 @@ module.exports = (command, state, notifyAll) => {
         type: 'add-bot',
         botId: botId,
         nick: nick,
-        x: playerX,
-        y: playerY,
+        x: botX,
+        y: botY,
 		serverId: state.serverId
     });
 
