@@ -15,9 +15,12 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     const keyPressed = command.keyPressed
     const moveFunction = acceptedKeys[keyPressed]
 
-    if (moveFunction) moveFunction(bot, state)
+    if (moveFunction) {
+        let move = moveFunction(bot, state)
+        if (move) bot.traces.unshift({ x: bot.x, y: bot.y })
+    }
 
-    if (bot.traces.length > bot.score || bot.traces.length >= 1500) bot.traces.splice(0, 1)
+    if (bot.traces.length-1 > bot.score || bot.traces.length >= 1000) bot.traces.splice(bot.traces.length-1, 1)
     
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]

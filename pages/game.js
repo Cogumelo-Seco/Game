@@ -11,7 +11,7 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
-        const debug = false
+        const debug = true
 
         const canvas = document.getElementById('screen');
         let socket = null

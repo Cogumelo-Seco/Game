@@ -87,12 +87,12 @@ export default function Joystick(state, handleKeys) {
         document.addEventListener('mouseup', handleUp);
         document.addEventListener('touchend', handleUp);
 
-        setInterval(() => {            
+        /*setInterval(() => {            
             let joystickValue = self.value
             if (joystickValue.x > 0.2) handleKeys({ key: 'd' }, joystickValue.x*1000)
             if (joystickValue.x < -0.2) handleKeys({ key: 'a' }, -joystickValue.x*1000)
             if (joystickValue.y > 0.2) handleKeys({ key: 's' }, joystickValue.y*1000)
             if (joystickValue.y < -0.2) handleKeys({ key: 'w' }, -joystickValue.y*1000)
-        }, 50)
+        }, 50)*/
     }
 }

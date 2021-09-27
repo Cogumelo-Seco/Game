@@ -1,30 +1,42 @@
 module.exports = {
     w(player, state) {
-        if (player.traces.find((t) => t.x == player.x && t.y == player.y-1 && player.direction == 's')) return;
-        if (player.y <= 0) return player.direction = 'a';
-        else player.y--
+        if (player.direction == 's') return false
+        if (player.y <= 0) {
+            player.direction = 'a'
+            return false
+        }
+        player.y--
         player.direction = 'w'
-        player.traces.push({ x: player.x, y: player.y })
+        return true
     },
     s(player, state) {
-        if (player.traces.find((t) => t.x == player.x && t.y == player.y+1 && player.direction == 'w')) return;
-        if (player.y >= state.screen.width-1) return player.direction = 'd';
-        else player.y++
+        if (player.direction == 'w') return false
+        if (player.y >= state.screen.width-1) {
+            player.direction = 'd';
+            return false
+        } 
+        player.y++
         player.direction = 's'
-        player.traces.push({ x: player.x, y: player.y })
+        return true
     },
     a(player, state) {
-        if (player.traces.find((t) => t.x == player.x-1 && t.y == player.y && player.direction == 'd')) return;
-        if (player.x <= 0) return player.direction = 's';
-        else player.x--
+        if (player.direction == 'd') return false
+        if (player.x <= 0) {
+            player.direction = 's';
+            return false
+        }
+        player.x--
         player.direction = 'a'
-        player.traces.push({ x: player.x, y: player.y })
+        return true
     },
     d(player, state) {
-        if (player.traces.find((t) => t.x == player.x+1 && t.y == player.y && player.direction == 'a')) return;
-        if (player.x >= state.screen.height-1) return player.direction = 'w';
-        else player.x++
+        if (player.direction == 'a') return false
+        if (player.x >= state.screen.height-1) {
+            player.direction = 'w';
+            return false
+        }
+        player.x++
         player.direction = 'd'
-        player.traces.push({ x: player.x, y: player.y })
+        return true
     }
 }

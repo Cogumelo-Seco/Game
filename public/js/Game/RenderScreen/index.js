@@ -40,7 +40,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderFruits')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderChat')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderScoreTable')(canvas, game, requestAnimationFrame, Listener, scoreArr)
-        require('./RenderMiniMap')(canvas, game, requestAnimationFrame, Listener, scoreArr)
+        //require('./RenderMiniMap')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderInformationTexts')(canvas, game, requestAnimationFrame, Listener, scoreArr)
         require('./RenderPlayerSelectionToLook')(canvas, game, requestAnimationFrame, Listener, scoreArr)
     }

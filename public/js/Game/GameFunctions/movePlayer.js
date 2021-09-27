@@ -33,9 +33,12 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     
     if (!player || command.auto && command.keyPressed != player.direction) return;
 
-    if (moveFunction) moveFunction(player, state)
+    if (moveFunction) {
+        let move = moveFunction(player, state)
+        if (move) player.traces.unshift({ x: player.x, y: player.y })
+    }
 
-    if (player.traces.length > player.score || player.traces.length >= 1500) player.traces.splice(0, 1)
+    if (player.traces.length-1 > player.score || player.traces.length >= 1000) player.traces.splice(player.traces.length-1, 1)
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]
