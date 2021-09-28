@@ -1,10 +1,11 @@
 module.exports = (command, state, notifyAll, removeFruit) => {
     if (!command.keyPressed) return;
     command.verify = state.myID
-	command.serverId = state.serverId
-    if (!command.verify) notifyAll(command)
-    if (command.serverId != state.serverId) return
-
+	command.serverId = state.serverId    
+    if (command.serverId != state.serverId) {
+        if (!command.verify) notifyAll(command)
+        return;
+    }
     const acceptedKeys = require('./acceptedKeys')
 
     let player = state.players[command.playerId];
@@ -33,10 +34,18 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     
     if (!player || command.auto && command.keyPressed != player.direction) return;
 
-    if (moveFunction) {
+    if (moveFunction && !command.x && !command.y) {
         let move = moveFunction(player, state)
         if (move) player.traces.unshift({ x: player.x, y: player.y })
+        command.x = player.x
+        command.y = player.y
+        command.traces = player.traces
+    } else if (command.x && command.y) {
+        player.x = command.x
+        player.y = command.y
+        player.traces = command.traces
     }
+    notifyAll(command)
 
     if (player.traces.length-1 > player.score || player.traces.length >= 1000) player.traces.splice(player.traces.length-1, 1)
 
