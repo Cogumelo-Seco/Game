@@ -4,6 +4,7 @@ module.exports = (command, state, notifyAll) => {
     const botY = command.y || Math.floor(Math.random()*state.screen.width);
     const botId = command.botId
     let nick = command['nick']
+	if (state.players[botId]) return;
 
     state.players[botId] = {
         bot: true,
