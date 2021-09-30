@@ -35,11 +35,18 @@ const Game = (props) => {
             game.state.observedPlayerId = Object.keys(game.state.players)[0]
             alert(`Você Perdeu, seu score máximo foi ${command.score}`)            
         })
+        socket.on('maxPlayers', () => {
+            alert('Desculpe, mas o servidor está cheio')
+            router.push('/servers')
+        })
         socket.on('setup', (state) => {
             let nick = prompt('Escolha seu nick')
             socket.emit('nick', nick)
 
-            Listener.registerPlayerId(socket.id)
+            Listener.registerSettings({
+                playerId: socket.id,
+                serverId: state.serverId
+            })
             Listener.subscribe((command) => game.movePlayer(command));
             Listener.subscribe((command) => {
                 socket.emit(command.type, command)
@@ -55,7 +62,8 @@ const Game = (props) => {
                     type: 'move-player',
                     auto: true,
                     playerId: socket.id,
-                    keyPressed: game.state.players[socket.id].direction
+                    keyPressed: game.state.players[socket.id].direction,
+                    serverId: game.state.serverId
                 })
                 socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })
             }, 1000)
@@ -73,6 +81,11 @@ const Game = (props) => {
         socket.on('reset-game', (command) => game.resetGame(command))
         socket.on('message', (command) => game.message(command))
         socket.on('deadPlayer', (command) => game.deadPlayer(command))
+        socket.on('startGame', (command) => game.clientStart(command))
+        socket.on('gameOver', (command) => {
+            router.push('/')
+            alert('O administrador saiu do servidor')
+        })
         socket.on('move-player', (command) => {
             if (command.playerId != socket.id) game.movePlayer(command)
         });
@@ -81,6 +94,15 @@ const Game = (props) => {
             if (command.song == 'kill') var song = new Audio('/songs/kill.mp3');
             song?.play()
         });
+
+        const startButton = document.getElementById('startButton')
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none'
+            socket.emit('startGame')
+        })
+        setTimeout(() => {
+            socket.emit('startGame')
+        }, 60000)
     }, [])
 
     return (
@@ -125,6 +147,8 @@ const Game = (props) => {
                     <div id="joystickContent">
                         <div id="joystick" />
                     </div>
+
+                    <button id="startButton">Iniciar partida</button>
 
                     <div id="playerScore">Score: ?</div>
                     <div id="fpsDisplay">?FPS</div>

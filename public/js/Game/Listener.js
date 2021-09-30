@@ -17,7 +17,11 @@ export default function createListener() {
         mobile: false
     }
 
-    const registerPlayerId = (playerId) => state.playerId = playerId
+    const registerSettings = (settings) => {
+        for (let i in settings) {
+            state[i] = settings[i]
+        }
+    }
 
     const subscribe = (observerFunction) => state.observers.push(observerFunction)
 
@@ -82,14 +86,15 @@ export default function createListener() {
             notifyAll({
                 type: 'move-player',
                 playerId: state.playerId,
-                keyPressed
+                keyPressed,
+                serverId: state.serverId
             })
         }
     }
 
     return {
         subscribe,
-        registerPlayerId,
+        registerSettings,
         notifyAll,
         state
     }

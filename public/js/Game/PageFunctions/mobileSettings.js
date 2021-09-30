@@ -11,11 +11,11 @@ module.exports = (game, Listener) => {
         const chat = document.querySelector('div#chat')
 
         if (
-            !scoreTable ||
-            !scoreTableScore ||
-            !miniMap ||
-            !chatButton ||
-            !unreadMessageCounter ||
+            !scoreTable          ||
+            !scoreTableScore     ||
+            !miniMap             ||
+            !chatButton          ||
+            !unreadMessageCounter||
             !chat
         ) return
 
@@ -24,8 +24,10 @@ module.exports = (game, Listener) => {
         scoreTableScore.style.width = '20px'
         miniMap.style.transform = 'translateY(0)'
         miniMap.style.top = '5px' 
-        chatButton.style.left = '148px'
-        unreadMessageCounter.style.left = '176px'
+        miniMap.style.width = '100px' 
+        miniMap.style.height = '110px' 
+        chatButton.style.left = '120px'
+        unreadMessageCounter.style.left = '148px'
         chat.style.left = '193px'
 
         if (repetition >= 5) clearInterval(interval)

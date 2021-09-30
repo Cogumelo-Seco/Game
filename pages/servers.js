@@ -12,6 +12,7 @@ const Page = (props) => {
     useEffect(() => {
         document.getElementById('returnButton').addEventListener('click', () => router.push('/'))
 
+        const reloadButton = document.getElementById('reloadButton')
         const canvas = document.getElementById('backgroundCanvas')
         canvas.width = window.innerWidth/10;
         canvas.height = window.innerHeight/10;
@@ -33,31 +34,42 @@ const Page = (props) => {
             withCredentials: true,
         })
 
+        reloadButton.addEventListener('click', () => socket.emit('getServer', {
+            type: 'list'
+        }))
+
         socket.emit('getServer', {
             type: 'list'
         })
 
-        socket.on('serverList', (servers) => {
-            let serverList = document.getElementById('serverList')
-            let loadingCircle = document.getElementById('loadingCircle')
-            serverList.innerHTML = ''
-            for (let i in servers) {
-                let server = document.createElement('div');
-                server.id = 'server'
-                server.innerHTML = `
-                    <p id="Name">${i}</p>
-                    <p id="PlayerCount">${servers[i].players}/${servers[i].maxPlayers}</p>
-                    <p id="GameSize">${servers[i].gameSize}X${servers[i].gameSize}</p>
-                `
-                server.addEventListener('click', () => joinServer(i))
-                serverList.appendChild(server)
-            }
-            if (loadingCircle) loadingCircle.style.display = 'none'
-        })
+        socket.on('serverList', listServers)
 
         socket.on('server', () => {
             data.socket = socket
             router.push('/game')
+        })
+
+        const serverCreationWindow = document.getElementById('serverCreationWindow')
+        const botCount = document.querySelector('.serverCreationWindow-inputs.botCount')
+        const gameSize = document.querySelector('.serverCreationWindow-inputs.gameSize')
+        const maxPlayers = document.querySelector('.serverCreationWindow-inputs.maxPlayers')
+        const Name = document.querySelector('.serverCreationWindow-inputs.Name')
+        const gameTime = document.querySelector('.serverCreationWindow-inputs.gameTime')         
+        document.getElementById('serverCreationWindowButton').addEventListener('click', () => {
+            if (serverCreationWindow.style.display == 'block') serverCreationWindow.style.display = 'none'
+            else serverCreationWindow.style.display = 'block'
+        })
+        document.getElementById('createButton').addEventListener('click', () => {
+            socket.emit('createServer', {
+                botCount: botCount.value,
+                gameSize: gameSize.value,
+                maxPlayers: maxPlayers.value,
+                Name: Name.value,
+                gameTime: gameTime.value,
+                adm: socket.id
+            })
+
+            joinServer(Name.value)
         })
 
         function joinServer(serverName) {
@@ -65,6 +77,27 @@ const Page = (props) => {
                 type: 'server',
                 server: serverName
             })
+        }
+
+        function listServers(servers) {
+            let serverList = document.getElementById('serverList')
+            let loadingCircle = document.getElementById('loadingCircle')
+            serverList.innerHTML = ''
+            if (Object.keys(servers)[0]) {
+                for (let i in servers) {
+                    let server = document.createElement('div');
+                    server.id = 'server'
+                    server.innerHTML = `
+                        <p id="Name">${i}</p>
+                        <p id="Time">${servers[i].time/60000}m</p>
+                        <p id="PlayerCount">${servers[i].players}/${servers[i].maxPlayers}</p>
+                        <p id="GameSize">${servers[i].gameSize}X${servers[i].gameSize}</p>
+                    `
+                    if (servers[i].maxPlayers > servers[i].players) server.addEventListener('click', () => joinServer(i))
+                    serverList.appendChild(server)
+                }
+            } else serverList.innerHTML = 'Sem servidores disponíveis!'
+            if (loadingCircle) loadingCircle.style.display = 'none'
         }
     }, [])
 
@@ -87,7 +120,20 @@ const Page = (props) => {
                         <div id="loadingCircle" />
                     </div>
 
-                    <button id="returnButton">Voltar</button>
+                    <div id="serverCreationWindow">
+                        <p>Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
+                        <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 2-20</p>
+                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 50-1500</p>
+                        <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0-19</p>
+                        <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5-20</p>
+                        <button id="createButton">Criar</button>
+                    </div>
+                    <div id="buttons">
+                        <button id="returnButton" />
+                        <button id="serverCreationWindowButton">Criar servidor</button>
+                        <button id="reloadButton" />
+                    </div>
+
                     <div id="ownerName">Power by: Cogumelo</div>
                 </section>
 

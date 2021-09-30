@@ -29,7 +29,8 @@ module.exports = (command, state, notifyAll) => {
         dead: false,
         direction: 'w',
         traces: [ { x: playerX, y: playerY } ],
-        score: 1
+        score: 1,
+        safeTime: true
     }
 
     notifyAll({
@@ -40,4 +41,9 @@ module.exports = (command, state, notifyAll) => {
         y: playerY,
 		serverId: state.serverId
     });
+
+    setTimeout(() => {
+        let player = state.players[playerId]
+        if (player) player.safeTime = false
+    }, 3000)
 }

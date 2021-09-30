@@ -4,4 +4,8 @@ module.exports = (canvas, game, Listener, scoreArr) => {
 
     const playerScore = document.getElementById('playerScore');
     if (!player.dead) playerScore.innerText = `Score: ${player.score}`
+    else {
+        playerScore.innerText = 'Morto'
+        playerScore.style.backgroundColor = 'rgba(255, 0, 0, 0.658)'
+    }
 }

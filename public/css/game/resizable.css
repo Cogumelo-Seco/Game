@@ -2,6 +2,8 @@
     header canvas#miniMap {
         transform: translateY(0);
         top: 5px;
+        width: 100px;
+        height: 100px;
     }
 
     header button#chat-button,

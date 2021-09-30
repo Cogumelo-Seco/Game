@@ -14,6 +14,7 @@ function Function(game, canvas, socket, Listener) {
     document.getElementById('fpsDisplay').style.display = 'block';
     document.getElementById('loadingCircle').style.display = 'none'
     document.getElementById('scoreTable-button').style.display = 'block'
+    if (socket.id == game.state.adm) document.getElementById('startButton').style.display = 'block'
 
     require('./observedPlayerSelectionArrows')(game)
     require('./scoreTableButton')(game)

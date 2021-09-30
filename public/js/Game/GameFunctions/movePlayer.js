@@ -1,11 +1,11 @@
-module.exports = (command, state, notifyAll, removeFruit) => {
+module.exports = (command, state, notifyAll, removeFruit) => {  
     if (!command.keyPressed) return;
     command.verify = state.myID
-	command.serverId = state.serverId    
     if (command.serverId != state.serverId) {
         if (!command.verify) notifyAll(command)
         return;
     }
+    command.serverId = state.serverId
     const acceptedKeys = require('./acceptedKeys')
 
     let player = state.players[command.playerId];
@@ -31,8 +31,9 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     }
 
     const moveFunction = acceptedKeys[keyPressed]
-    
+
     if (!player || command.auto && command.keyPressed != player.direction) return;
+    if (player.dead) return;
 
     if (moveFunction && !command.x && !command.y) {
         let move = moveFunction(player, state)
@@ -40,10 +41,14 @@ module.exports = (command, state, notifyAll, removeFruit) => {
         command.x = player.x
         command.y = player.y
         command.traces = player.traces
-    } else if (command.x && command.y) {
+        command.direction = player.direction
+        command.score = player.score
+    } else if (typeof command.y == 'number' && typeof command.x == 'number') {
         player.x = command.x
         player.y = command.y
         player.traces = command.traces
+        player.direction = command.direction
+        player.score = command.score
     }
     notifyAll(command)
 
