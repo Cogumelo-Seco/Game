@@ -61,11 +61,11 @@ const Page = (props) => {
         })
         document.getElementById('createButton').addEventListener('click', () => {
             socket.emit('createServer', {
-                botCount: botCount.value,
-                gameSize: gameSize.value,
-                maxPlayers: maxPlayers.value,
+                botCount: Number(botCount.value),
+                gameSize: Number(gameSize.value),
+                maxPlayers: Number(maxPlayers.value),
                 Name: Name.value,
-                gameTime: gameTime.value,
+                gameTime: Number(gameTime.value),
                 adm: socket.id
             })
 

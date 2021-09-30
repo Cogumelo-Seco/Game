@@ -11,8 +11,8 @@ function createGame() {
         fruits: {},
 		paused: true,
         screen: {
-            width: 200,
-            height: 200
+            width: 50,
+            height: 50
         }
     }
 
