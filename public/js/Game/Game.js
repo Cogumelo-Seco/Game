@@ -9,7 +9,7 @@ function createGame() {
         messages: [],
         players: {},
         fruits: {},
-		paused: true,
+		stopped: true,
         screen: {
             width: 50,
             height: 50
@@ -63,9 +63,9 @@ function createGame() {
     }
 
 	const start = (game, sockets, serverAddBot) => {
-		setInterval(() => addFruit({ serverId: game.state.serverId }), 1000)
+		setInterval(() => addFruit({ serverId: game.state.serverId }), game.state.fruitBirthSpeed || 1000)
 
-		game.state.paused = false
+		game.state.stopped = false
 		game.state.time = game.state.serverTime
 		setInterval(() => {
 			game.state.time -= 1000
@@ -85,7 +85,7 @@ function createGame() {
 	}
 
     const clientStart = () => {
-        state.paused = false
+        state.stopped = false
     }
 
     const resetGame = () => {

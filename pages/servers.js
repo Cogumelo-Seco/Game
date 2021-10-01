@@ -54,7 +54,8 @@ const Page = (props) => {
         const gameSize = document.querySelector('.serverCreationWindow-inputs.gameSize')
         const maxPlayers = document.querySelector('.serverCreationWindow-inputs.maxPlayers')
         const Name = document.querySelector('.serverCreationWindow-inputs.Name')
-        const gameTime = document.querySelector('.serverCreationWindow-inputs.gameTime')         
+        const gameTime = document.querySelector('.serverCreationWindow-inputs.gameTime')
+        const fruitBirthSpeed = document.querySelector('.serverCreationWindow-inputs.fruitBirthSpeed')               
         document.getElementById('serverCreationWindowButton').addEventListener('click', () => {
             if (serverCreationWindow.style.display == 'block') serverCreationWindow.style.display = 'none'
             else serverCreationWindow.style.display = 'block'
@@ -66,6 +67,7 @@ const Page = (props) => {
                 maxPlayers: Number(maxPlayers.value),
                 Name: Name.value,
                 gameTime: Number(gameTime.value),
+                fruitBirthSpeed: Number(fruitBirthSpeed.value),
                 adm: socket.id
             })
 
@@ -124,6 +126,7 @@ const Page = (props) => {
                         <p>Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
                         <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 2-20</p>
                         <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 50-1500</p>
+                        <p>Velocidade de spawn das frutas em segundos: <input className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.5-5</p>
                         <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0-19</p>
                         <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5-20</p>
                         <button id="createButton">Criar</button>
