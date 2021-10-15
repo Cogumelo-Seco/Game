@@ -25,7 +25,7 @@ const Page = () => {
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
             soundEffectsVolumeInput.value = cookie.soundEffectsVol
-            nickInput.value = cookie.nick
+            if (cookie.nick) nickInput.value = cookie.nick
 
             options.style.display = 'block'
         })
