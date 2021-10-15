@@ -89,7 +89,7 @@ const Page = () => {
 
                     <div id="options">
                         <p id="nick">
-                            Nick: <input id="nickInput" class="textInput" />
+                            Nick: <input id="nickInput" className="textInput" />
                         </p>
                         <p id="soundEffectsVolume">
                             Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>

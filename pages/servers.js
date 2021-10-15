@@ -1,7 +1,7 @@
 import createPage from '../public/js/Home/Home.js';
 import render from '../public/js/Home/RenderScreen.js';
 import { useRouter } from 'next/router';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
