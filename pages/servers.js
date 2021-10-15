@@ -1,4 +1,3 @@
-import data from '../public/js/data.js';
 import createPage from '../public/js/Home/Home.js';
 import render from '../public/js/Home/RenderScreen.js';
 import { useRouter } from 'next/router';

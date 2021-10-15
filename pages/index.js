@@ -11,6 +11,7 @@ const Page = () => {
     useEffect(() => {
         const options = document.getElementById('options')
         const playGame = document.getElementById('playGame')
+        playGame.addEventListener('click', () => router.push('/servers'))
         const optionsButton = document.getElementById('optionsButton')
         const saveButton = document.getElementById('saveButton')
         const cancelButton = document.getElementById('cancelButton')
