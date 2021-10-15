@@ -29,7 +29,6 @@ const Game = (props) => {
             socket.emit('getSetup', true)
         }
 
-        console.log(cookie)
         const game = createGame(cookie);
         const Listener = createListener();
 
@@ -69,7 +68,7 @@ const Game = (props) => {
                 })
                 socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })
             }, 1000)
-            PageFunctions(game, canvas, socket, Listener)
+            PageFunctions(game, canvas, socket, Listener, cookie)
         })
         socket.on('ping', (command) => game.ping(command))
         socket.on('newTime', (time) => game.state.time = +new Date()+time)

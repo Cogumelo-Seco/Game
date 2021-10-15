@@ -20,11 +20,13 @@ const Page = () => {
         const soundEffectsVolumeInput = document.getElementById('soundEffectsVolumeInput')
         const soundEffectsVolumePercent = document.getElementById('soundEffectsVolumePercent')
         const nickInput = document.getElementById('nickInput')
+        const showInfos = document.getElementById('showInfos')
 
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
             soundEffectsVolumeInput.value = cookie.soundEffectsVol
             if (cookie.nick) nickInput.value = cookie.nick
+            showInfos.checked = cookie.showInfos == 'true' ? true : false
 
             options.style.display = 'block'
         })
@@ -35,6 +37,7 @@ const Page = () => {
 
             document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/`;
             document.cookie = `nick=${nickInput.value}; path=/`;
+            document.cookie = `showInfos=${showInfos.checked}; path=/`;            
 
             options.style.display = 'none'
         })
@@ -94,6 +97,12 @@ const Page = () => {
                     <div id="options">
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
+                        </p>
+                        <p>
+                            Mostrar Informações: <label className="switch">
+                                <input type="checkbox" id="showInfos" />
+                                <span className="slider"></span>
+                            </label>
                         </p>
                         <p id="soundEffectsVolume">
                             Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>
