@@ -13,7 +13,6 @@ const Page = () => {
     useEffect(() => {
         const options = document.getElementById('options')
         const playGame = document.getElementById('playGame')
-        playGame.addEventListener('click', () => router.push('/servers'))
         const optionsButton = document.getElementById('optionsButton')
         const saveButton = document.getElementById('saveButton')
         const cancelButton = document.getElementById('cancelButton')
@@ -34,8 +33,8 @@ const Page = () => {
             cookie.soundEffectsVol = soundEffectsVolumeInput.value
             cookie.nick = nickInput.value
 
-            document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/game`;
-            document.cookie = `nick=${nickInput.value}; path=/game`;
+            document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/`;
+            document.cookie = `nick=${nickInput.value}; path=/`;
 
             options.style.display = 'none'
         })
