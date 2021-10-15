@@ -1,0 +1,9 @@
+@media screen and (max-width:597px) {
+    section div#options {
+        width: 100%
+    }
+    input[type=range] {
+        margin: 5px auto;
+        width: 100%;
+    }
+}

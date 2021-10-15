@@ -27,10 +27,10 @@ const Game = (props) => {
             socket.emit('getSetup', true)
         }
 
-        const game = createGame(socket);
+        const game = createGame(data);
         const Listener = createListener();
 
-        socket.on('gameOver', (command) => {
+        socket.on('deadPlayerGameOver', (command) => {
             if (command.playerId != socket.id) return;
             game.state.observedPlayerId = Object.keys(game.state.players)[0]
             alert(`Você Perdeu, seu score máximo foi ${command.score}`)            
@@ -40,8 +40,7 @@ const Game = (props) => {
             router.push('/servers')
         })
         socket.on('setup', (state) => {
-            let nick = prompt('Escolha seu nick')
-            socket.emit('nick', nick)
+            socket.emit('nick', data.nick)
 
             Listener.registerSettings({
                 playerId: socket.id,
@@ -90,9 +89,7 @@ const Game = (props) => {
             if (command.playerId != socket.id) game.movePlayer(command)
         });
         socket.on('song', (command) => {
-            if (command.playerId != socket.id) return;
-            if (command.song == 'kill') var song = new Audio('/songs/kill.mp3');
-            song?.play()
+            if (command.playerId == socket.id) game.playSoundEffect(command.song)
         });
 
         const startButton = document.getElementById('startButton')

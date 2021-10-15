@@ -1,4 +1,4 @@
-function createGame() {
+function createGame(data) {
     const state = {
         fps: '0-0',
         ping: '?',
@@ -38,6 +38,7 @@ function createGame() {
     const deadPlayer = (command) => getGameFunction('deadPlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
     const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
+    const playSoundEffect = (command) => getGameFunction('playSoundEffect')(command, state, notifyAll, data)
 
     const setState = (newState) => Object.assign(state, newState)
 
@@ -96,6 +97,8 @@ function createGame() {
         })
     }
 
+    state.playSoundEffect = playSoundEffect
+    
     return {
 		notifyAll,
         movePlayer,
@@ -114,7 +117,8 @@ function createGame() {
         addBot,
         moveBot,
         deadPlayer,
-        clientStart
+        clientStart,
+        playSoundEffect
     }
 }
 

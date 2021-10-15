@@ -1,4 +1,5 @@
 module.exports = {
     socket: null,
-    nick: null
+    nick: null,
+    soundEffectsVol: 50
 }

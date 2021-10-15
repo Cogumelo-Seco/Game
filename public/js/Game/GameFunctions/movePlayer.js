@@ -59,11 +59,7 @@ module.exports = (command, state, notifyAll, removeFruit) => {
         if (player.x == fruit.x && player.y == fruit.y) {
             player.score++
 
-            if (command.playerId == state.myID) {
-                let song = new Audio('/songs/up.mp3');
-                if (player.score%50 == 0) song = new Audio('/songs/up+.mp3');
-                song.play()
-            }
+            if (command.playerId == state.myID) state.playSoundEffect(player.score%50 == 0 ? 'up+' : 'up')
 
             removeFruit({ 
                 playerId: command.playerId,

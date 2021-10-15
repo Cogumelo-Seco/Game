@@ -58,6 +58,66 @@ section ul li {
 
 section ul li:hover {
     font-size: 21px;
-    background-color: rgba(192, 73, 73, 0.637);;
+    background-color: rgba(192, 73, 73, 0.637);
     animation: toggleRotation 0.5s linear infinite;
+}
+
+/* Opções */
+
+section div#options {
+    /*display: none;*/
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    height: 70%;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.686);
+    color: white;
+    border: solid black 2px;
+    border-radius: 10px;
+}
+
+section div#options button {
+    position: absolute;
+    bottom: 5px;
+    color: white;
+    background-color: rgba(44, 44, 44, 0.686);
+    border: solid black 2px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+section div#options button:hover {
+    background-color: rgba(84, 84, 84, 0.686);
+}
+
+section div#options button#saveButton {
+    right: 5px;
+}
+
+section div#options button#cancelButton {
+    right: 65px;
+}
+
+
+section div#options input.textInput {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: rgb(215, 215, 215);
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 3px;
+    transition: all 0.5s;
+}
+
+section div#options input.textInput:focus {
+    background-color: rgb(190, 190, 190)
+}
+
+section div#options p#soundEffectsVolume a#soundEffectsVolumePercent {
+    font-size: 15px;
 }
