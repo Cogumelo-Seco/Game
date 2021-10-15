@@ -2,10 +2,12 @@ import data from '../public/js/data.js';
 import createPage from '../public/js/Home/Home.js';
 import render from '../public/js/Home/RenderScreen.js';
 import { useRouter } from 'next/router';
+import cookies from 'next-cookies';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
 const Page = () => {
+    const cookie = cookies(data.cookies)
     const router = useRouter()
 
     useEffect(() => {
@@ -22,15 +24,18 @@ const Page = () => {
 
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
-            soundEffectsVolumeInput.value = data.soundEffectsVol
-            nickInput.value = data.nick
+            soundEffectsVolumeInput.value = cookie.soundEffectsVol
+            nickInput.value = cookie.nick
 
             options.style.display = 'block'
         })
 
         saveButton.addEventListener('click', () => {
-            data.soundEffectsVol = soundEffectsVolumeInput.value
-            data.nick = nickInput.value
+            cookie.soundEffectsVol = soundEffectsVolumeInput.value
+            cookie.nick = nickInput.value
+
+            document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/game`;
+            document.cookie = `nick=${nickInput.value}; path=/game`;
 
             options.style.display = 'none'
         })

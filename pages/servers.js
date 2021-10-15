@@ -1,11 +1,14 @@
+import data from '../public/js/data.js';
 import createPage from '../public/js/Home/Home.js';
 import render from '../public/js/Home/RenderScreen.js';
 import { useRouter } from 'next/router';
 import { io } from 'socket.io-client';
+import cookies from 'next-cookies';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
 const Page = (props) => {
+    const cookie = cookies(data.cookies)
     const router = useRouter()
 
     useEffect(() => {

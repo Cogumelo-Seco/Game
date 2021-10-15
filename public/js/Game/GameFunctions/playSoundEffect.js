@@ -1,19 +1,22 @@
 module.exports = (type, state, notifyAll, data) => {
+    const vol = Number(data.soundEffectsVol)/100
+    let songDir = null
+
     switch(type) {
         case 'kill':
-            var song = new Audio('/songs/kill.mp3');
-            song.volume = data.soundEffectsVol/100
-            song.play()
+            songDir = '/songs/kill.mp3'
             break
         case 'up+':
-            var song = new Audio('/songs/up+.mp3');
-            song.volume = data.soundEffectsVol/100
-            song.play()
+            songDir = '/songs/up+.mp3'
             break
         case 'up':
-            var song = new Audio('/songs/up.mp3');
-            song.volume = data.soundEffectsVol/100
-            song.play()
+            songDir = '/songs/up.mp3'
             break
+    }
+
+    if (songDir) {
+        const song = new Audio(songDir);
+        song.volume = vol
+        song.play()
     }
 }

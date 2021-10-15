@@ -3,11 +3,13 @@ import createGame from '../public/js/Game/Game.js';
 import createListener from '../public/js/Game/Listener.js';
 import PageFunctions from '../public/js/Game/PageFunctions/index.js';
 import io from 'socket.io-client';
+import cookies from 'next-cookies';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
 const Game = (props) => {
+    const cookie = cookies(data.cookies)
     const router = useRouter()
 
     useEffect(() => {
@@ -27,7 +29,8 @@ const Game = (props) => {
             socket.emit('getSetup', true)
         }
 
-        const game = createGame(data);
+        console.log(cookie)
+        const game = createGame(cookie);
         const Listener = createListener();
 
         socket.on('deadPlayerGameOver', (command) => {
@@ -40,7 +43,7 @@ const Game = (props) => {
             router.push('/servers')
         })
         socket.on('setup', (state) => {
-            socket.emit('nick', data.nick)
+            socket.emit('nick', cookie.nick)
 
             Listener.registerSettings({
                 playerId: socket.id,
