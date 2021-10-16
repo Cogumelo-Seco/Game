@@ -41,8 +41,12 @@ const Page = (props) => {
         const data = require('../public/js/data.js')
         
         let socket = null
-        if (data.socket) socket = data.socket
-        else socket = io(props.SERVER, {
+        if (data.socket) {
+            socket.emit('disconnectedPlayer')
+            socket = io(props.SERVER, {
+                withCredentials: true,
+            })
+        } else socket = io(props.SERVER, {
             withCredentials: true,
         })
 

@@ -5,7 +5,11 @@ module.exports = (canvas, game, Listener, scoreArr) => {
 
     for (const playerId in game.state.players) {
         const player2 = game.state.players[playerId];
-        if (player2.dead) break;
+        if (!player2.bot && !player2.dead) renderPlayer(player2, playerId)
+        else if (player2.bot) renderPlayer(player2, playerId)
+    }
+
+    function renderPlayer(player2, playerId) {
         let color1 = game.state.myID == playerId ? 'green' : '#363636'
         let color2 = playerId == scoreArr[0].playerId ? 'rgb(204, 146, 0)': false
 
@@ -16,7 +20,7 @@ module.exports = (canvas, game, Listener, scoreArr) => {
             let x = (trace.x-player.x)+(Number.parseInt(canvas.width/2))
             let y = (trace.y-player.y)+(Number.parseInt(canvas.height/2))
             if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {                
-                ctx.globalAlpha = 0.5
+                ctx.globalAlpha = 0.4
                 ctx.fillRect(x, y, 1, 1);
             }
         }

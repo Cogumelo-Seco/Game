@@ -300,3 +300,44 @@ header button#startButton {
 header button#startButton:hover {
     background-color: rgba(150, 0, 0, 1);
 }
+
+/* Tela final */
+
+header div#finalScreen {
+    display: none;
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    height: 50%;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    border-radius: 10px;
+    line-height: 200%;
+}
+
+header div#finalScreen h1 {
+    font-size: 50px;
+    transform: translateY(-150%);
+    color: black;
+}
+
+header div#finalScreen p {
+    font-size: 20px;
+}
+
+header div#finalScreen button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: white;
+    background-color: rgba(44, 44, 44, 0.686);
+    border: solid black 2px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+header div#finalScreen button:hover {
+    background-color: rgba(84, 84, 84, 0.686);
+}

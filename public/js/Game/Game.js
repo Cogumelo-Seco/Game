@@ -10,6 +10,7 @@ function createGame(data) {
         players: {},
         fruits: {},
 		stopped: true,
+        gameOver: false,
         screen: {
             width: 50,
             height: 50
@@ -63,7 +64,7 @@ function createGame(data) {
         if (command.content.trim()) state.messages.push(command)
     }
 
-	const start = (game, sockets, serverAddBot) => {
+	const start = (game, sockets, socket, serverAddBot) => {
 		setInterval(() => addFruit({ serverId: game.state.serverId }), game.state.fruitBirthSpeed || 1000)
 
 		game.state.stopped = false
@@ -72,24 +73,48 @@ function createGame(data) {
 			game.state.time -= 1000
 			if (game.state.time <= 0) {
 				game.state.time = game.state.serverTime
-				game.resetGame()
+				game.endOfTheGame({ serverId: game.state.serverId })
 			}
 		}, 1000)
 		
 		for (let botNumber = 0;botNumber < game.state.botCount; botNumber++) {
-			serverAddBot(game, sockets, botNumber, 0)
+			serverAddBot(game, sockets, socket, botNumber, 0)
 		}
 
 		notifyAll({
-            type: 'startGame'
+            type: 'startGame',
+			serverId: state.serverId
         })
 	}
 
-    const resetGame = () => {
-        state.fruits = {}
+    const endOfTheGame = (command, router) => {
+        if (command.serverId != state.serverId) return;
+        state.stopped = true;
+        state.gameOver = true;
+
+        if (state.myID) {
+            let scoreArr = []
+            for (let i in state.players)
+                scoreArr.push({ score: state.players[i].score, nick: state.players[i].nick, playerId: i })
+            scoreArr = scoreArr.slice().sort((a, b) => b.score-a.score)
+
+            const finalScreen = document.getElementById('finalScreen')
+            const finalScreenP1 = document.getElementById('finalScreenP1')
+            const finalScreenP2 = document.getElementById('finalScreenP2')
+            const finalScreenP3 = document.getElementById('finalScreenP3')
+
+            finalScreen.style.display = 'block'
+
+            finalScreenP1.innerText = `1º ${scoreArr[0].nick} - ${scoreArr[0].score}`
+            finalScreenP2.innerText = `2º ${scoreArr[1].nick} - ${scoreArr[1].score}`
+            finalScreenP3.innerText = `3º ${scoreArr[2].nick} - ${scoreArr[2].score}`
+
+            setTimeout(() => router.push('/servers'), 60000)
+        }
 
         notifyAll({
-            type: 'reset-game',
+            type: 'endOfTheGame',
+			serverId: state.serverId
         })
     }
 
@@ -107,7 +132,7 @@ function createGame(data) {
         subscribe,
         start,
         changePlayer,
-        resetGame,
+        endOfTheGame,
         ping,
         message,
         addBot,

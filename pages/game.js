@@ -21,6 +21,7 @@ const Game = (props) => {
             }
 	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'
+        document.getElementById('exitButton').addEventListener('click', () => router.push('/servers'))
         const debug = false
 
         const canvas = document.getElementById('screen');
@@ -87,7 +88,7 @@ const Game = (props) => {
         socket.on('remove-player', (command) => game.removePlayer(command))        
         socket.on('move-bot', (command) => game.moveBot(command))
         socket.on('change-player', (command) => game.changePlayer(command))
-        socket.on('reset-game', (command) => game.resetGame(command))
+        socket.on('endOfTheGame', (command) => game.endOfTheGame(command, router))
         socket.on('message', (command) => game.message(command))
         socket.on('deadPlayer', (command) => game.deadPlayer(command))
         socket.on('startGame', (command) => {
@@ -95,10 +96,6 @@ const Game = (props) => {
         })
         socket.on('newADM', (command) => {
             if (command.serverId == game.state.serverId) game.state.adm = command.admId
-        })
-        socket.on('gameOver', (command) => {
-            router.push('/')
-            alert('O administrador saiu do servidor')
         })
         socket.on('move-player', (command) => {
             if (command.playerId != socket.id) game.movePlayer(command)
@@ -113,7 +110,7 @@ const Game = (props) => {
             socket.emit('startGame', { serverId: game.state.serverId })
         })
         setTimeout(() => {
-            socket.emit('startGame', { serverId: game.state.serverId })
+            if (game.state.adm == game.state.myID) socket.emit('startGame', { serverId: game.state.serverId })
         }, 60000)
     }, [])
 
@@ -161,6 +158,14 @@ const Game = (props) => {
 
                     <button id="startButton">Iniciar partida</button>
 
+                    <div id="finalScreen">
+                        <h1>Game Over</h1>
+                        <p id="finalScreenP1" style={{ color: 'rgb(255, 196, 48)' }} />
+                        <p id="finalScreenP2" style={{ color: 'gray' }} />
+                        <p id="finalScreenP3" style={{ color: 'rgb(0, 229, 255)' }} />
+                        <button id="exitButton">Sair</button>
+                    </div>
+
                     <div id="playerScore">Score: ?</div>
                     <div id="fpsDisplay">?FPS</div>
                     <div id="pingDisplay">?ms</div>
@@ -174,32 +179,7 @@ const Game = (props) => {
         </html>
     )
 }
-/*
-<button id="chat-button" />
-<h2 id="timer">00:00</h2>
-<h2 id="pingDisplay" title="Ping">?ms</h2>
-<p />
-<div id="chat">
-    <canvas id="chat-content" width="2000" height="4000" />
-    <p/>
-    <input id="message-box" maxLength="140" placeholder="Enviar mensagem" />
-    <button id="send-button" title="Enviar mensagem" />
-</div>
-<div id="scoreTable">
-    <a id="p1" title="Primeiro" />
-    <a id="p2" title="Segundo" />
-    <a id="p3" title="Terceiro" />
-    <a id="p4" />
-</div>
 
-<button className="arrows-buttons" id="arrow-up" />
-<p />
-<button className="arrows-buttons" id="arrow-left" />
-<button className="arrows-buttons" id="arrow-down" />
-<button className="arrows-buttons" id="arrow-right" />
-<h2 id="connecting">Conectando com o servidor...</h2>
-<p />
-<button id="music-button">Música 🔇</button>*/
 export async function getStaticProps() {
     const SERVER = process.env.SERVER
 

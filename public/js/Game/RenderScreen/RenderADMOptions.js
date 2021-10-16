@@ -1,7 +1,9 @@
 module.exports = (canvas, game, Listener, scoreArr) => {
     const startButton = document.getElementById('startButton')
 
-    if (game.state.stopped && game.state.myID == game.state.adm) {
+    if (game.state.stopped && game.state.myID == game.state.adm && !game.state.gameOver) {
         startButton.style.display = 'block'
+    } else {
+        startButton.style.display = 'none'
     }
 }

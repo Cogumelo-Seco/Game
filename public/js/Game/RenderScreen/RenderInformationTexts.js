@@ -22,7 +22,8 @@ module.exports = (canvas, game, Listener, scoreArr) => {
     if (game.state.time) {
         const timer = document.getElementById('timer')
         
-        if (game.state.stopped) timer.innerText = 'Esperando o administrador começar a partida'
+        if (game.state.stopped && !game.state.gameOver) timer.innerText = 'Esperando o administrador começar a partida'
+        else if (game.state.stopped && game.state.gameOver) timer.innerText = 'Jogo acabado'
         else {
             let time = game.state.time-(+new Date())
             if (time <= 1) game.state.time = (+new Date())+game.state.serverTime
