@@ -48,7 +48,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 
-    rAF(() => {
+    if (!game.state.router) rAF(() => {
         renderScreen(canvas, game, requestAnimationFrame, Listener)
     })
 }

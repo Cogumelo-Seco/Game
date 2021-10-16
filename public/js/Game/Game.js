@@ -11,6 +11,7 @@ function createGame(data) {
         fruits: {},
 		stopped: true,
         gameOver: false,
+        router: false,
         screen: {
             width: 50,
             height: 50
@@ -92,7 +93,7 @@ function createGame(data) {
         state.stopped = true;
         state.gameOver = true;
 
-        if (state.myID) {
+        if (state.myID && !state.router) {
             let scoreArr = []
             for (let i in state.players)
                 scoreArr.push({ score: state.players[i].score, nick: state.players[i].nick, playerId: i })
@@ -105,11 +106,14 @@ function createGame(data) {
 
             finalScreen.style.display = 'block'
 
-            finalScreenP1.innerText = `1º ${scoreArr[0].nick} - ${scoreArr[0].score}`
-            finalScreenP2.innerText = `2º ${scoreArr[1].nick} - ${scoreArr[1].score}`
-            finalScreenP3.innerText = `3º ${scoreArr[2].nick} - ${scoreArr[2].score}`
+            if (scoreArr[0]) finalScreenP1.innerText = `1º ${scoreArr[0].nick} - ${scoreArr[0].score}`
+            if (scoreArr[1]) finalScreenP2.innerText = `2º ${scoreArr[1].nick} - ${scoreArr[1].score}`
+            if (scoreArr[2]) finalScreenP3.innerText = `3º ${scoreArr[2].nick} - ${scoreArr[2].score}`
 
-            setTimeout(() => router.push('/servers'), 60000)
+            setTimeout(() => {
+                state.router = true
+                router.push('/servers')
+            }, 60000)
         }
 
         notifyAll({

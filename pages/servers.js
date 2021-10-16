@@ -42,7 +42,7 @@ const Page = (props) => {
         
         let socket = null
         if (data.socket) {
-            socket.emit('disconnectedPlayer')
+            data.socket.emit('disconnectedPlayer')
             socket = io(props.SERVER, {
                 withCredentials: true,
             })

@@ -20,8 +20,7 @@ const Game = (props) => {
                     .catch(() => console.log('Erro ao tentar deixar o jogo em tela cheia'))
             }
 	    }, 1000)
-        if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'
-        document.getElementById('exitButton').addEventListener('click', () => router.push('/servers'))
+        if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'        
         const debug = false
 
         const canvas = document.getElementById('screen');
@@ -40,6 +39,11 @@ const Game = (props) => {
 
         const game = createGame(cookie);
         const Listener = createListener();
+
+        document.getElementById('exitButton').addEventListener('click', () => {
+            game.state.router = true
+            router.push('/servers')
+        })
 
         socket.on('deadPlayerGameOver', (command) => {
             if (command.playerId != socket.id) return;
