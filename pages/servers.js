@@ -37,16 +37,9 @@ const Page = (props) => {
         setTimeout(() => page.addBot(), 1000)
         
         render(canvas, page)
-
-        const data = require('../public/js/data.js')
         
-        let socket = null
-        if (data.socket) {
-            data.socket.emit('disconnectedPlayer')
-            socket = io(props.SERVER, {
-                withCredentials: true,
-            })
-        } else socket = io(props.SERVER, {
+        if (data.socket) data.socket.emit('disconnectedPlayer')
+        const socket = io(props.SERVER, {
             withCredentials: true,
         })
 
@@ -141,7 +134,7 @@ const Page = (props) => {
                     <div id="serverCreationWindow">
                         <p>Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
                         <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 2-20</p>
-                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 50-1500</p>
+                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 50-500</p>
                         <p>Velocidade de spawn das frutas em segundos: <input className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.5-5</p>
                         <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0-19</p>
                         <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5-20</p>

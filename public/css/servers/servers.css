@@ -163,7 +163,7 @@ section div#serverCreationWindow input.serverCreationWindow-inputs.botCount {
 }
 
 section div#serverCreationWindow input.serverCreationWindow-inputs.gameSize {
-    width: 32px;
+    width: 24px;
 }
 
 section div#serverCreationWindow input.serverCreationWindow-inputs.maxPlayers {
