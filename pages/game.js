@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
-const Game = (props) => {
+const Game = (props) => {    
     const cookie = cookies(data.cookies)
     const router = useRouter()
 
@@ -90,7 +90,12 @@ const Game = (props) => {
         socket.on('reset-game', (command) => game.resetGame(command))
         socket.on('message', (command) => game.message(command))
         socket.on('deadPlayer', (command) => game.deadPlayer(command))
-        socket.on('startGame', (command) => game.clientStart(command))
+        socket.on('startGame', (command) => {
+            if (command.serverId == game.state.serverId) game.state.stopped = false
+        })
+        socket.on('newADM', (command) => {
+            if (command.serverId == game.state.serverId) game.state.adm = command.admId
+        })
         socket.on('gameOver', (command) => {
             router.push('/')
             alert('O administrador saiu do servidor')
@@ -105,10 +110,10 @@ const Game = (props) => {
         const startButton = document.getElementById('startButton')
         startButton.addEventListener('click', () => {
             startButton.style.display = 'none'
-            socket.emit('startGame')
+            socket.emit('startGame', { serverId: game.state.serverId })
         })
         setTimeout(() => {
-            socket.emit('startGame')
+            socket.emit('startGame', { serverId: game.state.serverId })
         }, 60000)
     }, [])
 

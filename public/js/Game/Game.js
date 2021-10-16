@@ -85,10 +85,6 @@ function createGame(data) {
         })
 	}
 
-    const clientStart = () => {
-        state.stopped = false
-    }
-
     const resetGame = () => {
         state.fruits = {}
 
@@ -117,7 +113,6 @@ function createGame(data) {
         addBot,
         moveBot,
         deadPlayer,
-        clientStart,
         playSoundEffect
     }
 }

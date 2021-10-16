@@ -43,6 +43,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderInformationTexts')(canvas, game, Listener, scoreArr)
         require('./RenderPlayerSelectionToLook')(canvas, game, Listener, scoreArr)
         require('./RenderMiniMap')(canvas, game, Listener, scoreArr)
+        require('./RenderADMOptions')(canvas, game, Listener, scoreArr)
     }
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;

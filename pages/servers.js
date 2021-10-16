@@ -108,6 +108,7 @@ const Page = (props) => {
                         <p id="GameSize">${servers[i].gameSize}X${servers[i].gameSize}</p>
                     `
                     if (servers[i].maxPlayers > servers[i].players) server.addEventListener('click', () => joinServer(i))
+                    else server.style.borderColor = 'red'
                     serverList.appendChild(server)
                 }
             } else serverList.innerHTML = 'Sem servidores disponíveis!'
