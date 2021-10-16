@@ -304,7 +304,7 @@ header button#startButton:hover {
 /* Tela final */
 
 header div#finalScreen {
-    display: none;
+    /*display: none;*/
     position: absolute;
     transform: translateX(-50%) translateY(-50%);
     left: 50%;
