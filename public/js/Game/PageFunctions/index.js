@@ -1,11 +1,9 @@
 import renderScreen from '../RenderScreen/index.js';
-import renderLow from '../RenderScreen/indexLow.js';
 
 function Function(game, canvas, socket, Listener, cookies) {
     let playerId = socket.id
     game.state.myID = playerId
     renderScreen(canvas, game, requestAnimationFrame, Listener);
-    renderLow(canvas, game, requestAnimationFrame, Listener, cookies);
     canvas.style.display = 'block';
     document.getElementById('miniMap').style.display = 'block';
     document.getElementById('timer').style.display = 'block';

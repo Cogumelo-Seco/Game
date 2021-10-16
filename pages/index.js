@@ -11,6 +11,8 @@ const Page = () => {
     const router = useRouter()
 
     useEffect(() => {
+        if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/home/animations.css" />'
+
         const options = document.getElementById('options')
         const playGame = document.getElementById('playGame')
         const optionsButton = document.getElementById('optionsButton')
@@ -20,13 +22,17 @@ const Page = () => {
         const soundEffectsVolumeInput = document.getElementById('soundEffectsVolumeInput')
         const soundEffectsVolumePercent = document.getElementById('soundEffectsVolumePercent')
         const nickInput = document.getElementById('nickInput')
-        const showInfos = document.getElementById('showInfos')
+        const showInfos = document.getElementById('showInfosCheckbox')
+        const fullScreen = document.getElementById('fullScreenCheckbox')
+        const animations = document.getElementById('animationsCheckbox')
 
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
             soundEffectsVolumeInput.value = cookie.soundEffectsVol
             if (cookie.nick) nickInput.value = cookie.nick
             showInfos.checked = cookie.showInfos == 'true' ? true : false
+            fullScreen.checked = cookie.fullScreen == 'true' ? true : false
+            animations.checked = cookie.animations == 'true' ? true : false
 
             options.style.display = 'block'
         })
@@ -37,7 +43,9 @@ const Page = () => {
 
             document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/`;
             document.cookie = `nick=${nickInput.value}; path=/`;
-            document.cookie = `showInfos=${showInfos.checked}; path=/`;            
+            document.cookie = `showInfos=${showInfos.checked}; path=/`;
+            document.cookie = `fullScreen=${fullScreen.checked}; path=/`;
+            document.cookie = `animations=${animations.checked}; path=/`;
 
             options.style.display = 'none'
         })
@@ -81,7 +89,6 @@ const Page = () => {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                <link rel="stylesheet" href="/css/home/animations.css" />
                 <link rel="stylesheet" href="/css/home/home.css" />
                 <link rel="stylesheet" href="/css/home/resizable.css" />
             </Head>
@@ -98,14 +105,26 @@ const Page = () => {
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
                         </p>
+			<p id="soundEffectsVolume">
+                            Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>
+                        </p>
                         <p>
                             Mostrar Informações: <label className="switch">
-                                <input type="checkbox" id="showInfos" />
+                                <input type="checkbox" id="showInfosCheckbox" />
                                 <span className="slider"></span>
                             </label>
                         </p>
-                        <p id="soundEffectsVolume">
-                            Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>
+                        <p>
+                            Tela cheia <label className="switch">
+                                <input type="checkbox" id="fullScreenCheckbox" />
+                                <span className="slider"></span>
+                            </label>
+                        </p>
+                        <p>
+                            Animações: <label className="switch">
+                                <input type="checkbox" id="animationsCheckbox" />
+                                <span className="slider"></span>
+                            </label>
                         </p>
                         <button id="saveButton">Salvar</button>
                         <button id="cancelButton">Cancelar</button>

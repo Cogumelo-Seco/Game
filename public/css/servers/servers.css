@@ -140,15 +140,15 @@ section div#serverCreationWindow {
     display: none;
     position: absolute;
     overflow: scroll;
-    transform: translateX(-50%) translateY(50%);
+    transform: translateX(-50%) translateY(-50%);
     left: 50%;
-    bottom: 54%;
+    top: 46%;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     border-radius: 10px;
     width: 50%;
     height: 70%;
-    transition: all 0.5s;
+    animation: verticalMenuSlide 0.2s ease-out;
 }
 
 section div#serverCreationWindow input.serverCreationWindow-inputs {

@@ -13,6 +13,14 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        let interval = setInterval(() => {
+	        if (cookie.fullScreen == 'true') {
+                document.documentElement.requestFullscreen()
+  		            .then(() => clearInterval(interval))
+                    .catch(() => console.log('Erro ao tentar deixar o jogo em tela cheia'))
+            }
+	    }, 1000)
+        if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'
         const debug = false
 
         const canvas = document.getElementById('screen');
@@ -113,7 +121,6 @@ const Game = (props) => {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 
-                <link rel="stylesheet" href="/css/game/animations.css" />
                 <link rel="stylesheet" href="/css/game/game.css" />
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </Head>

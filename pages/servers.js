@@ -12,6 +12,14 @@ const Page = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        let interval = setInterval(() => {
+	        if (cookie.fullScreen == 'true') {
+                document.documentElement.requestFullscreen()
+  		            .then(() => clearInterval(interval))
+                    .catch(() => console.log('Erro ao tentar deixar o jogo em tela cheia'))
+            }
+	    }, 1000)
+        if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/servers/animations.css" />'
         document.getElementById('returnButton').addEventListener('click', () => router.push('/'))
 
         const reloadButton = document.getElementById('reloadButton')
@@ -32,7 +40,9 @@ const Page = (props) => {
 
         const data = require('../public/js/data.js')
         
-        const socket = io(props.SERVER, {
+        let socket = null
+        if (data.socket) socket = data.socket
+        else socket = io(props.SERVER, {
             withCredentials: true,
         })
 
@@ -114,7 +124,6 @@ const Page = (props) => {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                <link rel="stylesheet" href="/css/servers/animations.css" />
                 <link rel="stylesheet" href="/css/servers/servers.css" />
                 <link rel="stylesheet" href="/css/servers/resizable.css" />             
             </Head>
