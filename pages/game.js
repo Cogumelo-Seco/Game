@@ -40,11 +40,11 @@ const Game = (props) => {
         socket.on('deadPlayerGameOver', (command) => {
             if (command.playerId != socket.id) return;
             game.state.observedPlayerId = Object.keys(game.state.players)[0]
-            alert(`Você Perdeu, seu score máximo foi ${command.score}`)            
+            game.state.gameAlert(`Você Perdeu, seu score máximo foi ${command.score}`)            
         })
         socket.on('maxPlayers', () => {
-            alert('Desculpe, mas o servidor está cheio')
-            router.push('/servers')
+            game.state.gameAlert('Desculpe, mas o servidor está cheio')
+            setTimeout(() => router.push('/servers'), 3000) 
         })
         socket.on('setup', (state) => {
             socket.emit('addMyPlayer', cookie.nick)
@@ -75,8 +75,8 @@ const Game = (props) => {
                 if (game.state.noConnection <= 5) game.state.noConnection += 1
                 else {
                     game.state.noConnection = -1000
-                    alert('Sem conexão com o servidor!')
-                    router.push('/')
+                    game.state.gameAlert('Sem conexão com o servidor!')
+                    setTimeout(() => router.push('/servers'), 3000)                    
                 }
             }, 1000)
             PageFunctions(game, canvas, socket, Listener, cookie)
@@ -130,8 +130,10 @@ const Game = (props) => {
                 <link rel="stylesheet" href="/css/game/resizable.css" />
             </head>
             <body id="body">
-                <header id="header-screen">    
+                <header id="header-screen">
                     <div id="loadingCircle" />
+
+                    <div id="gameAlert" />
 
                     <button id="chat-button" />
                     <div id="unreadMessageCounter" />
@@ -169,7 +171,8 @@ const Game = (props) => {
                         <button id="exitButton">Sair</button>
                     </div>
 
-                    <div id="playerScore">Score: ?</div>                    
+                    <div id="playerScore">Score: ?</div>
+                    <div id="playerCounter">?Players</div>
                     <div id="fruitCounter">?Frutas</div>
                     <div id="fpsDisplay">?FPS</div>
                     <div id="pingDisplay">?ms</div>

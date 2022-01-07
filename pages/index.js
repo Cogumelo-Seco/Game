@@ -6,7 +6,7 @@ import cookies from 'next-cookies';
 import React, { useEffect } from 'react';
 import Head from "next/head";
 
-const Page = () => {
+const Page = () => {    
     const cookie = cookies(data.cookies)
     const router = useRouter()
 
@@ -43,6 +43,10 @@ const Page = () => {
         saveButton.addEventListener('click', () => {
             cookie.soundEffectsVol = soundEffectsVolumeInput.value
             cookie.nick = nickInput.value
+            cookie.showInfos = showInfos.checked.toString()
+            cookie.fullScreen = fullScreen.checked.toString()
+            cookie.animations = animations.checked.toString()
+            cookie.darkTheme = darkTheme.checked.toString()
 
             document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/`;
             document.cookie = `nick=${nickInput.value}; path=/`;
@@ -107,8 +111,6 @@ const Page = () => {
                     </ul>
 
                     <div id="options">
-                        <p id="alert">Atualize a página após salvar para aplicar melhor as alterações!!</p>
-
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
                         </p>

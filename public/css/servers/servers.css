@@ -51,7 +51,7 @@ section div#serverList div#server {
     margin: 5px 0 0 5px;
     transition: all 1s;
     transform: translateX(0);
-    animation: serverButtonSlide 0.2s ease forwards;
+    animation: serverButton 0.3s ease;
 }
 
 section div#serverList div#server:hover {

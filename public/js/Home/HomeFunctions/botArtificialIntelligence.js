@@ -96,5 +96,5 @@ module.exports = (command, state) => {
                 delete state.fruits[fruitId]
             }
         }
-    }, 500)
+    }, 200)
 }

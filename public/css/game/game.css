@@ -14,6 +14,23 @@ header {
     height: 100%;
 }
 
+div#gameAlert {
+    z-index: 1;
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-100%) translateX(-50%);
+    left: 50%;
+    margin: 5px;
+    width: 50%;
+    height: 50px;
+    color: white;
+    background-color: rgb(100, 50, 50);
+    border: solid black 2px;
+    animation: gameAlert 0.2s linear forwards;
+}
+
 /* Textos informativos */
 
 header div#timer {
@@ -55,6 +72,16 @@ header div#fruitCounter {
     position: absolute;
     right: 5px;
     bottom: 55px;
+}
+
+header div#playerCounter {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
+    position: absolute;
+    right: 5px;
+    bottom: 80px;
 }
 
 header div#playerScore {
@@ -165,8 +192,13 @@ header div#chat div#chat-content {
     height: 91%;
 }
 
-header div#chat div#chat-content a#Message {
+header div#chat div#chat-content a#Message {    
+    cursor: default;
     margin-bottom: 10px;
+}
+
+header div#chat div#chat-content a#Name {    
+    cursor: default;
 }
 
 header div#chat input#message-box {
@@ -178,11 +210,18 @@ header div#chat input#message-box {
     width: 78%;
     bottom: 0;
     left: 0;
+    color: black;
+    background-color: white;
+}
+
+body#dark header div#chat input#message-box {
+    color: white;
+    background-color: rgb(63, 63, 63);
 }
 
 header div#chat button#send-button {
     cursor: pointer;
-    background: rgb(0, 185, 252) url(/images/send-button.png) no-repeat center 0px / 100%;
+    background: rgb(0, 125, 170) url(/images/send-button.png) no-repeat center 0px / 100%;
     border: none;
     position: absolute;
     width: 20%;
@@ -193,7 +232,7 @@ header div#chat button#send-button {
 }
 
 header div#chat button#send-button:hover {
-    background-color: rgb(0, 166, 226);
+    background-color: rgb(0, 110, 160);
 }
 
 /* Setas de seleção de players a espectar */
@@ -260,7 +299,7 @@ header div#joystickContent div#joystick {
     border-radius: 100%;
 }
 
-/* Mimi mapa */
+/* Mini mapa */
 
 header canvas#miniMap {
     display: none;
@@ -271,14 +310,9 @@ header canvas#miniMap {
     transform: translateY(50%);
     left: 10px;
     bottom: 50%;
-    background-color: #CCC;
     border: solid black 2px;
     width: 130px;
     height: 130px;
-}
-
-body#dark header canvas#miniMap {
-    background-color: #363636;
 }
 
 /* Canvas/Jogo */

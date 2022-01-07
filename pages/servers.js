@@ -60,6 +60,10 @@ const Page = (props) => {
             router.push('/game')
         })
 
+        socket.on('serverDoesNotExist', () => socket.emit('getServer', {
+                type: 'list'
+        }))
+
         const serverCreationWindow = document.getElementById('serverCreationWindow')
         const botCount = document.querySelector('.serverCreationWindow-inputs.botCount')
         const gameSize = document.querySelector('.serverCreationWindow-inputs.gameSize')

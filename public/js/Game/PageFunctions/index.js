@@ -10,7 +10,8 @@ function Function(game, canvas, socket, Listener, cookie) {
     document.getElementById('playerScore').style.display = 'block';
     if (cookie.showInfos == 'true') document.getElementById('pingDisplay').style.display = 'block';
     if (cookie.showInfos == 'true') document.getElementById('fpsDisplay').style.display = 'block';
-    if (cookie.showInfos == 'true') document.getElementById('fruitCounter').style.display = 'block';    
+    if (cookie.showInfos == 'true') document.getElementById('fruitCounter').style.display = 'block'; 
+    if (cookie.showInfos == 'true') document.getElementById('playerCounter').style.display = 'block'; 
     document.getElementById('loadingCircle').style.display = 'none'
     document.getElementById('scoreTable-button').style.display = 'block'
     if (socket.id == game.state.adm) document.getElementById('startButton').style.display = 'block'

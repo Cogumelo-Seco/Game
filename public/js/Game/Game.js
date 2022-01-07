@@ -124,7 +124,14 @@ function createGame(cookie) {
             type: 'endOfTheGame',
 			serverId: state.serverId
         })
-    }    
+    }
+
+    state.gameAlert = (text) => {
+        const gameAlert = document.getElementById('gameAlert')        
+        gameAlert.innerText = text
+        gameAlert.style.display = 'flex'
+        setTimeout(() => gameAlert.style.display = 'none', 5000)
+    }
     
     return {
 		notifyAll,

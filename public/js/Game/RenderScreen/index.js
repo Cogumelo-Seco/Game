@@ -7,7 +7,7 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
 
     const ctx = canvas.getContext('2d')
     ctx.fillStyle = cookie.darkTheme == 'true' ? '#363636' : '#CCC';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)    
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
