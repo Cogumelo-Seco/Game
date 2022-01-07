@@ -1,4 +1,4 @@
-module.exports = (command, state, notifyAll, removeFruit) => {  
+module.exports = (command, state, notifyAll, removeFruit) => {    
     if (!command.keyPressed) return;
     command.verify = state.myID
     if (command.serverId != state.serverId) {
@@ -52,14 +52,17 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     }
     notifyAll(command)
 
-    if (player.traces.length-1 > player.score || player.traces.length >= 1000) player.traces.splice(player.traces.length-1, 1)
+    if (player.traces.length-1 > player.score || player.traces.length >= 500) player.traces.splice(player.traces.length-1, 1)
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]
         if (player.x == fruit.x && player.y == fruit.y) {
             player.score++
 
-            if (command.playerId == state.myID) state.playSoundEffect(player.score%50 == 0 ? 'up+' : 'up')
+            if (command.playerId == state.myID) {
+                if (player.score%50 == 0) state.playSoundEffect('up+')
+                else state.playSoundEffect('up')
+            }
 
             removeFruit({ 
                 playerId: command.playerId,

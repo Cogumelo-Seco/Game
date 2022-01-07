@@ -1,7 +1,8 @@
-function createGame(data) {
+function createGame(cookie) {
     const state = {
         fps: '0-0',
         ping: '?',
+        noConnection: 0,
         time: NaN,
 		serverTime: 120000,
         observedNumber: 0,
@@ -11,7 +12,7 @@ function createGame(data) {
         fruits: {},
 		stopped: true,
         gameOver: false,
-        router: false,
+        playersSize: 10,        
         screen: {
             width: 50,
             height: 50
@@ -40,26 +41,22 @@ function createGame(data) {
     const deadPlayer = (command) => getGameFunction('deadPlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
     const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
-    const playSoundEffect = (command) => getGameFunction('playSoundEffect')(command, state, notifyAll, data)
+    const playSoundEffect = (command) => getGameFunction('playSoundEffect')(command, state, notifyAll, cookie)
+    state.playSoundEffect = playSoundEffect
 
     const setState = (newState) => Object.assign(state, newState)
 
     const ping = (command) => {
         notifyAll(command)
-        if (command.ping && command.playerId == state.myID) state.ping = +new Date()-command.ping
+        if (command.ping && command.playerId == state.myID) {
+            state.noConnection = 0
+            state.ping = +new Date()-command.ping
+        }
     }
 
     const message = (command) => {
         if (command.serverId != state.serverId) return
-        command.read = false
         notifyAll(command)
-        let messages = []
-        for (let i in state.messages) {
-            let message = state.messages[i]
-            let filter = messages.filter((m) => m.nick == message.nick && m.content == message.content)
-            if (!filter[0]) messages.push(message)
-        }
-        state.messages = messages
         if (state.messages.length >= 9) state.messages.splice(0 ,1)
         if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
         if (command.content.trim()) state.messages.push(command)
@@ -74,7 +71,16 @@ function createGame(data) {
 			game.state.time -= 1000
 			if (game.state.time <= 0) {
 				game.state.time = game.state.serverTime
-				game.endOfTheGame({ serverId: game.state.serverId })
+				if (game.state.serverType == 'InfiniteServer') {
+					for (let playerId in game.state.players) {
+						game.changePlayer({
+							playerId,
+							score: 1,
+							traces: [],
+							serverId: game.state.serverId
+						})
+					}				
+				} else game.endOfTheGame({ serverId: game.state.serverId })
 			}
 		}, 1000)
 		
@@ -93,11 +99,12 @@ function createGame(data) {
         state.stopped = true;
         state.gameOver = true;
 
-        if (state.myID && !state.router) {
+        if (state.myID) {
             let scoreArr = []
-            for (let i in state.players)
-                scoreArr.push({ score: state.players[i].score, nick: state.players[i].nick, playerId: i })
-            scoreArr = scoreArr.slice().sort((a, b) => b.score-a.score)
+            for (let i in state.players) {
+                if (!state.players[i].dead) scoreArr.push({ score: state.players[i].score, nick: state.players[i].nick, playerId: i })
+            }
+            scoreArr = scoreArr.sort((a, b) => b.score-a.score)
 
             const finalScreen = document.getElementById('finalScreen')
             const finalScreenP1 = document.getElementById('finalScreenP1')
@@ -110,19 +117,14 @@ function createGame(data) {
             if (scoreArr[1]) finalScreenP2.innerText = `2º ${scoreArr[1].nick} - ${scoreArr[1].score}`
             if (scoreArr[2]) finalScreenP3.innerText = `3º ${scoreArr[2].nick} - ${scoreArr[2].score}`
 
-            setTimeout(() => {
-                state.router = true
-                router.push('/servers')
-            }, 60000)
+            setTimeout(() => router.push('/servers'), 30000)
         }
 
         notifyAll({
             type: 'endOfTheGame',
 			serverId: state.serverId
         })
-    }
-
-    state.playSoundEffect = playSoundEffect
+    }    
     
     return {
 		notifyAll,

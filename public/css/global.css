@@ -84,14 +84,13 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Switch liga e desliga */
 
+
 .switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 25px;
-    -webkit-transform: translateX(-3px);
-    -ms-transform: translateX(-3px);
-    transform: translateY(-3px);
+    margin-left: 5px;
+    width: 45px;
+    height: 20px;
 }
 
 .switch input {
@@ -107,7 +106,8 @@ input[type=range]:focus::-ms-fill-upper {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(255, 50, 50);
+    background-color: rgb(255, 81, 81);
+    border: solid black 2px;
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 40px;
@@ -120,27 +120,24 @@ input[type=range]:focus::-ms-fill-upper {
 .slider:before {
     position: absolute;
     content: "";
-    height: 21.5px;
-    width: 21.5px;
+    height: 10px;
+    width: 10px;
     left: 4px;
-    bottom: 2px;
+    bottom: 1px;
+    border: solid black 2px;
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
 }
 
 input:checked + .slider {
-    background-color: #00c900;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #009b12
+    background-color: rgb(139, 255, 123);
 }
 
 input:checked + .slider:before {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
 }
 
 /* Cilcilo de carregando */
@@ -149,7 +146,7 @@ div#loadingCircle {
     width: 20px;
     height: 20px;
     margin: 20px auto;
-    border: solid #ff6363 10px;
+    border: solid rgb(200, 50, 50) 10px;
     border-top: solid transparent 10px;
     border-radius: 20px;
     animation: loadingCircle 1s linear infinite;

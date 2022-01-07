@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     color: white;
-    background-color: #CCC;
+    background-color: #363636;
 }
 
 header {
@@ -44,7 +44,17 @@ header div#fpsDisplay {
     padding: 2px;
     position: absolute;
     right: 5px;
-    bottom: 35px;
+    bottom: 30px;
+}
+
+header div#fruitCounter {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+    padding: 2px;
+    position: absolute;
+    right: 5px;
+    bottom: 55px;
 }
 
 header div#playerScore {
@@ -110,11 +120,11 @@ header button#chat-button {
     top: 5px;
     left: 5px;
     cursor: pointer;
-    border: solid black 1px;
+    border: solid black 2px;
     border-radius: 5px;
     width: 40px; 
     height: 40px;
-    background: rgb(242, 242, 242) url(/images/chat.png) no-repeat center 0px / 100%;
+    background: rgba(0, 0, 0, 0.658) url(/images/chat.png) no-repeat center 0px / 100%;
     transition: all 0.5s;
 }
 
@@ -127,8 +137,8 @@ header div#unreadMessageCounter {
     top: 0px;
     width: 18px; 
     height: 18px;
-    color: black;
-    background-color: rgb(242, 242, 242);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.658);
     border-radius: 100%;
     border: solid black 1px;
 }
@@ -267,6 +277,10 @@ header canvas#miniMap {
     height: 130px;
 }
 
+body#dark header canvas#miniMap {
+    background-color: #363636;
+}
+
 /* Canvas/Jogo */
 
 section canvas#screen {
@@ -309,12 +323,12 @@ header div#finalScreen {
     transform: translateX(-50%) translateY(-50%);
     left: 50%;
     top: 50%;
-    height: 50%;
+    height: 200px;
     width: 50%;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
     border-radius: 10px;
-    line-height: 200%;
+    line-height: 23px;
 }
 
 header div#finalScreen h1 {
@@ -329,7 +343,8 @@ header div#finalScreen p {
 
 header div#finalScreen button {
     position: absolute;
-    bottom: 5px;
+    height: 30px;
+    top: 5px;
     right: 5px;
     color: white;
     background-color: rgba(44, 44, 44, 0.686);

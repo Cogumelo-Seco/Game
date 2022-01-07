@@ -39,7 +39,7 @@ export default function createListener() {
     document.addEventListener('keydown', handleKeys)
 
     function zoom(key) {
-        if (key == '-' && state.zoom > 5) state.zoom--
+        if (key == '-' && state.zoom > 3) state.zoom--
         else if (key == '+' && state.zoom < 70) state.zoom++           
     }
 

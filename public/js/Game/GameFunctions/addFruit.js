@@ -3,11 +3,13 @@ module.exports = (command, state, notifyAll) => {
     const fruitX = command ? command.x || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.height);
     const fruitY = command ? command.y || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.width);
     const fruitId = command.fruitId || Math.random().toString(36).substring(2)
+    const fruitColor = command.color || '#'+Math.floor(Math.random()*16777215).toString(16);
     if (state.fruits[fruitId]) return
 
     state.fruits[fruitId] = {
         x: fruitX,
-        y: fruitY
+        y: fruitY,
+        color: fruitColor
     }
 
     notifyAll({
@@ -15,6 +17,7 @@ module.exports = (command, state, notifyAll) => {
         fruitId: fruitId,
         x: fruitX,
         y: fruitY,
+        color: fruitColor,
 		serverId: state.serverId
     });
 }

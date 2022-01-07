@@ -1,6 +1,8 @@
-module.exports = (type, state, notifyAll, data) => {
-    const vol = Number(data.soundEffectsVol)/100
+module.exports = (type, state, notifyAll, cookie) => {
+    let vol = Number(cookie.soundEffectsVol)/100
     let songDir = null
+
+    console.log(cookie)
 
     switch(type) {
         case 'kill':

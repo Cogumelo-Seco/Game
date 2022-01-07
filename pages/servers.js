@@ -20,6 +20,7 @@ const Page = (props) => {
             }
 	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/servers/animations.css" />'
+        if (cookie.darkTheme == 'true') document.body.id = 'dark'
         document.getElementById('returnButton').addEventListener('click', () => router.push('/'))
 
         const reloadButton = document.getElementById('reloadButton')
@@ -36,7 +37,7 @@ const Page = (props) => {
 
         setTimeout(() => page.addBot(), 1000)
         
-        render(canvas, page)
+        render(canvas, page, cookie)
         
         if (data.socket) data.socket.emit('disconnectedPlayer')
         const socket = io(props.SERVER, {
@@ -52,6 +53,7 @@ const Page = (props) => {
         })
 
         socket.on('serverList', listServers)
+        socket.on('limitServers', () => alert('Desculpe, parece que não á espaço para mais servidores'))        
 
         socket.on('server', () => {
             data.socket = socket
@@ -65,10 +67,7 @@ const Page = (props) => {
         const Name = document.querySelector('.serverCreationWindow-inputs.Name')
         const gameTime = document.querySelector('.serverCreationWindow-inputs.gameTime')
         const fruitBirthSpeed = document.querySelector('.serverCreationWindow-inputs.fruitBirthSpeed')               
-        document.getElementById('serverCreationWindowButton').addEventListener('click', () => {
-            if (serverCreationWindow.style.display == 'block') serverCreationWindow.style.display = 'none'
-            else serverCreationWindow.style.display = 'block'
-        })
+        
         document.getElementById('createButton').addEventListener('click', () => {
             socket.emit('createServer', {
                 botCount: Number(botCount.value),
@@ -79,18 +78,22 @@ const Page = (props) => {
                 fruitBirthSpeed: Number(fruitBirthSpeed.value),
                 adm: socket.id
             })
-
-            joinServer(Name.value)
         })
 
-        function joinServer(serverName) {
+        socket.on('connectToServers', (serverId) => joinServer(serverId))
+        function joinServer(serverId) {
             socket.emit('getServer', {
                 type: 'server',
-                server: serverName
+                server: serverId
             })
         }
 
         function listServers(servers) {
+            document.getElementById('serverCreationWindowButton').addEventListener('click', () => {
+                if (serverCreationWindow.style.display == 'block') serverCreationWindow.style.display = 'none'
+                else serverCreationWindow.style.display = 'block'
+            })
+
             let serverList = document.getElementById('serverList')
             let loadingCircle = document.getElementById('loadingCircle')
             serverList.innerHTML = ''
@@ -99,13 +102,17 @@ const Page = (props) => {
                     let server = document.createElement('div');
                     server.id = 'server'
                     server.innerHTML = `
-                        <p id="Name">${i}</p>
-                        <p id="Time">${servers[i].time/60000}m</p>
+                        <p id="Name">${servers[i].name}</p>
+                        <p id="GameType">${servers[i].serverType || 'Normal'}</p>
+                        <p id="Time">${servers[i].time/60000 >= 1 ? servers[i].time/60000+'m' : servers[i].time/1000-1+'s'}</p>
                         <p id="PlayerCount">${servers[i].players}/${servers[i].maxPlayers}</p>
                         <p id="GameSize">${servers[i].gameSize}X${servers[i].gameSize}</p>
                     `
                     if (servers[i].maxPlayers > servers[i].players) server.addEventListener('click', () => joinServer(i))
-                    else server.style.borderColor = 'red'
+                    else {
+                        server.style.borderColor = 'rgb(150, 50, 50)'
+                        server.style.backgroundColor = 'rgba(255, 136, 136, 0.337)'
+                    }
                     serverList.appendChild(server)
                 }
             } else serverList.innerHTML = 'Sem servidores disponíveis!'
@@ -117,14 +124,15 @@ const Page = (props) => {
         <html lang="pt-BR">
             <Head>
                 <title>Servers</title>
-
+            </Head>
+            <head>
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
                 <link rel="stylesheet" href="/css/servers/servers.css" />
                 <link rel="stylesheet" href="/css/servers/resizable.css" />             
-            </Head>
+            </head>
             <body>
                 <section>
                     <div id="serverList">
@@ -132,12 +140,12 @@ const Page = (props) => {
                     </div>
 
                     <div id="serverCreationWindow">
-                        <p>Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
-                        <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 2-20</p>
-                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 50-500</p>
-                        <p>Velocidade de spawn das frutas em segundos: <input className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.5-5</p>
-                        <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0-19</p>
-                        <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5-20</p>
+                        <p className="serverCreationWindowMarginTop">Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
+                        <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 1/20</p>
+                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 100/500</p>
+                        <p>Velocidade de spawn das frutas em segundos: <input className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.1/1.5</p>
+                        <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0/90</p>
+                        <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5/100</p>
                         <button id="createButton">Criar</button>
                     </div>
                     <div id="buttons">

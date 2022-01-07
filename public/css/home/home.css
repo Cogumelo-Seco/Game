@@ -25,18 +25,22 @@ canvas#backgroundCanvas {
     height: 100%;
 }
 
-section h1#gameName {
+body section h1#gameName {
     -webkit-text-stroke: black 3px;
-    color: transparent;
+    color: #CCC;
     font-size: 70px;
     margin-top: 5%;
     margin-bottom: 5%;
 }
 
-section div#ownerName {
+div#ownerName {
     position: absolute;
     bottom: 8px;
     right: 10px;
+}
+
+body#dark div#ownerName {
+    color: #CCC;
 }
 
 section ul {    
@@ -56,10 +60,18 @@ section ul li {
     transition: all 0.5s;
 }
 
+body#dark section ul li {
+    background-color: rgba(179, 54, 54, 0.637);
+}
+
 section ul li:hover {
     font-size: 21px;
-    background-color: rgba(192, 73, 73, 0.637);
+    background-color: rgba(211, 46, 46, 0.637);
     animation: toggleRotation 0.5s linear infinite;
+}
+
+body#dark section ul li:hover {
+    background-color: rgba(197, 50, 50, 0.637);
 }
 
 /* Opções */
@@ -73,16 +85,22 @@ section div#options {
     width: 50%;
     height: 70%;
     font-size: 20px;
-    background-color: rgba(0, 0, 0, 0.686);
+    overflow: scroll;
+    background-color: rgba(0, 0, 0, 0.786);
     color: white;
     border: solid black 2px;
     border-radius: 10px;
     animation: verticalMenuSlide 0.2s ease-out;
 }
 
+body#dark section div#options {
+    background-color: rgba(0, 0, 0, 0.686);
+}
+
 section div#options button {
     position: absolute;
-    bottom: 5px;
+    height: 30px;
+    top: 5px;
     color: white;
     background-color: rgba(44, 44, 44, 0.686);
     border: solid black 2px;
@@ -121,4 +139,9 @@ section div#options input.textInput:focus {
 
 section div#options p#soundEffectsVolume a#soundEffectsVolumePercent {
     font-size: 15px;
+}
+
+section div#options p#alert {
+    margin-top: 40px;
+    color: rgb(255, 83, 83)
 }

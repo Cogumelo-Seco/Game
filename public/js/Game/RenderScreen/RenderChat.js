@@ -1,10 +1,9 @@
-module.exports = (canvas, game, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     const chatContent = document.getElementById('chat-content')
     const chatButton = document.getElementById('chat-button')
     const unreadMessageCounter = document.getElementById('unreadMessageCounter')
     const chat = document.getElementById('chat')
-
-    unreadMessageCounter.style.display = 'none'
+    
     if (window.innerWidth <= 597) return
 
     chatContent.innerHTML = ''
@@ -13,17 +12,14 @@ module.exports = (canvas, game, Listener, scoreArr) => {
         let message = game.state.messages[i]
         let filter = messages.filter((m) => m.nick == message.nick && m.content == message.content)
         if (!filter[0]) messages.push(message)
-    }
-    let unreadMessages = 0
+    }  
     game.state.messages = messages
+    let unreadMessages = 0
     for (let i in messages) {
         let message = messages[i]
 
         if (!message.read && chat.style.display == 'block') message.read = true;
-        if (!message.read) {
-            unreadMessages++
-            chatButton.style.background = 'rgb(242, 242, 242) url(/images/unreadChat.png) no-repeat center 0px / 100%'
-        } else chatButton.style.background = 'rgb(242, 242, 242) url(/images/chat.png) no-repeat center 0px / 100%'
+        if (!message.read) unreadMessages++
 
         let nameAdditionalCSS = null
         let messageAdditionalCSS = null
@@ -45,5 +41,9 @@ module.exports = (canvas, game, Listener, scoreArr) => {
     if (unreadMessages > 0) {
         unreadMessageCounter.style.display = 'flex'
         unreadMessageCounter.innerText = unreadMessages
+        chatButton.style.background = 'rgba(0, 0, 0, 0.658) url(/images/unreadChat.png) no-repeat center 0px / 100%'
+    } else {
+        unreadMessageCounter.style.display = 'none'
+        chatButton.style.background = 'rgba(0, 0, 0, 0.658) url(/images/chat.png) no-repeat center 0px / 100%'
     }
 }

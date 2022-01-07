@@ -12,6 +12,7 @@ const Page = () => {
 
     useEffect(() => {
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/home/animations.css" />'
+        if (cookie.darkTheme == 'true') document.body.id = 'dark'
 
         const options = document.getElementById('options')
         const playGame = document.getElementById('playGame')
@@ -25,14 +26,16 @@ const Page = () => {
         const showInfos = document.getElementById('showInfosCheckbox')
         const fullScreen = document.getElementById('fullScreenCheckbox')
         const animations = document.getElementById('animationsCheckbox')
+        const darkTheme = document.getElementById('darkThemeCheckbox')
 
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
-            soundEffectsVolumeInput.value = cookie.soundEffectsVol
+            soundEffectsVolumeInput.value = cookie.soundEffectsVol || 100
             if (cookie.nick) nickInput.value = cookie.nick
             showInfos.checked = cookie.showInfos == 'true' ? true : false
             fullScreen.checked = cookie.fullScreen == 'true' ? true : false
             animations.checked = cookie.animations == 'true' ? true : false
+            darkTheme.checked = cookie.darkTheme == 'true' ? true : false
 
             options.style.display = 'block'
         })
@@ -46,6 +49,7 @@ const Page = () => {
             document.cookie = `showInfos=${showInfos.checked}; path=/`;
             document.cookie = `fullScreen=${fullScreen.checked}; path=/`;
             document.cookie = `animations=${animations.checked}; path=/`;
+            document.cookie = `darkTheme=${darkTheme.checked}; path=/`;
 
             options.style.display = 'none'
         })
@@ -77,21 +81,22 @@ const Page = () => {
 
         setTimeout(() => page.addBot(), 1000)
         
-        render(canvas, page)
+        render(canvas, page, cookie)
     }, [])
 
     return (
         <html lang="pt-BR">
             <Head>
                 <title>Home</title>
-
+            </Head>
+            <head>                
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
                 <link rel="stylesheet" href="/css/home/home.css" />
                 <link rel="stylesheet" href="/css/home/resizable.css" />
-            </Head>
+            </head>
             <body>
                 <section>
                     <h1 id="gameName">100 Nome</h1>
@@ -102,6 +107,8 @@ const Page = () => {
                     </ul>
 
                     <div id="options">
+                        <p id="alert">Atualize a página após salvar para aplicar melhor as alterações!!</p>
+
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
                         </p>
@@ -126,6 +133,12 @@ const Page = () => {
                                 <span className="slider"></span>
                             </label>
                         </p>
+                        <p>
+                            Tema escuro: <label className="switch">
+                                <input type="checkbox" id="darkThemeCheckbox" />
+                                <span className="slider"></span>
+                            </label>
+                        </p>                        
                         <button id="saveButton">Salvar</button>
                         <button id="cancelButton">Cancelar</button>
                     </div>

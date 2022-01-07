@@ -1,4 +1,4 @@
 module.exports = {
     cookies: {},
-    socket: null
+    socket: null,
 }

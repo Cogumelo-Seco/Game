@@ -2,7 +2,6 @@ import data from '../public/js/data.js';
 import createGame from '../public/js/Game/Game.js';
 import createListener from '../public/js/Game/Listener.js';
 import PageFunctions from '../public/js/Game/PageFunctions/index.js';
-import io from 'socket.io-client';
 import cookies from 'next-cookies';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -21,21 +20,14 @@ const Game = (props) => {
             }
 	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'        
-        const debug = false
+        if (cookie.darkTheme == 'true') document.body.id = 'dark'
 
         const canvas = document.getElementById('screen');
         let socket = null
 
-        if (!debug) {
-            if (!data.socket) return router.push('/servers')
-            socket = data.socket;
-            socket.emit('getSetup')
-        } else {
-            socket = io(props.SERVER, {
-                withCredentials: true,
-            })
-            socket.emit('getSetup', true)
-        }
+        if (!data.socket) return router.push('/servers')
+        socket = data.socket;
+        socket.emit('getSetup')
 
         const game = createGame(cookie);
         const Listener = createListener();
@@ -55,7 +47,7 @@ const Game = (props) => {
             router.push('/servers')
         })
         socket.on('setup', (state) => {
-            socket.emit('nick', cookie.nick)
+            socket.emit('addMyPlayer', cookie.nick)
 
             Listener.registerSettings({
                 playerId: socket.id,
@@ -79,7 +71,13 @@ const Game = (props) => {
                     keyPressed: game.state.players[socket.id].direction,
                     serverId: game.state.serverId
                 })
-                socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })
+                socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })                
+                if (game.state.noConnection <= 5) game.state.noConnection += 1
+                else {
+                    game.state.noConnection = -1000
+                    alert('Sem conexão com o servidor!')
+                    router.push('/')
+                }
             }, 1000)
             PageFunctions(game, canvas, socket, Listener, cookie)
         })
@@ -122,15 +120,16 @@ const Game = (props) => {
         <html lang="pt-BR">
             <Head>
                 <title>Game</title>
-
+            </Head>
+            <head>
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 
                 <link rel="stylesheet" href="/css/game/game.css" />
                 <link rel="stylesheet" href="/css/game/resizable.css" />
-            </Head>
-            <body>
+            </head>
+            <body id="body">
                 <header id="header-screen">    
                     <div id="loadingCircle" />
 
@@ -170,7 +169,8 @@ const Game = (props) => {
                         <button id="exitButton">Sair</button>
                     </div>
 
-                    <div id="playerScore">Score: ?</div>
+                    <div id="playerScore">Score: ?</div>                    
+                    <div id="fruitCounter">?Frutas</div>
                     <div id="fpsDisplay">?FPS</div>
                     <div id="pingDisplay">?ms</div>
                 </header>

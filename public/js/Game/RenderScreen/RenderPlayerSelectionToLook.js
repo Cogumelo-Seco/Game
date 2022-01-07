@@ -1,4 +1,4 @@
-module.exports = (canvas, game, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     const myPlayer = game.state.players[game.state.myID]
 
     if (myPlayer.dead) {

@@ -1,4 +1,4 @@
-export default function renderScreen(canvas, game, requestAnimationFrame, Listener) {
+export default function renderScreen(canvas, game, requestAnimationFrame, Listener, cookie) {
     canvas.width = window.innerWidth/Listener.state.zoom;
     canvas.height = window.innerHeight/Listener.state.zoom;
 
@@ -6,7 +6,8 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     game.state.fps = `${fps + 1}-${game.state.fps.split('-')[1]}`
 
     const ctx = canvas.getContext('2d')
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = cookie.darkTheme == 'true' ? '#363636' : '#CCC';
+    ctx.fillRect(0, 0, canvas.width, canvas.height)    
 
     game.subscribe((command) => {
         if (command.type != 'remove-player') return;
@@ -17,9 +18,10 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     })
 
     let scoreArr = []
-    for (let i in game.state.players)
-        scoreArr.push({ score: game.state.players[i].score, nick: game.state.players[i].nick, playerId: i })
-    scoreArr = scoreArr.slice().sort((a, b) => b.score-a.score)
+    for (let i in game.state.players) {
+        if (!game.state.players[i].dead) scoreArr.push({ score: game.state.players[i].score, nick: game.state.players[i].nick, playerId: i })
+    }
+    scoreArr = scoreArr.sort((a, b) => b.score-a.score)
 
     const myPlayer = game.state.players[game.state.myID]
 
@@ -35,20 +37,20 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     if (myPlayer && myPlayer.dead && !game.state.players[game.state.observedPlayerId]) game.state.observedPlayerId = Object.keys(game.state.players)[0]
 
     if (myPlayer && myPlayer.dead && game.state.players[game.state.observedPlayerId] || myPlayer) {        
-        require('./RenderBackgroundAndBoundaries')(canvas, game, Listener, scoreArr)
-        require('./RenderPlayers')(canvas, game, Listener, scoreArr)
-        require('./RenderFruits')(canvas, game, Listener, scoreArr)
-        require('./RenderChat')(canvas, game, Listener, scoreArr)
-        require('./RenderScoreTable')(canvas, game, Listener, scoreArr)
-        require('./RenderInformationTexts')(canvas, game, Listener, scoreArr)
-        require('./RenderPlayerSelectionToLook')(canvas, game, Listener, scoreArr)
-        require('./RenderMiniMap')(canvas, game, Listener, scoreArr)
-        require('./RenderADMOptions')(canvas, game, Listener, scoreArr)
+        require('./RenderBackgroundAndBoundaries')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderPlayers')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderFruits')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderChat')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderScoreTable')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderInformationTexts')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderPlayerSelectionToLook')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderMiniMap')(canvas, game, Listener, scoreArr, cookie)
+        require('./RenderADMOptions')(canvas, game, Listener, scoreArr, cookie)
     }
 
     let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 
     if (!game.state.router) rAF(() => {
-        renderScreen(canvas, game, requestAnimationFrame, Listener)
+        renderScreen(canvas, game, requestAnimationFrame, Listener, cookie)
     })
 }

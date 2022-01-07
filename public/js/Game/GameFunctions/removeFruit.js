@@ -1,6 +1,5 @@
 module.exports = (command, state, notifyAll) => {
-//alert(command.fruitId)
-	//if (command.serverId != state.serverId) return
+	if (command.serverId != state.serverId) return
     let fruitId = command.fruitId
     let playerId = command.playerId
 

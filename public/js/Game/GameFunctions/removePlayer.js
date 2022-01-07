@@ -11,4 +11,6 @@ module.exports = (command, state, notifyAll) => {
     })
 
     delete state.players[playerId]
+
+    if (!state.players[playerId]) return true
 }

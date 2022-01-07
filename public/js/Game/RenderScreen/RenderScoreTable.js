@@ -1,8 +1,11 @@
-module.exports = (canvas, game, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr, cookie) => {
+    const scoreTable = document.getElementById('scoreTable')
     scoreTable.innerHTML = ''
-    for (let i in scoreArr) {
+
+    let scores = scoreArr.splice(0, 10)
+    for (let i in scores) {
         let player = document.createElement('tr');
-        if (!game.state.players[scoreArr[i].playerId].dead) player.innerHTML = `<th id="Name">${scoreArr[i].nick}</th><th id="Score">${scoreArr[i].score}</th>`
-        if (i < 10) scoreTable.appendChild(player)
+        player.innerHTML = `<th id="Name">${scores[i].nick}</th><th id="Score">${scores[i].score}</th>`
+        scoreTable.appendChild(player)
     }
 }

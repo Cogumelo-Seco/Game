@@ -21,6 +21,7 @@ export default function chat(state, notifyAll) {
         notifyAll({
             type: 'message',
             playerId: state.playerId,
+            read: false,
             content,
         })
         messageBox.value = ''

@@ -16,7 +16,7 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 	
     notifyAll(command)
 
-    if (bot.traces.length-1 > bot.score || bot.traces.length >= 1000) bot.traces.splice(bot.traces.length-1, 1)
+    if (bot.traces.length-1 > bot.score || bot.traces.length >= 500) bot.traces.splice(bot.traces.length-1, 1)
     
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]

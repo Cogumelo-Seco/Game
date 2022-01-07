@@ -1,23 +1,43 @@
-module.exports = (canvas, game, Listener, scoreArr) => {
+module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     const miniMap = document.getElementById('miniMap')
     const ctx = miniMap.getContext('2d')
 
-    miniMap.width = game.state.screen.width
-    miniMap.height = game.state.screen.height
+    if (game.state.fps.split('-')[0] <= 30) return
+
+    let miniMapSize = 100
+
+    miniMap.width = miniMapSize
+    miniMap.height = miniMapSize
 
     ctx.clearRect(0, 0, miniMap.width, miniMap.height)
+
+    ctx.fillRect(0, 0, 1, 1);
 
     for (let playerId in game.state.players) {
         const player = game.state.players[playerId]
         if (!player.dead) {
             let playerSize = Math.floor(miniMap.height/30)
-            if (playerSize < 1) playerSize = 1
 
+            let x = Math.floor(miniMapSize/game.state.screen.width*player.x-(playerSize/2))
+            let y = Math.floor(miniMapSize/game.state.screen.height*player.y-(playerSize/2))
+
+            ctx.globalAlpha = 0.5
+            ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
+            ctx.fillRect(x, y, playerSize, playerSize);
             ctx.fillStyle = 'red'
-            if (playerId == scoreArr[0].playerId) ctx.fillStyle = 'rgb(204, 146, 0)'
-            if (game.state.myID == playerId) ctx.fillStyle = 'green'
-
-            ctx.fillRect(player.x-Math.floor(playerSize/2), player.y-Math.floor(playerSize/2), playerSize, playerSize)
+            if (playerId == game.state.myID) ctx.fillStyle = 'gold'
+            ctx.fillRect(x, y, playerSize, playerSize);
         }
+    }
+
+    for (let fruitId in game.state.fruits) {
+        const fruit = game.state.fruits[fruitId]
+
+        let x = Math.floor(miniMapSize/game.state.screen.width*fruit.x)
+        let y = Math.floor(miniMapSize/game.state.screen.height*fruit.y)
+
+        ctx.globalAlpha = 0.6        
+        ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black'
+        ctx.fillRect(x, y, 1, 1)
     }
 }
