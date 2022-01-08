@@ -3,10 +3,14 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     if (player.dead) player = game.state.players[game.state.observedPlayerId]
     const ctx = canvas.getContext('2d')
 
-    ctx.globalAlpha = 0.02
+    ctx.globalAlpha = 0.007
 
-    let backgroundImage = new Image()
-    backgroundImage.src = `/images/background-${cookie.darkTheme == 'true' ? 'white' : 'black'}.png`
+    let backgroundImage = game.state.backgroundImage 
+    if (!backgroundImage) {
+        backgroundImage = new Image()
+        backgroundImage.src = `/images/background-${cookie.darkTheme == 'true' ? 'white' : 'black'}.png`
+        game.state.backgroundImage = backgroundImage
+    }
 
     for (let x = (Number.parseInt(canvas.width/2))-player.x; x < canvas.width+canvas.width; x += 1000) {
         for (let y = (Number.parseInt(canvas.height/2))-player.y; y < canvas.width+canvas.height; y += 1000) {

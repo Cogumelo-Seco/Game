@@ -124,7 +124,7 @@ const Page = () => {
                             </label>
                         </p>
                         <p>
-                            Tela cheia <label className="switch">
+                            Tela cheia: <label className="switch">
                                 <input type="checkbox" id="fullScreenCheckbox" />
                                 <span className="slider"></span>
                             </label>

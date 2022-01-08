@@ -165,7 +165,7 @@ header div#unreadMessageCounter {
     width: 18px; 
     height: 18px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.658);
+    background-color: rgb(30, 30, 30);
     border-radius: 100%;
     border: solid black 1px;
 }

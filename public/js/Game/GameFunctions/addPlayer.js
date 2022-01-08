@@ -1,5 +1,4 @@
 module.exports = (command, state, notifyAll) => {
-	if (command.serverId != state.serverId) return
     const playerId = command.playerId
     let nick = command['nick']
 

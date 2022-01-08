@@ -188,26 +188,11 @@ section div#serverCreationWindow input.serverCreationWindow-inputs {
     border: none;
     border-radius: 5px;
     padding: 3px;
+    width: 36px;
 }
 
-section div#serverCreationWindow input.serverCreationWindow-inputs.botCount {
-    width: 16px;
-}
-
-section div#serverCreationWindow input.serverCreationWindow-inputs.gameSize {
-    width: 24px;
-}
-
-section div#serverCreationWindow input.serverCreationWindow-inputs.maxPlayers {
-    width: 16px;
-}
-
-section div#serverCreationWindow input.serverCreationWindow-inputs.gameTime {
-    width: 16px;
-}
-
-section div#serverCreationWindow input.serverCreationWindow-inputs.fruitBirthSpeed {
-    width: 19px;
+section div#serverCreationWindow input.serverCreationWindow-inputs.Name {
+    width: 100px;
 }
 
 section div#serverCreationWindow button#createButton {
@@ -217,14 +202,14 @@ section div#serverCreationWindow button#createButton {
     width: 50px;
     height: 30px;
     color: white;
-    background-color: rgba(49, 49, 49, 0.658);
+    background-color: rgb(49, 49, 49);
     border: solid black 2px;
     border-radius: 5px;
     transition: all 0.5s;
 }
 
 section div#serverCreationWindow button#createButton:hover {
-    background-color: rgba(67, 67, 67, 0.658);
+    background-color: rgb(67, 67, 67);
 }
 
 .serverCreationWindowMarginTop {

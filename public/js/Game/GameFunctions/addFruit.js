@@ -1,8 +1,7 @@
 module.exports = (command, state, notifyAll) => {
-	if (command.serverId != state.serverId) return
     const fruitX = command ? command.x || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.height);
     const fruitY = command ? command.y || Math.floor(Math.random()*state.screen.height) : Math.floor(Math.random()*state.screen.width);
-    const fruitId = command.fruitId || Math.random().toString(36).substring(2)
+    const fruitId = command.fruitId || Math.random().toString(36).substring(2)+'-'+state.serverId
     const fruitColor = command.color || '#'+Math.floor(Math.random()*16777215).toString(16);
 
     let fruitCount = 0

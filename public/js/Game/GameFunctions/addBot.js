@@ -1,5 +1,4 @@
 module.exports = (command, state, notifyAll) => {
-    if (command.serverId != state.serverId) return
     const botX = command.x || Math.floor(Math.random()*state.screen.height);
     const botY = command.y || Math.floor(Math.random()*state.screen.width);
     const botId = command.botId

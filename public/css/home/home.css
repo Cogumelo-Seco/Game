@@ -103,14 +103,14 @@ section div#options button {
     height: 30px;
     top: 5px;
     color: white;
-    background-color: rgba(44, 44, 44, 0.686);
+    background-color: rgb(49, 49, 49);
     border: solid black 2px;
     border-radius: 5px;
     transition: all 0.5s;
 }
 
 section div#options button:hover {
-    background-color: rgba(84, 84, 84, 0.686);
+    background-color: rgb(67, 67, 67);
 }
 
 section div#options button#saveButton {

@@ -57,12 +57,12 @@ function createGame(cookie) {
     const message = (command) => {
         if (command.serverId != state.serverId) return
         notifyAll(command)
-        if (state.messages.length >= 9) state.messages.splice(0 ,1)
+        if (state.messages.length >= 9) state.messages.splice(0, 1)
         if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
         if (command.content.trim()) state.messages.push(command)
     }
 
-	const start = (game, sockets, socket, serverAddBot) => {
+	const start = (game, sockets, socket, serverAddBot, servers) => {
 		setInterval(() => addFruit({ serverId: game.state.serverId }), game.state.fruitBirthSpeed || 1000)
 
 		game.state.stopped = false
@@ -85,7 +85,7 @@ function createGame(cookie) {
 		}, 1000)
 		
 		for (let botNumber = 0;botNumber < game.state.botCount; botNumber++) {
-			serverAddBot(game, sockets, socket, botNumber, 0)
+			serverAddBot(servers, game, sockets, socket, botNumber, 0)
 		}
 
 		notifyAll({

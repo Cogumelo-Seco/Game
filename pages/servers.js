@@ -145,11 +145,11 @@ const Page = (props) => {
 
                     <div id="serverCreationWindow">
                         <p className="serverCreationWindowMarginTop">Nome do servidor: <input className="serverCreationWindow-inputs Name" /></p>
-                        <p>Tempo de jogo em minutos: <input className="serverCreationWindow-inputs gameTime" /> 1/20</p>
-                        <p>Tamanho do jogo: <input className="serverCreationWindow-inputs gameSize" /> 100/500</p>
-                        <p>Velocidade de spawn das frutas em segundos: <input className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.1/1.5</p>
-                        <p>Quantidade de Bots: <input className="serverCreationWindow-inputs botCount" /> 0/90</p>
-                        <p>Quantidade Máxima de players: <input className="serverCreationWindow-inputs maxPlayers" /> 5/100</p>
+                        <p>Tempo de jogo em minutos: <input type="number" className="serverCreationWindow-inputs gameTime" /> 1/20</p>
+                        <p>Tamanho do jogo: <input type="number" className="serverCreationWindow-inputs gameSize" /> 100/500</p>
+                        <p>Velocidade de spawn das frutas em segundos: <input type="number" className="serverCreationWindow-inputs fruitBirthSpeed" /> 0.1/1.5</p>
+                        <p>Quantidade de Bots: <input type="number" className="serverCreationWindow-inputs botCount" /> 0/90</p>
+                        <p>Quantidade Máxima de players: <input type="number" className="serverCreationWindow-inputs maxPlayers" /> 5/100</p>
                         <button id="createButton">Criar</button>
                     </div>
                     <div id="buttons">

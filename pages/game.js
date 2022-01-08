@@ -39,7 +39,7 @@ const Game = (props) => {
 
         socket.on('deadPlayerGameOver', (command) => {
             if (command.playerId != socket.id) return;
-            game.state.observedPlayerId = Object.keys(game.state.players)[0]
+            //game.state.observedPlayerId = command.player2Id || Object.keys(game.state.players)[0]
             game.state.gameAlert(`Você Perdeu, seu score máximo foi ${command.score}`)            
         })
         socket.on('maxPlayers', () => {

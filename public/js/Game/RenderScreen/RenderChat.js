@@ -31,6 +31,12 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
             message.color2 = 'red'
             nameAdditionalCSS = 'text-decoration: line-through'
         }
+        if (!message.system && !game.state.players[message.playerId]) {
+            message.emoji = '🚫'
+            message.color = 'gray'
+            message.color2 = 'rgb(200, 200, 200)'
+            nameAdditionalCSS = 'text-decoration: line-through'
+        }
         if (scoreArr[0].nick == message.nick) message.emoji = '👑'
 
         chatContent.innerHTML += `

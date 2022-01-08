@@ -31,9 +31,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
         fruitCounter.innerText = `${fruitCount}Frutas`
     }
 
-    if (game.state.time) {
-        const timer = document.getElementById('timer')
-        
+    const timer = document.getElementById('timer')
+    
+    if (Number(game.state.time)) {
         if (game.state.stopped && !game.state.gameOver) timer.innerText = 'Esperando o administrador começar a partida'
         else if (game.state.stopped && game.state.gameOver) timer.innerText = 'Jogo acabado'
         else {

@@ -39,8 +39,8 @@ export default function createListener() {
     document.addEventListener('keydown', handleKeys)
 
     function zoom(key) {
-        if (key == '-' && state.zoom > 3) state.zoom -= 0.5
-        else if (key == '+' && state.zoom < 50) state.zoom += 0.5    
+        if (key == '-' && state.zoom > 3) state.zoom -= state.zoom ** 0.9 / 10
+        else if (key == '+' && state.zoom < 60) state.zoom += state.zoom ** 0.9 / 10
     }
 
     function scoreTable(key) {
