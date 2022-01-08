@@ -6,7 +6,7 @@ export default function createListener() {
         observers: [],
         onChat: false,
         playerId: null,
-        zoom: 10,
+        zoom: 13,
         cooldown: 0,
         keys: {
             w: { cooldown: 0 },
@@ -53,7 +53,7 @@ export default function createListener() {
 
     function handleKeys(event, sensitivity) {
         let keyPressed = event.key
-        sensitivity = sensitivity ? 1050-sensitivity : 50
+        sensitivity = sensitivity ? 1080-sensitivity : 80
 
         chatFunctions.keyPressed(keyPressed, state, notifyAll)
         
@@ -85,6 +85,7 @@ export default function createListener() {
 
             notifyAll({
                 type: 'move-player',
+                player: state.game.state.players[state.playerId],
                 playerId: state.playerId,
                 keyPressed,
                 serverId: state.serverId

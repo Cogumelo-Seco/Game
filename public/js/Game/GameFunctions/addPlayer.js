@@ -44,5 +44,5 @@ module.exports = (command, state, notifyAll) => {
     setTimeout(() => {
         let player = state.players[playerId]
         if (player) player.safeTime = false
-    }, 3000)
+    }, Math.floor(Math.random()*3000)+3000)
 }

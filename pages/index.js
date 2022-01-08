@@ -118,7 +118,7 @@ const Page = () => {
                             Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>
                         </p>
                         <p>
-                            Mostrar Informações: <label className="switch">
+                            Mostrar informações de jogo: <label className="switch">
                                 <input type="checkbox" id="showInfosCheckbox" />
                                 <span className="slider"></span>
                             </label>

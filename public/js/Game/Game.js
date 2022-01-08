@@ -26,28 +26,22 @@ function createGame(cookie) {
     const subscribe = (observerFunction) => observers.push(observerFunction)
 
     const notifyAll = (command) => {
-        if (observers.length > 10) observers.splice(0)
         for (const observerFunction of observers) {
 			observerFunction(command)
         }
     }
 
     const addPlayer = (command) => getGameFunction('addPlayer')(command, state, notifyAll)
-    const addBot = (command) => getGameFunction('addBot')(command, state, notifyAll)
-    const addFruit = (command) => getGameFunction('addFruit')(command, state, notifyAll)
     const removePlayer = (command) => getGameFunction('removePlayer')(command, state, notifyAll)
     const removeFruit = (command) => getGameFunction('removeFruit')(command, state, notifyAll)
     const changePlayer = (command) => getGameFunction('changePlayer')(command, state, notifyAll)
-    const deadPlayer = (command) => getGameFunction('deadPlayer')(command, state, notifyAll)
     const movePlayer = (command) => getGameFunction('movePlayer')(command, state, notifyAll, removeFruit)
-    const moveBot = (command) => getGameFunction('moveBot')(command, state, notifyAll, removeFruit)
     const playSoundEffect = (command) => getGameFunction('playSoundEffect')(command, state, notifyAll, cookie)
     state.playSoundEffect = playSoundEffect
 
     const setState = (newState) => Object.assign(state, newState)
 
     const ping = (command) => {
-        notifyAll(command)
         if (command.ping && command.playerId == state.myID) {
             state.noConnection = 0
             state.ping = +new Date()-command.ping
@@ -62,13 +56,16 @@ function createGame(cookie) {
         if (command.content.trim()) state.messages.push(command)
     }
 
-	const start = (game, sockets, socket, serverAddBot, servers) => {
-		setInterval(() => addFruit({ serverId: game.state.serverId }), game.state.fruitBirthSpeed || 1000)
+	const start = (game, socket, ServerFunctions, servers) => {
+		let intervals = []
+		intervals[0] = setInterval(() => {
+			ServerFunctions.addFruit(game.state)
+        }, game.state.fruitBirthSpeed || 1000)
 
 		game.state.stopped = false
 		game.state.time = game.state.serverTime
-		setInterval(() => {
-			game.state.time -= 1000
+		intervals[1] = setInterval(() => {
+			game.state.time -= 100
 			if (game.state.time <= 0) {
 				game.state.time = game.state.serverTime
 				if (game.state.serverType == 'InfiniteServer') {
@@ -79,14 +76,24 @@ function createGame(cookie) {
 							traces: [],
 							serverId: game.state.serverId
 						})
-					}				
+					}
 				} else game.endOfTheGame({ serverId: game.state.serverId })
 			}
-		}, 1000)
+
+            notifyAll({
+                type: 'update-state',
+                players: game.state.players,
+                fruits: game.state.fruits,
+				time: game.state.time,                
+                serverId: game.state.serverId,
+            })
+		}, 100)
 		
 		for (let botNumber = 0;botNumber < game.state.botCount; botNumber++) {
-			serverAddBot(servers, game, sockets, socket, botNumber, 0)
+			ServerFunctions.serverAddBot({ servers, game, socket, botNumber })
 		}
+
+        if (!servers[game.state.serverId]) for (let i in intervals) clearInterval(intervals[i])
 
 		notifyAll({
             type: 'startGame',
@@ -132,13 +139,24 @@ function createGame(cookie) {
         gameAlert.style.display = 'flex'
         setTimeout(() => gameAlert.style.display = 'none', 5000)
     }
+
+    function updateState(command) {
+        for (let i in command) {
+            if (i == 'players') {
+                if (state.players[state.myID]) {
+                    state.players[state.myID].score = command.players[state.myID].score
+                    command.players[state.myID] = state.players[state.myID]
+                }
+                state.players = command.players
+            } else if (i != 'type') state[i] = command[i]
+        }
+    }
     
     return {
 		notifyAll,
         movePlayer,
         addPlayer,
         removePlayer,
-        addFruit,
         removeFruit,
         state,
         setState,
@@ -148,9 +166,7 @@ function createGame(cookie) {
         endOfTheGame,
         ping,
         message,
-        addBot,
-        moveBot,
-        deadPlayer,
+        updateState,
         playSoundEffect
     }
 }

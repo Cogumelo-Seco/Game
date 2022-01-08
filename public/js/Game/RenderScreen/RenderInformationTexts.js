@@ -7,11 +7,31 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     const pingDisplay = document.getElementById('pingDisplay');
     const fruitCounter = document.getElementById('fruitCounter');
     const playerCounter = document.getElementById('playerCounter');
+    const timer = document.getElementById('timer');
+    const serverType = document.getElementById('serverType');
 
-    if (!player.dead) playerScore.innerText = `Score: ${player.score}`
-    else {
+    if (!player.dead) {
+        playerScore.innerText = `Score: ${player.score}`
+        playerScore.style.backgroundColor = 'rgba(0, 0, 0, 0.658)'
+    } else {
         playerScore.innerText = 'Morto'
         playerScore.style.backgroundColor = 'rgba(255, 0, 0, 0.658)'
+    }
+    
+    serverType.innerText = game.state.serverType
+    
+    if (Number(game.state.time)) {
+        if (game.state.stopped && !game.state.gameOver) timer.innerText = 'Esperando o administrador começar a partida'
+        else if (game.state.stopped && game.state.gameOver) timer.innerText = 'Jogo acabado'
+        else {
+            let time = game.state.time
+            time = time/1000
+            let seconds = ("00" +  Math.floor(time % 60)).slice(-2)
+            let minutes = ("00" +  Math.floor(time / 60) % 60).slice(-2)
+            if (minutes == '00') timer.innerText = `${seconds}s`
+            else timer.innerText = `${minutes}:${seconds}`
+            if (time <= 0) timer.innerText = `0s`
+        }
     }
 
     if (cookie.showInfos == 'true') {
@@ -29,22 +49,5 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
         let fruitCount = 0
         for (let i in game.state.fruits) fruitCount++
         fruitCounter.innerText = `${fruitCount}Frutas`
-    }
-
-    const timer = document.getElementById('timer')
-    
-    if (Number(game.state.time)) {
-        if (game.state.stopped && !game.state.gameOver) timer.innerText = 'Esperando o administrador começar a partida'
-        else if (game.state.stopped && game.state.gameOver) timer.innerText = 'Jogo acabado'
-        else {
-            let time = game.state.time-(+new Date())
-            if (time <= 1) game.state.time = (+new Date())+game.state.serverTime
-            time = time/1000
-            let seconds = ("00" +  Math.floor(time % 60)).slice(-2)
-            let minutes = ("00" +  Math.floor(time / 60) % 60).slice(-2)
-            if (minutes == '00') timer.innerText = `${seconds}s`
-            else timer.innerText = `${minutes}:${seconds}`
-            if (time <= 0) timer.innerText = `0s`
-        }
     }
 }

@@ -1,5 +1,5 @@
 module.exports = (command, state, notifyAll, removeFruit) => {
-	command.verify = state.myID
+	/*command.verify = state.myID
     command.serverId = state.serverId
     if (command.serverId != state.serverId) {
         if (!command.verify) notifyAll(command)
@@ -14,5 +14,5 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 	bot.score = command.score
 	bot.traces = command.traces
 	
-    notifyAll(command)
+    notifyAll(command)*/
 }

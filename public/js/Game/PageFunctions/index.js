@@ -7,6 +7,7 @@ function Function(game, canvas, socket, Listener, cookie) {
     canvas.style.display = 'block';
     document.getElementById('miniMap').style.display = 'block';
     document.getElementById('timer').style.display = 'block';
+    document.getElementById('serverType').style.display = 'block';
     document.getElementById('playerScore').style.display = 'block';
     if (cookie.showInfos == 'true') document.getElementById('pingDisplay').style.display = 'block';
     if (cookie.showInfos == 'true') document.getElementById('fpsDisplay').style.display = 'block';

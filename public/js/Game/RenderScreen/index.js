@@ -9,14 +9,6 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
     ctx.fillStyle = cookie.darkTheme == 'true' ? '#363636' : '#CCC';
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    game.subscribe((command) => {
-        if (command.type != 'remove-player') return;
-        for (let i = 0; i < command.traces.length; i++) {
-            let trace = command.traces[i]
-            ctx.clearRect(trace.x, trace.y, 1, 1);
-        }
-    })
-
     let scoreArr = []
     for (let i in game.state.players) {
         if (!game.state.players[i].dead) scoreArr.push({ score: game.state.players[i].score, nick: game.state.players[i].nick, playerId: i })

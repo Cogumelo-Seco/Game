@@ -10,7 +10,6 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
         const playerScore = document.getElementById('scoreOfSelectedPlayer')
 
         playerName.innerText = player.nick
-
         playerScore.innerText = `Score: ${player.score}`
-    }
+    } else document.getElementById('playerViewSelection').style.display = 'none'
 }

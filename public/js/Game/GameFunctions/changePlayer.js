@@ -4,6 +4,7 @@ module.exports = (command, state, notifyAll) => {
     const traces = command.traces || player.traces
     if (!player) return
     player.score = score
+    player.dead = command.dead || false
 
     if (command.tracesAdditional) player.traces = player.traces.concat(traces)
     else player.traces = traces
@@ -13,6 +14,7 @@ module.exports = (command, state, notifyAll) => {
         playerId: command.playerId,
         score,
         traces,
+        dead: command.dead || false,
         tracesAdditional: command.tracesAdditional || false,
 		serverId: state.serverId
     })

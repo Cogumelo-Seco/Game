@@ -32,15 +32,30 @@ const Game = (props) => {
         const game = createGame(cookie);
         const Listener = createListener();
 
-        document.getElementById('exitButton').addEventListener('click', () => {
+        function exit() {
+            socket.emit('disconnectedPlayer')
             game.state.router = true
             router.push('/servers')
+        }
+
+        document.getElementById('exitButton').addEventListener('click', exit)
+        document.getElementById('observedPlayerExitButton').addEventListener('click', exit)
+
+        document.getElementById('observedPlayerReturnButton').addEventListener('click', () => {
+            game.state.players[socket.id].safeTime = true
+            game.state.players[socket.id].dead = false
+            setTimeout(() => {
+                if (game.state.players[socket.id]) game.state.players[socket.id].safeTime = false
+            }, 3000)
+
+            socket.emit('revivePlayer', {
+                type: 'revivePlayer',
+                playerId: socket.id,
+            })
         })
 
         socket.on('deadPlayerGameOver', (command) => {
-            if (command.playerId != socket.id) return;
-            //game.state.observedPlayerId = command.player2Id || Object.keys(game.state.players)[0]
-            game.state.gameAlert(`Você Perdeu, seu score máximo foi ${command.score}`)            
+            if (command.playerId != socket.id) game.state.gameAlert(`Você morreu, seu score foi ${command.score}`)            
         })
         socket.on('maxPlayers', () => {
             game.state.gameAlert('Desculpe, mas o servidor está cheio')
@@ -49,36 +64,38 @@ const Game = (props) => {
         socket.on('setup', (state) => {
             socket.emit('addMyPlayer', cookie.nick)
 
+            Listener.state.game = game
             Listener.registerSettings({
                 playerId: socket.id,
                 serverId: state.serverId
             })
             Listener.subscribe((command) => game.movePlayer(command));
             Listener.subscribe((command) => {
+                command.server = true
                 socket.emit(command.type, command)
             });
             game.subscribe((command) => {
                 socket.emit(command.type, command)
             });
-            state.time = +new Date()+state.time
             game.setState(state)
 
             setInterval(() => {
                 if (game.state.players[socket.id]) Listener.notifyAll({
                     type: 'move-player',
+                    player: game.state.players[socket.id],
                     auto: true,
                     playerId: socket.id,
                     keyPressed: game.state.players[socket.id].direction,
                     serverId: game.state.serverId
                 })
-                socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id })                
-                if (game.state.noConnection <= 5) game.state.noConnection += 1
+                socket.emit('ping', { ping: +new Date(), playerId: game.state.myID || socket.id, serverId: game.state.serverId })                
+                if (game.state.noConnection <= 10) game.state.noConnection += 1
                 else {
                     game.state.noConnection = -1000
                     game.state.gameAlert('Sem conexão com o servidor!')
                     setTimeout(() => router.push('/servers'), 3000)                    
                 }
-            }, 1000)
+            }, 500)
             PageFunctions(game, canvas, socket, Listener, cookie)
         })
         socket.on('ping', (command) => game.ping(command))
@@ -88,20 +105,12 @@ const Game = (props) => {
         socket.on('remove-fruit', (command) => game.removeFruit(command))
         socket.on('add-fruit', (command) => game.addFruit(command))
         socket.on('remove-player', (command) => game.removePlayer(command))        
-        socket.on('move-bot', (command) => game.moveBot(command))
         socket.on('change-player', (command) => game.changePlayer(command))
         socket.on('endOfTheGame', (command) => game.endOfTheGame(command, router))
         socket.on('message', (command) => game.message(command))
-        socket.on('deadPlayer', (command) => game.deadPlayer(command))
-        socket.on('startGame', (command) => {
-            if (command.serverId == game.state.serverId) game.state.stopped = false
-        })
-        socket.on('newADM', (command) => {
-            if (command.serverId == game.state.serverId) game.state.adm = command.admId
-        })
-        socket.on('move-player', (command) => {
-            if (command.playerId != socket.id) game.movePlayer(command)
-        });
+        socket.on('update-state', (command) => game.updateState(command))
+        socket.on('startGame', (command) => game.state.stopped = false)
+        socket.on('newADM', (command) => game.state.adm = command.admId)
         socket.on('song', (command) => {
             if (command.playerId == socket.id) game.playSoundEffect(command.song)
         });
@@ -111,6 +120,7 @@ const Game = (props) => {
             startButton.style.display = 'none'
             socket.emit('startGame', { serverId: game.state.serverId })
         })
+
         setTimeout(() => {
             if (game.state.adm == game.state.myID) socket.emit('startGame', { serverId: game.state.serverId })
         }, 60000)
@@ -148,13 +158,18 @@ const Game = (props) => {
 
                     <table id="scoreTable" />
                     <button id="scoreTable-button" />
+                    <div id="serverType">???</div>
                     <div id="timer">00:00</div>
 
                     <div id="playerViewSelection">
                         <button className="observedPlayerSelectionArrows left" />                        
-                        <button className="observedPlayerSelectionArrows right" />
+                        <button className="observedPlayerSelectionArrows right" />                        
                         <p id="nameOfSelectedPlayer" />
-                        <p id="scoreOfSelectedPlayer" />
+                        <div id="playerViewSelectionFooter">
+                            <p id="observedPlayerExitButton" className="playerViewSelectionFooterContents button" >Sair</p>
+                            <p id="scoreOfSelectedPlayer" className="playerViewSelectionFooterContents" />
+                            <p id="observedPlayerReturnButton" className="playerViewSelectionFooterContents button" >Renascer</p>
+                        </div>                                           
                     </div>
 
                     <div id="joystickContent">

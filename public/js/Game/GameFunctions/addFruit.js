@@ -15,12 +15,12 @@ module.exports = (command, state, notifyAll) => {
         color: fruitColor
     }
 
-    notifyAll({
+    /*notifyAll({
         type: 'add-fruit',
         fruitId: fruitId,
         x: fruitX,
         y: fruitY,
         color: fruitColor,
 		serverId: state.serverId
-    });
+    });*/
 }

@@ -11,14 +11,20 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
 
     function renderPlayer(player2, playerId) {
         let color1 = game.state.myID == playerId ? 'rgb(10, 200, 10)' : cookie.darkTheme == 'true' ? '#CCC' : '#363636'
-        let color2 = playerId == scoreArr[0].playerId ? 'rgb(204, 146, 0)': false        
+        let color2 = playerId == scoreArr[0].playerId ? 'rgb(204, 146, 0)': false
+
+        if (player2.safeTime) {
+            color1 = 'gold'
+            color2 = 'gold'
+        }
 
         for (let i = 0; i < player2.traces.length; i++) {            
             let trace = player2.traces[i]
             let x = (trace.x-player.x)+(Number.parseInt(canvas.width/2))
             let y = (trace.y-player.y)+(Number.parseInt(canvas.height/2))
             if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {
-                ctx.globalAlpha = 0.2
+                if (trace.fruit) ctx.globalAlpha = 0.4
+                else ctx.globalAlpha = 0.2
                 ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
                 ctx.fillRect(x, y, 1, 1);
                 ctx.fillStyle = color1;

@@ -26,17 +26,29 @@ div#gameAlert {
     width: 50%;
     height: 50px;
     color: white;
-    background-color: rgb(100, 50, 50);
+    background-color: rgb(50, 50, 50);
     border: solid black 2px;
     animation: gameAlert 0.2s linear forwards;
 }
 
 /* Textos informativos */
 
-header div#timer {
+header div#serverType {
     display: none;
     position: absolute;
     top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px;
+    color: rgb(173, 226, 255);
+    background-color: rgba(0, 0, 0, 0.658);
+    border: solid black 2px;
+}
+
+header div#timer {
+    display: none;
+    position: absolute;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
     padding: 2px;
@@ -237,7 +249,7 @@ header div#chat button#send-button:hover {
 
 /* Setas de seleção de players a espectar */
 
-header div#playerViewSelection {
+div#playerViewSelection {
     display: none;
     background-color: rgba(0, 0, 0, 0.658);
     border: solid black 2px;
@@ -248,31 +260,57 @@ header div#playerViewSelection {
     bottom: 30vh;
 }
 
-header div#playerViewSelection button.observedPlayerSelectionArrows {
+div#playerViewSelection button.observedPlayerSelectionArrows {
+    position: absolute;
     border: solid black 2px;
     cursor: pointer;
     width: 50px;
     height: 50px;
 }
 
-header div#playerViewSelection button.observedPlayerSelectionArrows.left {
+div#playerViewSelection button.observedPlayerSelectionArrows.left {
     background: rgb(242, 242, 242) url(/images/Arrows/leftArrow.png) no-repeat center 0px / 100%;
-    float: left;
-    margin-left: 35%;
+    /*float: left;
+    margin-left: 35%;*/
+    left: 35%;
 }
 
-header div#playerViewSelection button.observedPlayerSelectionArrows.right {
+div#playerViewSelection button.observedPlayerSelectionArrows.right {
     background: rgb(242, 242, 242) url(/images/Arrows/rightArrow.png) no-repeat center 0px / 100%;
-    float: right;
-    margin-right: 35%;
+    right: 35%;
+    /*float: right;
+    margin-right: 35%;*/
 }
 
-header div#playerViewSelection p#scoreOfSelectedPlayer {
-    background-color: rgba(0, 0, 0, 0.658);
+div#playerViewSelection div#playerViewSelectionFooter {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    height: 25px;
+}
+
+div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooterContents {
+    display: inline-block;    
+    width: 100px;
+    margin: 1px;
+    margin-top: 3px;
+    color: white;
     border: solid black 2px;
     border-top: none;
-    width: 100px;
-    margin: 20px auto;
+    transition: all 0.5s;
+}
+
+div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooterContents.button {    
+    background-color: rgba(100, 0, 0, 0.658);
+    cursor: pointer;
+}
+
+div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooterContents.button:hover {    
+    background-color: rgba(100, 0, 0, 1);
+}
+
+div#playerViewSelection p#scoreOfSelectedPlayer {
+    background-color: rgba(0, 0, 0, 0.658);
 }
 
 /* joystick */
@@ -286,7 +324,7 @@ header div#joystickContent {
     height: 128px;
     border: solid black 2px;
     border-radius: 100%;
-    background-color: rgba(0, 0, 0, 0.658);
+    background-color: rgba(0, 0, 0, 0.508);
 }
 
 header div#joystickContent div#joystick {
@@ -368,7 +406,8 @@ header div#finalScreen {
 header div#finalScreen h1 {
     font-size: 50px;
     transform: translateY(-150%);
-    color: black;
+    -webkit-text-stroke: black 3px;
+    color: #CCC;
 }
 
 header div#finalScreen p {
