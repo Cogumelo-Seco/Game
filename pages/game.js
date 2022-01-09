@@ -21,6 +21,7 @@ const Game = (props) => {
 	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'        
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
+        else document.body.id = ''
 
         const canvas = document.getElementById('screen');
         let socket = null
@@ -62,7 +63,10 @@ const Game = (props) => {
             setTimeout(() => router.push('/servers'), 3000) 
         })
         socket.on('setup', (state) => {
-            socket.emit('addMyPlayer', cookie.nick)
+            socket.emit('addMyPlayer', {
+                color: cookie.color,
+                nick: cookie.nick
+            })
 
             Listener.state.game = game
             Listener.registerSettings({

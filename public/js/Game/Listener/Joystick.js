@@ -89,10 +89,10 @@ export default function Joystick(state, movePlayer) {
 
         setInterval(() => {
             let joystickValue = self.value
-            if (joystickValue.x > 0.25) movePlayer({ key: 'd' }, joystickValue.x*1000)
-            if (joystickValue.x < -0.25) movePlayer({ key: 'a' }, -joystickValue.x*1000)
-            if (joystickValue.y > 0.25) movePlayer({ key: 's' }, joystickValue.y*1000)
-            if (joystickValue.y < -0.25) movePlayer({ key: 'w' }, -joystickValue.y*1000)
+            if (joystickValue.x > 0.25) movePlayer('d', joystickValue.x*1000)
+            if (joystickValue.x < -0.25) movePlayer('a', -joystickValue.x*1000)
+            if (joystickValue.y > 0.25) movePlayer('s', joystickValue.y*1000)
+            if (joystickValue.y < -0.25) movePlayer('w', -joystickValue.y*1000)
         }, 50)
     }
 }

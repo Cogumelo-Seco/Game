@@ -66,7 +66,7 @@ export default function createListener() {
     }
 
     function movePlayer(keyPressed, sensitivity) {
-        sensitivity = sensitivity ? 1070-sensitivity : 70
+        sensitivity = sensitivity ? 1100-sensitivity : 100
 
         function getMoveKey(keyPressed) {
             switch(keyPressed) {

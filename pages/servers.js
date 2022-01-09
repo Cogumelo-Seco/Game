@@ -21,6 +21,7 @@ const Page = (props) => {
 	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/servers/animations.css" />'
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
+        else document.body.id = ''
         document.getElementById('returnButton').addEventListener('click', () => router.push('/'))
 
         const reloadButton = document.getElementById('reloadButton')

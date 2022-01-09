@@ -7,6 +7,7 @@ module.exports = (command, state, botArtificialIntelligence) => {
     let bot = state.bots[botId] = {
         x: X == 0 ? 1 : X,
         y: Y == 0 ? 1 : Y,
+        color: '#'+Math.floor(Math.random()*16777215).toString(16),
         direction: 's',
         score: 1,
         traces: []

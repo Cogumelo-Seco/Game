@@ -12,7 +12,7 @@ module.exports = {
     },
     s(player, state) {
         if (player.direction == 'w') return false
-        if (player.y+8 >= state.screen.width) {
+        if (player.y+1 >= state.screen.width) {
             player.direction = 'd';
             return false
         } else {
@@ -34,7 +34,7 @@ module.exports = {
     },
     d(player, state) {
         if (player.direction == 'a') return false
-        if (player.x+8 >= state.screen.height) {
+        if (player.x+1 >= state.screen.height) {
             player.direction = 'w';
             return false
         } else {

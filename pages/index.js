@@ -13,6 +13,7 @@ const Page = () => {
     useEffect(() => {
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/home/animations.css" />'
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
+        else document.body.id = ''
 
         const options = document.getElementById('options')
         const playGame = document.getElementById('playGame')
@@ -23,6 +24,7 @@ const Page = () => {
         const soundEffectsVolumeInput = document.getElementById('soundEffectsVolumeInput')
         const soundEffectsVolumePercent = document.getElementById('soundEffectsVolumePercent')
         const nickInput = document.getElementById('nickInput')
+        const colorInput = document.getElementById('colorInput')        
         const showInfos = document.getElementById('showInfosCheckbox')
         const fullScreen = document.getElementById('fullScreenCheckbox')
         const animations = document.getElementById('animationsCheckbox')
@@ -32,6 +34,7 @@ const Page = () => {
         optionsButton.addEventListener('click', () => {
             soundEffectsVolumeInput.value = cookie.soundEffectsVol || 100
             if (cookie.nick) nickInput.value = cookie.nick
+            colorInput.value = cookie.color || '#00bd1f'
             showInfos.checked = cookie.showInfos == 'true' ? true : false
             fullScreen.checked = cookie.fullScreen == 'true' ? true : false
             animations.checked = cookie.animations == 'true' ? true : false
@@ -50,6 +53,7 @@ const Page = () => {
 
             document.cookie = `soundEffectsVol=${soundEffectsVolumeInput.value}; path=/`;
             document.cookie = `nick=${nickInput.value}; path=/`;
+            document.cookie = `color=${colorInput.value}; path=/`;
             document.cookie = `showInfos=${showInfos.checked}; path=/`;
             document.cookie = `fullScreen=${fullScreen.checked}; path=/`;
             document.cookie = `animations=${animations.checked}; path=/`;
@@ -114,7 +118,10 @@ const Page = () => {
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
                         </p>
-			<p id="soundEffectsVolume">
+                        <p id="nick">
+                            Cor: <input type="color" id="colorInput" className="textInput" />
+                        </p>
+			            <p id="soundEffectsVolume">
                             Volume dos efeitos: <input id="soundEffectsVolumeInput" type="range" /> <a id="soundEffectsVolumePercent">50%</a>
                         </p>
                         <p>

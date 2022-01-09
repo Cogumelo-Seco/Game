@@ -27,14 +27,14 @@ export default function renderScreen(canvas, page, cookie) {
             ctx.globalAlpha = 0.2
             ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
             ctx.fillRect(trace.x, trace.y, 1, 1);
-            ctx.fillStyle = cookie.darkTheme == 'true' ? '#CCC' : '#363636';
+            ctx.fillStyle = bot.color//cookie.darkTheme == 'true' ? '#CCC' : '#363636';
             ctx.fillRect(trace.x, trace.y, 1, 1);
         }
         
         ctx.globalAlpha = 0.5
         ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
         ctx.fillRect(bot.x, bot.y, 1, 1);
-        ctx.fillStyle = cookie.darkTheme == 'true' ? '#CCC' : '#363636';
+        ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
         ctx.fillRect(bot.x, bot.y, 1, 1);
     }
 

@@ -1,13 +1,12 @@
 module.exports = (command, state, notifyAll) => {
     const playerId = command.playerId
-    let nick = command['nick']
 
     let playerX = command.x
     let playerY = command.y
 
     function generatePlayerPosition() {
-        let X = Math.floor(Math.random()*(state.screen.height-7));
-        let Y = Math.floor(Math.random()*(state.screen.width-7));
+        let X = Math.floor(Math.random()*state.screen.height);
+        let Y = Math.floor(Math.random()*state.screen.width);
 		playerX = X
 		playerY = Y
         
@@ -23,7 +22,8 @@ module.exports = (command, state, notifyAll) => {
     state.players[playerId] = {
         x: playerX,
         y: playerY,
-        nick: nick,
+        nick: command.nick,
+		color: command.color,
         bot: false,
         dead: false,
         direction: 'w',
@@ -34,8 +34,9 @@ module.exports = (command, state, notifyAll) => {
 
     notifyAll({
         type: 'add-player',
-        playerId: playerId,
-        nick: nick,
+        playerId,
+        nick: command.nick,
+		color: command.color,
         x: playerX,
         y: playerY,
 		serverId: state.serverId
