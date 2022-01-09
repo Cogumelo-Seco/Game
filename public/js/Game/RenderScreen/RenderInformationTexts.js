@@ -36,10 +36,17 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
 
     if (cookie.showInfos == 'true') {
         if (+new Date()-game.state.fps.split('-')[1] > 1000) {
-            fpsDisplay.innerText = `${game.state.fps.split('-')[0]}FPS`
+            let FPS = game.state.fps.split('-')[0]
+            if (FPS >= 25 && FPS <= 45) fpsDisplay.style.color = 'rgb(255, 150, 50)'
+            else if (FPS <= 25) fpsDisplay.style.color = 'rgb(255, 50, 50)'
+            else fpsDisplay.style.color = 'rgb(100, 200, 100)'
+            fpsDisplay.innerText = `${FPS}FPS`
             game.state.fps = `0-${+new Date()}`
         }
 
+        if (game.state.ping >= 220 && game.state.ping <= 300) pingDisplay.style.color = 'rgb(255, 150, 50)'
+        else if (game.state.ping >= 300) pingDisplay.style.color = 'rgb(255, 50, 50)'
+        else pingDisplay.style.color = 'rgb(100, 200, 100)'
         pingDisplay.innerText = `${game.state.ping}ms`
 
         let playerCount = 0

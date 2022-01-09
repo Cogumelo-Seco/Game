@@ -1,4 +1,4 @@
-@media screen and (max-width:597px) {
+@media screen and (max-width:600px) {
     header canvas#miniMap {
         transform: translateY(0);
         top: 5px;
@@ -11,9 +11,11 @@
         display: none;
     }
 
-    header div#playerViewSelection button.observedPlayerSelectionArrows.left,
-    header div#playerViewSelection button.observedPlayerSelectionArrows.right {
-        margin: 0;
+    header div#playerViewSelection button.observedPlayerSelectionArrows.left {
+        left: 0;
+    }
+    header div#playerViewSelection button.observedPlayerSelectionArrows.right {        
+        right: 0;
     }
 
     header table#scoreTable {

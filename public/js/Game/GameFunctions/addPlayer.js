@@ -6,8 +6,8 @@ module.exports = (command, state, notifyAll) => {
     let playerY = command.y
 
     function generatePlayerPosition() {
-        let X = Math.floor(Math.random()*state.screen.height);
-        let Y = Math.floor(Math.random()*state.screen.width);
+        let X = Math.floor(Math.random()*(state.screen.height-7));
+        let Y = Math.floor(Math.random()*(state.screen.width-7));
 		playerX = X
 		playerY = Y
         

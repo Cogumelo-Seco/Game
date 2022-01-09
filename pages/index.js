@@ -119,7 +119,7 @@ const Page = () => {
                         </p>
                         <p>
                             Mostrar informações de jogo: <label className="switch">
-                                <input type="checkbox" id="showInfosCheckbox" />
+                                <input defaultChecked type="checkbox" id="showInfosCheckbox" />
                                 <span className="slider"></span>
                             </label>
                         </p>
@@ -131,13 +131,13 @@ const Page = () => {
                         </p>
                         <p>
                             Animações: <label className="switch">
-                                <input type="checkbox" id="animationsCheckbox" />
+                                <input defaultChecked type="checkbox" id="animationsCheckbox" />
                                 <span className="slider"></span>
                             </label>
                         </p>
                         <p>
                             Tema escuro: <label className="switch">
-                                <input type="checkbox" id="darkThemeCheckbox" />
+                                <input defaultChecked type="checkbox" id="darkThemeCheckbox" />
                                 <span className="slider"></span>
                             </label>
                         </p>                        

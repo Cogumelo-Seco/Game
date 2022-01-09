@@ -247,7 +247,7 @@ header div#chat button#send-button:hover {
     background-color: rgb(0, 110, 160);
 }
 
-/* Setas de seleção de players a espectar */
+/* Espectador */
 
 div#playerViewSelection {
     display: none;
@@ -270,16 +270,12 @@ div#playerViewSelection button.observedPlayerSelectionArrows {
 
 div#playerViewSelection button.observedPlayerSelectionArrows.left {
     background: rgb(242, 242, 242) url(/images/Arrows/leftArrow.png) no-repeat center 0px / 100%;
-    /*float: left;
-    margin-left: 35%;*/
     left: 35%;
 }
 
 div#playerViewSelection button.observedPlayerSelectionArrows.right {
     background: rgb(242, 242, 242) url(/images/Arrows/rightArrow.png) no-repeat center 0px / 100%;
     right: 35%;
-    /*float: right;
-    margin-right: 35%;*/
 }
 
 div#playerViewSelection div#playerViewSelectionFooter {
@@ -290,17 +286,17 @@ div#playerViewSelection div#playerViewSelectionFooter {
 }
 
 div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooterContents {
-    display: inline-block;    
+    display: inline-block;
     width: 100px;
     margin: 1px;
     margin-top: 3px;
     color: white;
     border: solid black 2px;
-    border-top: none;
     transition: all 0.5s;
 }
 
 div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooterContents.button {    
+    margin-top: 25px;
     background-color: rgba(100, 0, 0, 0.658);
     cursor: pointer;
 }
@@ -310,6 +306,9 @@ div#playerViewSelection div#playerViewSelectionFooter .playerViewSelectionFooter
 }
 
 div#playerViewSelection p#scoreOfSelectedPlayer {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;    
     background-color: rgba(0, 0, 0, 0.658);
 }
 

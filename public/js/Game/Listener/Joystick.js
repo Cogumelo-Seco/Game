@@ -1,4 +1,4 @@
-export default function Joystick(state, handleKeys) {
+export default function Joystick(state, movePlayer) {
     const joystick = document.getElementById('joystick')
     const joystickContent = document.getElementById('joystickContent')
     const playerScore = document.getElementById('playerScore')
@@ -89,10 +89,10 @@ export default function Joystick(state, handleKeys) {
 
         setInterval(() => {
             let joystickValue = self.value
-            if (joystickValue.x > 0.25) handleKeys({ key: 'd' }, joystickValue.x*1000)
-            if (joystickValue.x < -0.25) handleKeys({ key: 'a' }, -joystickValue.x*1000)
-            if (joystickValue.y > 0.25) handleKeys({ key: 's' }, joystickValue.y*1000)
-            if (joystickValue.y < -0.25) handleKeys({ key: 'w' }, -joystickValue.y*1000)
+            if (joystickValue.x > 0.25) movePlayer({ key: 'd' }, joystickValue.x*1000)
+            if (joystickValue.x < -0.25) movePlayer({ key: 'a' }, -joystickValue.x*1000)
+            if (joystickValue.y > 0.25) movePlayer({ key: 's' }, joystickValue.y*1000)
+            if (joystickValue.y < -0.25) movePlayer({ key: 'w' }, -joystickValue.y*1000)
         }, 50)
     }
 }

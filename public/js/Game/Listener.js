@@ -6,7 +6,7 @@ export default function createListener() {
         observers: [],
         onChat: false,
         playerId: null,
-        zoom: 13,
+        zoom: 10,
         cooldown: 0,
         keys: {
             w: { cooldown: 0 },
@@ -14,6 +14,7 @@ export default function createListener() {
             s: { cooldown: 0 },
             d: { cooldown: 0 },
         },
+        pressedKeys: {},
         mobile: false
     }
 
@@ -34,9 +35,11 @@ export default function createListener() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
     const chatFunctions = chat(state, notifyAll)
-    Joystick(state, handleKeys)
+    Joystick(state, movePlayer)
 
     document.addEventListener('keydown', handleKeys)
+    document.addEventListener('keydown', (e) => state.pressedKeys[e.key] = true)
+    document.addEventListener('keyup', (e) => state.pressedKeys[e.key] = false)
 
     function zoom(key) {
         if (key == '-' && state.zoom > 3) state.zoom -= state.zoom ** 0.9 / 10
@@ -52,8 +55,7 @@ export default function createListener() {
     }
 
     function handleKeys(event, sensitivity) {
-        let keyPressed = event.key
-        sensitivity = sensitivity ? 1080-sensitivity : 80
+        let keyPressed = event.key        
 
         chatFunctions.keyPressed(keyPressed, state, notifyAll)
         
@@ -61,8 +63,11 @@ export default function createListener() {
 
         zoom(keyPressed)
         scoreTable(keyPressed)
+    }
 
-        // Move Player
+    function movePlayer(keyPressed, sensitivity) {
+        sensitivity = sensitivity ? 1070-sensitivity : 70
+
         function getMoveKey(keyPressed) {
             switch(keyPressed) {
                 case 'ArrowUp':
@@ -92,6 +97,12 @@ export default function createListener() {
             })
         }
     }
+
+    setInterval(() => {
+        for (let key in state.pressedKeys) {
+            if (state.pressedKeys[key]) movePlayer(key)
+        }
+    }, 50)
 
     return {
         subscribe,

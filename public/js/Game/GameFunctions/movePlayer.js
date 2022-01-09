@@ -40,15 +40,12 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 	}
 
     player.traces.splice(player.score+1, player.traces.length)
-	player.traces.splice(300, player.traces.length)
+	player.traces.splice(500, player.traces.length)
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]
-        if (player.x == fruit.x && player.y == fruit.y) {
-            if (!state.stopped) {
-                player.traces[0].fruit = true
-                player.score += 1
-            }
+        if (Math.abs(player.x+4-fruit.x) <= 4 && Math.abs(player.y+4-fruit.y) <= 4) {
+            if (!state.stopped) player.score += 1
 
             if (command.playerId == state.myID) {
                 if (player.score%50 == 0) state.playSoundEffect('up+')
