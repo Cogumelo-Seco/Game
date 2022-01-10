@@ -1,8 +1,9 @@
-module.exports = (command, state, notifyAll, removeFruit) => {    
-    if (!command.keyPressed) return;
+module.exports = (command, state, notifyAll, removeFruit) => {        
     const acceptedKeys = require('./acceptedKeys')
-
     let player = state.players[command.playerId];
+
+	if (!command.keyPressed || !player) return;
+
     let keyPressed = command.keyPressed
 
     switch(keyPressed) {
@@ -40,7 +41,7 @@ module.exports = (command, state, notifyAll, removeFruit) => {
 	}
 
     player.traces.splice(player.score+1, player.traces.length)
-	player.traces.splice(500, player.traces.length)
+	player.traces.splice(300, player.traces.length)
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]
