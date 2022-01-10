@@ -35,6 +35,7 @@ const Game = (props) => {
 
         function exit() {
             socket.emit('disconnectedPlayer')
+            data.socket = false
             game.state.router = true
             router.push('/servers')
         }
