@@ -1,7 +1,7 @@
 import chat from './Listener/Chat.js';
 import Joystick from './Listener/Joystick.js';
 
-export default function createListener() {
+export default function createListener(socket) {
     const state = {
         observers: [],
         onChat: false,
@@ -27,24 +27,25 @@ export default function createListener() {
     const subscribe = (observerFunction) => state.observers.push(observerFunction)
 
     const notifyAll = (command) => {
-        for (const observerFunction of state.observers) {
-            observerFunction(command)
-        }
+        for (const observerFunction of state.observers) observerFunction(command)
     }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
-    const chatFunctions = chat(state, notifyAll)
+    const chatFunctions = chat(state, socket)
     Joystick(state, movePlayer)
+
+    document.getElementById('body').onwheel = (event) => {
+        if (event.deltaY > 0) state.zoom -= state.zoom ** 0.9 / 5
+        else state.zoom += state.zoom ** 0.9 / 5
+
+        if (state.zoom <= 3) state.zoom = 3
+        if (state.zoom >= 60) state.zoom = 60
+    }
 
     document.addEventListener('keydown', handleKeys)
     document.addEventListener('keydown', (e) => state.pressedKeys[e.key] = true)
     document.addEventListener('keyup', (e) => state.pressedKeys[e.key] = false)
-
-    function zoom(key) {
-        if (key == '-' && state.zoom > 3) state.zoom -= state.zoom ** 0.9 / 10
-        else if (key == '+' && state.zoom < 60) state.zoom += state.zoom ** 0.9 / 10
-    }
 
     function scoreTable(key) {
         if (key == '*') {
@@ -54,14 +55,13 @@ export default function createListener() {
         }
     }
 
-    function handleKeys(event, sensitivity) {
+    function handleKeys(event) {
         let keyPressed = event.key        
 
-        chatFunctions.keyPressed(keyPressed, state, notifyAll)
+        chatFunctions.keyPressed(keyPressed)
         
         if (state.onChat) return;
 
-        zoom(keyPressed)
         scoreTable(keyPressed)
     }
 

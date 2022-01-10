@@ -1,4 +1,4 @@
-export default function chat(state, notifyAll) {
+export default function chat(state, socket) {
     document.getElementById('chat-button').addEventListener('click', openCloseChat);
     document.getElementById('send-button').addEventListener('click', send);
     
@@ -18,8 +18,7 @@ export default function chat(state, notifyAll) {
     function send() {
         let content = messageBox.value
         if (!content) return;
-        notifyAll({
-            type: 'message',
+        socket.emit('message', {
             playerId: state.playerId,
             read: false,
             content,
@@ -27,9 +26,9 @@ export default function chat(state, notifyAll) {
         messageBox.value = ''
     }
 
-    function keyPressed(keyPressed, state, notifyAll) {
+    function keyPressed(keyPressed) {
         // Enviar mensagem com enter
-        if (state.onChat && keyPressed == 'Enter' && messageBox.value.trim()) send(state, notifyAll)
+        if (state.onChat && keyPressed == 'Enter' && messageBox.value.trim()) send()
 
         // Abrir chat com /
         const chat = document.getElementById('chat')
@@ -41,7 +40,7 @@ export default function chat(state, notifyAll) {
         }
 
         // Fechar chat aberto com ESC
-        if(state.onChat && keyPressed == 'Escape') openCloseChat(state, notifyAll)
+        if(state.onChat && keyPressed == 'Escape') openCloseChat()
     }
 
     return {

@@ -16,7 +16,7 @@ function createGame(cookie) {
         screen: {
             width: 50,
             height: 50
-        }
+        }        
     }
 
     const observers = []
@@ -26,9 +26,7 @@ function createGame(cookie) {
     const subscribe = (observerFunction) => observers.push(observerFunction)
 
     const notifyAll = (command) => {
-        for (const observerFunction of observers) {
-			observerFunction(command)
-        }
+        for (const observerFunction of observers) observerFunction(command)
     }
 
     const addPlayer = (command) => getGameFunction('addPlayer')(command, state, notifyAll)
@@ -50,7 +48,6 @@ function createGame(cookie) {
 
     const message = (command) => {
         if (command.serverId != state.serverId) return
-        //notifyAll(command)
         if (state.messages.length >= 9) state.messages.splice(0, 1)
         if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
         if (command.content.trim()) state.messages.push(command)
@@ -149,6 +146,9 @@ function createGame(cookie) {
                     command.players[state.myID] = state.players[state.myID]
                 }
                 state.players = command.players
+            } else if (i == 'messages') {
+                if (state.messages[state.messages.length-1] != command.messages[command.messages.length-1]) state.messages.push(command.messages[command.messages.length-1])
+                if (state.messages.length >= 9) state.messages.splice(0, 1)
             } else if (i != 'type') state[i] = command[i]
         }
     }

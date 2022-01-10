@@ -4,7 +4,7 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     const unreadMessageCounter = document.getElementById('unreadMessageCounter')
     const chat = document.getElementById('chat')
     
-    if (window.innerWidth <= 597) return
+    if (window.innerWidth <= 600) return
 
     chatContent.innerHTML = ''
     let messages = []

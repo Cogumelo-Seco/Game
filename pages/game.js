@@ -31,7 +31,7 @@ const Game = (props) => {
         socket.emit('getSetup')
 
         const game = createGame(cookie);
-        const Listener = createListener();
+        const Listener = createListener(socket);
 
         function exit() {
             socket.emit('disconnectedPlayer')
@@ -48,7 +48,7 @@ const Game = (props) => {
             game.state.players[socket.id].dead = false
             setTimeout(() => {
                 if (game.state.players[socket.id]) game.state.players[socket.id].safeTime = false
-            }, 3000)
+            }, Math.floor(Math.random()*3000)+3000)
 
             socket.emit('revivePlayer', {
                 type: 'revivePlayer',
