@@ -50,7 +50,7 @@ function createGame(cookie) {
 
     const message = (command) => {
         if (command.serverId != state.serverId) return
-        notifyAll(command)
+        //notifyAll(command)
         if (state.messages.length >= 9) state.messages.splice(0, 1)
         if (!command.nick) command.nick = state.players[command.playerId] ? state.players[command.playerId].nick : ''
         if (command.content.trim()) state.messages.push(command)
@@ -84,7 +84,8 @@ function createGame(cookie) {
                 type: 'update-state',
                 players: game.state.players,
                 fruits: game.state.fruits,
-				time: game.state.time,                
+                messages: game.state.messages,
+				time: game.state.time,
                 serverId: game.state.serverId,
             })
 		}, 100)
