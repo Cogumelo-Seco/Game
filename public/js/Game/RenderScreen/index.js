@@ -32,7 +32,6 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderBackgroundAndBoundaries')(canvas, game, Listener, scoreArr, cookie)
         require('./RenderPlayers')(canvas, game, Listener, scoreArr, cookie)
         require('./RenderFruits')(canvas, game, Listener, scoreArr, cookie)
-        require('./RenderChat')(canvas, game, Listener, scoreArr, cookie)
         require('./RenderScoreTable')(canvas, game, Listener, scoreArr, cookie)
         require('./RenderInformationTexts')(canvas, game, Listener, scoreArr, cookie)
         require('./RenderPlayerSelectionToLook')(canvas, game, Listener, scoreArr, cookie)

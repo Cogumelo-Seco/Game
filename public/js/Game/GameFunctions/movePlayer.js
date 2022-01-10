@@ -1,4 +1,4 @@
-module.exports = (command, state, notifyAll, removeFruit) => {        
+module.exports = (command, state, notifyAll) => {        
     const acceptedKeys = require('./acceptedKeys')
     let player = state.players[command.playerId];
 
@@ -30,15 +30,21 @@ module.exports = (command, state, notifyAll, removeFruit) => {
     if (!player || command.auto && command.keyPressed != player.direction) return;
     if (player.dead) return;
 
-	if (!command.server) {
+    if (!command.x && !command.y) {
         let move = moveFunction(player, state)
         if (move) player.traces.unshift({ x: player.x, y: player.y })
-	} else {
-		player.x = command.player.x
-		player.y = command.player.y
-		player.traces = command.player.traces
-		player.direction = command.player.direction
-	}
+        command.x = player.x
+		command.y = player.y
+		command.traces = player.traces
+		command.direction = player.direction
+    } else {
+        player.x = command.x
+		player.y = command.y
+		player.traces = command.traces
+		player.direction = command.direction
+    }
+
+    notifyAll(command)
 
     player.traces.splice(player.score+1, player.traces.length)
 	player.traces.splice(300, player.traces.length)
@@ -56,10 +62,11 @@ module.exports = (command, state, notifyAll, removeFruit) => {
                 else state.playSoundEffect('up')
             }
 
-            removeFruit({ 
+            if (command.ServerFunctions) command.ServerFunctions.removeFruit({ 
                 playerId: command.playerId,
                 fruitId,
-				serverId: state.serverId 
+				serverId: state.serverId,
+				state
             })
         }
     }

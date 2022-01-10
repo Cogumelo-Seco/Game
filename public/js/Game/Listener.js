@@ -1,10 +1,10 @@
 import chat from './Listener/Chat.js';
 import Joystick from './Listener/Joystick.js';
 
-export default function createListener(socket) {
+export default function createListener(socket, cookie) {
     const state = {
         observers: [],
-        onChat: false,
+        onChat: 'off',
         playerId: null,
         zoom: 10,
         cooldown: 0,
@@ -32,10 +32,12 @@ export default function createListener(socket) {
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) state.mobile = true
 
-    const chatFunctions = chat(state, socket)
+    const chatFunctions = chat(state, socket, cookie)
     Joystick(state, movePlayer)
 
     document.getElementById('body').onwheel = (event) => {
+        if (state.onChat == 'over') return
+        
         if (event.deltaY > 0) state.zoom -= state.zoom ** 0.9 / 5
         else state.zoom += state.zoom ** 0.9 / 5
 
@@ -60,12 +62,13 @@ export default function createListener(socket) {
 
         chatFunctions.keyPressed(keyPressed)
         
-        if (state.onChat) return;
+        if (document.activeElement.id == 'message-box') return;
 
         scoreTable(keyPressed)
     }
 
     function movePlayer(keyPressed, sensitivity) {
+        if (document.activeElement.id == 'message-box') return
         sensitivity = sensitivity ? 1100-sensitivity : 100
 
         function getMoveKey(keyPressed) {
@@ -90,7 +93,6 @@ export default function createListener(socket) {
 
             notifyAll({
                 type: 'move-player',
-                player: state.game.state.players[state.playerId],
                 playerId: state.playerId,
                 keyPressed,
                 serverId: state.serverId

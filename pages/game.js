@@ -31,7 +31,7 @@ const Game = (props) => {
         socket.emit('getSetup')
 
         const game = createGame(cookie);
-        const Listener = createListener(socket);
+        const Listener = createListener(socket, cookie);
 
         function exit() {
             socket.emit('disconnectedPlayer')
@@ -44,16 +44,13 @@ const Game = (props) => {
         document.getElementById('observedPlayerExitButton').addEventListener('click', exit)
 
         document.getElementById('observedPlayerReturnButton').addEventListener('click', () => {
-            game.state.players[socket.id].safeTime = true
-            game.state.players[socket.id].dead = false
-            setTimeout(() => {
+            //game.state.players[socket.id].safeTime = true
+            //game.state.players[socket.id].dead = false
+            /*setTimeout(() => {
                 if (game.state.players[socket.id]) game.state.players[socket.id].safeTime = false
-            }, Math.floor(Math.random()*3000)+3000)
+            }, Math.floor(Math.random()*3000)+3000)*/
 
-            socket.emit('revivePlayer', {
-                type: 'revivePlayer',
-                playerId: socket.id,
-            })
+            socket.emit('revivePlayer')
         })
 
         socket.on('deadPlayerGameOver', (command) => {
@@ -75,19 +72,13 @@ const Game = (props) => {
                 serverId: state.serverId
             })
             Listener.subscribe((command) => game.movePlayer(command));
-            Listener.subscribe((command) => {
-                command.server = true
-                socket.emit(command.type, command)
-            });
-            game.subscribe((command) => {
-                socket.emit(command.type, command)
-            });
+            //Listener.subscribe((command) => socket.emit(command.type, command));
+            game.subscribe((command) => socket.emit(command.type, command));
             game.setState(state)
 
             setInterval(() => {
                 if (game.state.players[socket.id]) Listener.notifyAll({
                     type: 'move-player',
-                    player: game.state.players[socket.id],
                     auto: true,
                     playerId: socket.id,
                     keyPressed: game.state.players[socket.id].direction,
@@ -104,15 +95,9 @@ const Game = (props) => {
             PageFunctions(game, canvas, socket, Listener, cookie)
         })
         socket.on('ping', (command) => game.ping(command))
-        socket.on('newTime', (time) => game.state.time = +new Date()+time)
-        socket.on('add-player', (command) => game.addPlayer(command))
         socket.on('add-bot', (command) => game.addBot(command))
-        socket.on('remove-fruit', (command) => game.removeFruit(command))
-        socket.on('add-fruit', (command) => game.addFruit(command))
-        socket.on('remove-player', (command) => game.removePlayer(command))        
         socket.on('change-player', (command) => game.changePlayer(command))
         socket.on('endOfTheGame', (command) => game.endOfTheGame(command, router))
-        socket.on('message', (command) => game.message(command))
         socket.on('update-state', (command) => game.updateState(command))
         socket.on('startGame', (command) => game.state.stopped = false)
         socket.on('newADM', (command) => game.state.adm = command.admId)

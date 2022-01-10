@@ -5,6 +5,7 @@ module.exports = (command, state, notifyAll) => {
     if (!player) return
     player.score = score
     player.dead = command.dead || false
+    player.safeTime = command.safeTime || false
 
     if (command.tracesAdditional) player.traces = player.traces.concat(traces)
     else player.traces = traces
@@ -14,6 +15,7 @@ module.exports = (command, state, notifyAll) => {
         playerId: command.playerId,
         score,
         traces,
+        safeTime: command.safeTime || false,
         dead: command.dead || false,
         tracesAdditional: command.tracesAdditional || false,
 		serverId: state.serverId
