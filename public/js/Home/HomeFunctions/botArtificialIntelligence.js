@@ -50,7 +50,7 @@ module.exports = (command, state) => {
             },
             s(bot, state) {
                 if (bot.direction == 'w') return false
-                if (bot.y >= state.screen.width-2) {
+                if (bot.y >= state.screen.height-1) {
                     bot.direction = 'd';
                     return false
                 } 
@@ -70,7 +70,7 @@ module.exports = (command, state) => {
             },
             d(bot, state) {
                 if (bot.direction == 'a') return false
-                if (bot.x >= state.screen.height-2) {
+                if (bot.x >= state.screen.width-1) {
                     bot.direction = 'w';
                     return false
                 }
