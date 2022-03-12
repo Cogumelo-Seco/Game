@@ -48,6 +48,7 @@ module.exports = (command, state, notifyAll) => {
 
     player.traces.splice(player.score+1, player.traces.length)
 	player.traces.splice(300, player.traces.length)
+	if (player.color.split('hsl(')[0] == '') player.color = `hsl(${Number(player.color.split(',')[0].split('hsl(')[1]) >= 360 ? 0 : Number(player.color.split(',')[0].split('hsl(')[1])+4}, 100%, 50%)`
 
     for (const fruitId in state.fruits) {
         const fruit = state.fruits[fruitId]

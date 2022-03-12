@@ -14,7 +14,7 @@ export default function chat(state, socket, cookie) {
             for (let i in state.game.state.messages) {
                 if (!state.game.state.messages[i].read) {
                     state.game.state.messages[i].read = true
-                    chatContent.scrollTop = +new Date()*+new Date()
+                    chatContent.scrollTop = chatContent.scrollHeight
                 }                
             }
             state.game.state.unreadMessages = 0

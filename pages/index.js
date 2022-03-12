@@ -11,6 +11,22 @@ const Page = () => {
     const router = useRouter()
 
     useEffect(() => {
+        if (!cookie.animations) {
+            cookie.soundEffectsVol = 100
+            cookie.color = '#00bd1f'
+            cookie.showInfos = 'true'
+            cookie.fullScreen = 'false'
+            cookie.animations = 'true'
+            cookie.darkTheme = 'true'
+
+            document.cookie = `soundEffectsVol=${cookie.soundEffectsVol}; path=/`;
+            document.cookie = `color=${cookie.color}; path=/`;
+            document.cookie = `showInfos=${cookie.showInfos}; path=/`;
+            document.cookie = `fullScreen=${cookie.fullScreen}; path=/`;
+            document.cookie = `animations=${cookie.animations}; path=/`;
+            document.cookie = `darkTheme=${cookie.darkTheme}; path=/`;
+        }
+
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/home/animations.css" />'
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
         else document.body.id = ''

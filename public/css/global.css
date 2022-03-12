@@ -151,3 +151,8 @@ div#loadingCircle {
     border-radius: 20px;
     animation: loadingCircle 1s linear infinite;
 }
+
+span.x-slash {
+    border-top: solid 1px;
+    font-size: 13px;
+}

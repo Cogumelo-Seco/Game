@@ -1,7 +1,9 @@
 function createGame(cookie) {
     const state = {
         fps: '0-0',
+        averageFPS: [],
         ping: '?',
+        averagePing: [],
         noConnection: 0,
         time: NaN,
 		serverTime: 120000,
@@ -41,6 +43,9 @@ function createGame(cookie) {
         if (command.ping && command.playerId == state.myID) {
             state.noConnection = 0
             state.ping = +new Date()-command.ping
+
+            state.averagePing.unshift(state.ping)
+            state.averagePing.splice(20, state.averagePing.length)
         }
     }
 
@@ -84,7 +89,7 @@ function createGame(cookie) {
             <p id="Name" style="color: ${message.color || 'rgb(0, 229, 255)'} ${message.nameAdditionalCSS ? ';'+message.nameAdditionalCSS : ''}">${message.nick} ${message.emoji || ''}</p>
             <p id="Message" style="color: ${message.color2 || 'white'} ${message.messageAdditionalCSS ? ';'+message.messageAdditionalCSS : ''}">${message.content}</p>
         `
-        chatContent.scrollTop = +new Date()*+new Date()
+        chatContent.scrollTop = chatContent.scrollHeight
 
         if (state.unreadMessages > 0) {
             unreadMessageCounter.style.display = 'flex'
@@ -129,7 +134,7 @@ function createGame(cookie) {
     }
 
     state.gameAlert = (text) => {
-        const gameAlert = document.getElementById('gameAlert')        
+        const gameAlert = document.getElementById('gameAlert')
         gameAlert.innerText = text
         gameAlert.style.display = 'flex'
         setTimeout(() => gameAlert.style.display = 'none', 5000)
@@ -141,6 +146,7 @@ function createGame(cookie) {
                 if (state.players[state.myID]) {
                     state.players[state.myID].score = command.players[state.myID].score
                     state.players[state.myID].safeTime = command.players[state.myID].safeTime
+                    state.players[state.myID].color = command.players[state.myID].color
                     command.players[state.myID] = state.players[state.myID]
                 }
                 state.players = command.players
