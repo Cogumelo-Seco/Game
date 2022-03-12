@@ -42,7 +42,7 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
             else fpsDisplay.style.color = 'rgb(100, 200, 100)'
 
             game.state.averageFPS.unshift(Number(FPS))
-            game.state.averageFPS.splice(20, game.state.averageFPS.length)
+            game.state.averageFPS.splice(10, game.state.averageFPS.length)
 
             let averageFPS = 0
             for (let i in game.state.averageFPS) averageFPS += game.state.averageFPS[i]
