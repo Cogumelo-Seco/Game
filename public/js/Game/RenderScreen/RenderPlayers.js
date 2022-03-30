@@ -13,9 +13,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
         let color1 = player2.color || '#00bd1f'
         let color2 = playerId == scoreArr[0].playerId ? 'gold': game.state.myID == playerId ? '#00bd1f' : cookie.darkTheme == 'true' ? 'white' : 'black'
 
-        if (player2.safeTime) {
-            color1 = 'red'
-            color2 = 'red'
+        if (player2.safeTime || game.state.stopped) {
+            color1 = 'red';
+            color2 = 'red';
         }
 
         for (let i = 0; i < player2.traces.length; i++) {            

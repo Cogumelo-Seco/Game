@@ -19,7 +19,7 @@ function createGame(cookie) {
         screen: {
             width: 50,
             height: 50
-        }        
+        }
     }
 
     const observers = []
@@ -45,7 +45,7 @@ function createGame(cookie) {
             state.ping = +new Date()-command.ping
 
             state.averagePing.unshift(state.ping)
-            state.averagePing.splice(10, state.averagePing.length)
+            state.averagePing.splice(20, state.averagePing.length)
         }
     }
 
