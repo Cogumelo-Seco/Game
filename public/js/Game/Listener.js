@@ -6,7 +6,7 @@ export default function createListener(socket, cookie) {
         observers: [],
         onChat: 'off',
         playerId: null,
-        zoom: 2,
+        zoom: 2.5,
         cooldown: 0,
         keys: {
             w: { cooldown: 0 },
@@ -41,7 +41,7 @@ export default function createListener(socket, cookie) {
         if (event.deltaY > 0) state.zoom += state.zoom ** 0.9 / 5
         else state.zoom -= state.zoom ** 0.9 / 5
 
-        if (state.zoom >= 4) state.zoom = 4
+        if (state.zoom >= 4.5) state.zoom = 4.5
         if (state.zoom <= 0.5) state.zoom = 0.5
     }
 
