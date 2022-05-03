@@ -6,7 +6,7 @@ export default function createListener(socket, cookie) {
         observers: [],
         onChat: 'off',
         playerId: null,
-        zoom: 10,
+        zoom: 2,
         cooldown: 0,
         keys: {
             w: { cooldown: 0 },
@@ -38,11 +38,11 @@ export default function createListener(socket, cookie) {
     document.getElementById('body').onwheel = (event) => {
         if (state.onChat == 'over') return
         
-        if (event.deltaY > 0) state.zoom -= state.zoom ** 0.9 / 5
-        else state.zoom += state.zoom ** 0.9 / 5
+        if (event.deltaY > 0) state.zoom += state.zoom ** 0.9 / 5
+        else state.zoom -= state.zoom ** 0.9 / 5
 
-        if (state.zoom <= 3) state.zoom = 3
-        if (state.zoom >= 60) state.zoom = 60
+        if (state.zoom >= 4) state.zoom = 4
+        if (state.zoom <= 0.5) state.zoom = 0.5
     }
 
     document.addEventListener('keydown', handleKeys)

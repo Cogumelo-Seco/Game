@@ -12,13 +12,6 @@ const Game = (props) => {
     const router = useRouter()
 
     useEffect(() => {
-        let interval = setInterval(() => {
-	        if (cookie.fullScreen == 'true') {
-                document.documentElement.requestFullscreen()
-  		            .then(() => clearInterval(interval))
-                    .catch(() => console.log('Erro ao tentar deixar o jogo em tela cheia'))
-            }
-	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/game/animations.css" />'        
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
         else document.body.id = ''
@@ -63,7 +56,8 @@ const Game = (props) => {
         socket.on('setup', (state) => {
             socket.emit('addMyPlayer', {
                 color: cookie.color,
-                nick: cookie.nick
+                nick: cookie.nick,
+                playerImage: props.image
             })
 
             Listener.state.game = game
@@ -195,11 +189,24 @@ const Game = (props) => {
 export async function getStaticProps() {
     const SERVER = process.env.SERVER
 
+    let imgs = [
+        (await fetch(`https://some-random-api.ml/animal/cat`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/dog`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/panda`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/fox`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/red_panda`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/koala`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/birb`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/raccoon`).then((body) => body?.json()).catch(() => null))?.image,
+        (await fetch(`https://some-random-api.ml/animal/kangaroo`).then((body) => body?.json()).catch(() => null))?.image,
+    ]
+
     return {
         props: {
             SERVER,
+            image: imgs[Math.floor(Math.random()*imgs.length-1)] || 'https://cdn.discordapp.com/attachments/772606352102522890/970889126419263548/Roxo.png',
         },
-        revalidate: 1800
+        revalidate: 1
     }
 }
 

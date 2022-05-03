@@ -1,6 +1,8 @@
 export default function renderScreen(canvas, game, requestAnimationFrame, Listener, cookie) {
-    canvas.width = window.innerWidth/Listener.state.zoom;
-    canvas.height = window.innerHeight/Listener.state.zoom;
+    const tileSize = cookie.performanceMode == 'false' ? game.state.tileSize : 1
+
+    canvas.width = window.innerWidth*(Listener.state.zoom*(tileSize/100));
+    canvas.height = window.innerHeight*(Listener.state.zoom*(tileSize/100));
 
     let fps = Number(game.state.fps.split('-')[0])
     game.state.fps = `${fps + 1}-${game.state.fps.split('-')[1]}`

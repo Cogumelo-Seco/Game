@@ -13,9 +13,10 @@ function createGame(cookie) {
         messages: {},
         players: {},
         fruits: {},
+        images: [],
 		stopped: true,
         gameOver: false,
-        playersSize: 10,
+        tileSize: 50,
         screen: {
             width: 50,
             height: 50
@@ -70,7 +71,7 @@ function createGame(cookie) {
         if (!message.read && chat.style.display == 'block') message.read = true;
         if (!message.read && state.unreadMessages < 99) state.unreadMessages += 1
 
-        if (scoreArr[0].nick == message.nick) message.color = 'rgb(255, 196, 48)'
+        if (scoreArr[0] && scoreArr[0].nick == message.nick) message.color = 'rgb(255, 196, 48)'
         if (message.playerId && state.players[message.playerId] && state.players[message.playerId].dead) {
             message.emoji = '👻'
             message.color = 'gray'
@@ -83,7 +84,7 @@ function createGame(cookie) {
             message.color2 = 'rgb(200, 200, 200)'
             message.nameAdditionalCSS = 'text-decoration: line-through'
         }
-        if (scoreArr[0].nick == message.nick) message.emoji = '👑'
+        if (scoreArr[0] && scoreArr[0].nick == message.nick) message.emoji = '👑'
 
         chatContent.innerHTML += `
             <p id="Name" style="color: ${message.color || 'rgb(0, 229, 255)'} ${message.nameAdditionalCSS ? ';'+message.nameAdditionalCSS : ''}">${message.nick} ${message.emoji || ''}</p>

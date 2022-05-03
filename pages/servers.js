@@ -12,13 +12,6 @@ const Page = (props) => {
     const router = useRouter()
 
     useEffect(() => {
-        let interval = setInterval(() => {
-	        if (cookie.fullScreen == 'true') {
-                document.documentElement.requestFullscreen()
-  		            .then(() => clearInterval(interval))
-                    .catch(() => console.log('Erro ao tentar deixar o jogo em tela cheia'))
-            }
-	    }, 1000)
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/servers/animations.css" />'
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
         else document.body.id = ''

@@ -15,14 +15,14 @@ const Page = () => {
             cookie.soundEffectsVol = 100
             cookie.color = '#00bd1f'
             cookie.showInfos = 'true'
-            cookie.fullScreen = 'false'
+            cookie.performanceMode = 'false'
             cookie.animations = 'true'
             cookie.darkTheme = 'true'
 
             document.cookie = `soundEffectsVol=${cookie.soundEffectsVol}; path=/`;
             document.cookie = `color=${cookie.color}; path=/`;
             document.cookie = `showInfos=${cookie.showInfos}; path=/`;
-            document.cookie = `fullScreen=${cookie.fullScreen}; path=/`;
+            document.cookie = `performanceMode=${cookie.performanceMode}; path=/`;
             document.cookie = `animations=${cookie.animations}; path=/`;
             document.cookie = `darkTheme=${cookie.darkTheme}; path=/`;
         }
@@ -42,7 +42,7 @@ const Page = () => {
         const nickInput = document.getElementById('nickInput')
         const colorInput = document.getElementById('colorInput')        
         const showInfos = document.getElementById('showInfosCheckbox')
-        const fullScreen = document.getElementById('fullScreenCheckbox')
+        const performanceMode = document.getElementById('performanceModeCheckbox')
         const animations = document.getElementById('animationsCheckbox')
         const darkTheme = document.getElementById('darkThemeCheckbox')
 
@@ -52,7 +52,7 @@ const Page = () => {
             if (cookie.nick) nickInput.value = cookie.nick
             colorInput.value = cookie.color || '#00bd1f'
             showInfos.checked = cookie.showInfos == 'true' ? true : false
-            fullScreen.checked = cookie.fullScreen == 'true' ? true : false
+            performanceMode.checked = cookie.performanceMode == 'true' ? true : false
             animations.checked = cookie.animations == 'true' ? true : false
             darkTheme.checked = cookie.darkTheme == 'true' ? true : false
 
@@ -63,7 +63,7 @@ const Page = () => {
             cookie.soundEffectsVol = soundEffectsVolumeInput.value
             cookie.nick = nickInput.value
             cookie.showInfos = showInfos.checked.toString()
-            cookie.fullScreen = fullScreen.checked.toString()
+            cookie.performanceMode = performanceMode.checked.toString()
             cookie.animations = animations.checked.toString()
             cookie.darkTheme = darkTheme.checked.toString()
 
@@ -71,7 +71,7 @@ const Page = () => {
             document.cookie = `nick=${nickInput.value}; path=/`;
             document.cookie = `color=${colorInput.value}; path=/`;
             document.cookie = `showInfos=${showInfos.checked}; path=/`;
-            document.cookie = `fullScreen=${fullScreen.checked}; path=/`;
+            document.cookie = `performanceMode=${performanceMode.checked}; path=/`;
             document.cookie = `animations=${animations.checked}; path=/`;
             document.cookie = `darkTheme=${darkTheme.checked}; path=/`;
 
@@ -147,8 +147,8 @@ const Page = () => {
                             </label>
                         </p>
                         <p>
-                            Tela cheia: <label className="switch">
-                                <input type="checkbox" id="fullScreenCheckbox" />
+                            Modo desempenho: <label className="switch">
+                                <input type="checkbox" id="performanceModeCheckbox" />
                                 <span className="slider"></span>
                             </label>
                         </p>

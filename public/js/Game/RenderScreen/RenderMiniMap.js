@@ -12,7 +12,7 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
     ctx.fillStyle = cookie.darkTheme == 'true' ? '#363636' : '#CCC';
     ctx.fillRect(0, 0, miniMap.width, miniMap.height)    
 
-    for (let fruitId in game.state.fruits) {
+    /*for (let fruitId in game.state.fruits) {
         const fruit = game.state.fruits[fruitId]
 
         let x = Math.floor(miniMapSize/game.state.screen.width*fruit.x)
@@ -21,7 +21,7 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
         ctx.globalAlpha = cookie.animations == 'true' ? Math.random()*0.5+0.2 : 0.6
         ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black'
         ctx.fillRect(x, y, 1, 1)
-    }
+    }*/
 
     for (let playerId in game.state.players) {
         const player = game.state.players[playerId]
