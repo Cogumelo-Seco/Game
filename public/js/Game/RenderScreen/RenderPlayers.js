@@ -21,9 +21,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
 
         for (let i = 0; i < player2.traces.length; i++) {            
             let trace = player2.traces[i]
-            let x = (trace.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2))
-            let y = (trace.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2))
-            if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {
+            let x = (trace.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2-tileSize/2))
+            let y = (trace.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2-tileSize/2))
+            if (x >= -tileSize && y >= -tileSize && x < canvas.width && y < canvas.height) {
                 ctx.globalAlpha = 0.2
 
                 ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
@@ -40,9 +40,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
             }
         }
 
-        let x = (player2.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2))
-        let y = (player2.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2))
-        if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {
+        let x = (player2.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2-tileSize/2))
+        let y = (player2.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2-tileSize/2))
+        if (x >= -tileSize && y >= -tileSize && x < canvas.width && y < canvas.height) {
             ctx.globalAlpha = 0.5
             ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
 
@@ -53,7 +53,7 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
 
             if (cookie.performanceMode == 'false') {
                 ctx.globalAlpha = 1
-                ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
+                ctx.fillStyle = player2.safeTime || game.state.stopped ? 'red' : color2//cookie.darkTheme == 'true' ? 'white' : 'black';
 
                 if (player2.playerImage) {
                     let playerImage = game.state.images[player2.playerImage]
@@ -65,8 +65,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
                     ctx.drawImage(playerImage, x, y, tileSize, tileSize)
                 }
 
-                ctx.font = `bold ${tileSize}px`
-                ctx.fillText(player2.nick, x+(tileSize/2)-(ctx.measureText(player2.nick).width/2), y-(tileSize/4));
+                ctx.font = `bold ${tileSize/4}px Arial`
+                ctx.fillText(player2.nick, x+(tileSize/2)-(ctx.measureText(player2.nick).width/2), y-(tileSize*0.30));
+                ctx.fillText(player2.score, x+(tileSize/2)-(ctx.measureText(player2.score).width/2), y-(tileSize*0.05));
             }
         }
     }

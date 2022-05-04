@@ -26,6 +26,8 @@ const Game = (props) => {
         const game = createGame(cookie);
         const Listener = createListener(socket, cookie);
 
+        game.state.tileSize = Number(cookie.pixelResolution)
+
         function exit() {
             socket.emit('disconnectedPlayer')
             data.socket = false

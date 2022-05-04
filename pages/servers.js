@@ -12,6 +12,7 @@ const Page = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        if (!cookie.animations) router.push('/')
         if (cookie.animations == 'true') document.head.innerHTML += '<link rel="stylesheet" href="/css/servers/animations.css" />'
         if (cookie.darkTheme == 'true') document.body.id = 'dark'
         else document.body.id = ''

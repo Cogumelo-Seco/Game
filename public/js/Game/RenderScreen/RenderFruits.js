@@ -6,9 +6,9 @@ module.exports = (canvas, game, Listener, scoreArr, cookie) => {
 
     for (const fruitId in game.state.fruits) {
         let fruit = game.state.fruits[fruitId];
-        let x = (fruit.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2))
-        let y = (fruit.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2))
-        if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {
+        let x = (fruit.x*tileSize)-(player.x*tileSize)+(Number.parseInt(canvas.width/2-tileSize/2))
+        let y = (fruit.y*tileSize)-(player.y*tileSize)+(Number.parseInt(canvas.height/2-tileSize/2))
+        if (x >= -tileSize && y >= -tileSize && x < canvas.width && y < canvas.height) {
             ctx.globalAlpha = cookie.animations == 'true' ? Math.random()*0.6+0.15 : 0.5
             ctx.fillStyle = cookie.darkTheme == 'true' ? 'white' : 'black';
 

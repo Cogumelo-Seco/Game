@@ -14,6 +14,7 @@ const Page = () => {
         if (!cookie.animations) {
             cookie.soundEffectsVol = 100
             cookie.color = '#00bd1f'
+            cookie.pixelResolution = '50'
             cookie.showInfos = 'true'
             cookie.performanceMode = 'false'
             cookie.animations = 'true'
@@ -23,6 +24,7 @@ const Page = () => {
             document.cookie = `color=${cookie.color}; path=/`;
             document.cookie = `showInfos=${cookie.showInfos}; path=/`;
             document.cookie = `performanceMode=${cookie.performanceMode}; path=/`;
+            document.cookie = `pixelResolution=${cookie.pixelResolution}; path=/`;
             document.cookie = `animations=${cookie.animations}; path=/`;
             document.cookie = `darkTheme=${cookie.darkTheme}; path=/`;
         }
@@ -43,16 +45,20 @@ const Page = () => {
         const colorInput = document.getElementById('colorInput')        
         const showInfos = document.getElementById('showInfosCheckbox')
         const performanceMode = document.getElementById('performanceModeCheckbox')
+        const pixelResolution = document.getElementById('pixelResolution')
         const animations = document.getElementById('animationsCheckbox')
         const darkTheme = document.getElementById('darkThemeCheckbox')
+
+        for (let i = 40;i <= 150;i += 10) pixelResolution.innerHTML += `<option>${i}</option>`
 
         playGame.addEventListener('click', () => router.push('/servers'))
         optionsButton.addEventListener('click', () => {
             soundEffectsVolumeInput.value = cookie.soundEffectsVol || 100
             if (cookie.nick) nickInput.value = cookie.nick
+            pixelResolution.value = cookie.pixelResolution
             colorInput.value = cookie.color || '#00bd1f'
             showInfos.checked = cookie.showInfos == 'true' ? true : false
-            performanceMode.checked = cookie.performanceMode == 'true' ? true : false
+            performanceMode.checked = cookie.performanceMode == 'true' ? true : false            
             animations.checked = cookie.animations == 'true' ? true : false
             darkTheme.checked = cookie.darkTheme == 'true' ? true : false
 
@@ -62,6 +68,7 @@ const Page = () => {
         saveButton.addEventListener('click', () => {
             cookie.soundEffectsVol = soundEffectsVolumeInput.value
             cookie.nick = nickInput.value
+            cookie.pixelResolution = pixelResolution.value
             cookie.showInfos = showInfos.checked.toString()
             cookie.performanceMode = performanceMode.checked.toString()
             cookie.animations = animations.checked.toString()
@@ -72,6 +79,7 @@ const Page = () => {
             document.cookie = `color=${colorInput.value}; path=/`;
             document.cookie = `showInfos=${showInfos.checked}; path=/`;
             document.cookie = `performanceMode=${performanceMode.checked}; path=/`;
+            document.cookie = `pixelResolution=${pixelResolution.value}; path=/`;
             document.cookie = `animations=${animations.checked}; path=/`;
             document.cookie = `darkTheme=${darkTheme.checked}; path=/`;
 
@@ -134,7 +142,7 @@ const Page = () => {
                         <p id="nick">
                             Nick: <input id="nickInput" className="textInput" />
                         </p>
-                        <p id="nick">
+                        <p>
                             Cor: <input type="color" id="colorInput" className="textInput" />
                         </p>
 			            <p id="soundEffectsVolume">
@@ -151,6 +159,9 @@ const Page = () => {
                                 <input type="checkbox" id="performanceModeCheckbox" />
                                 <span className="slider"></span>
                             </label>
+                        </p>
+                        <p id="pixelResolutionContaner">
+                            Resolução de pixel: <select id="pixelResolution" />
                         </p>
                         <p>
                             Animações: <label className="switch">
