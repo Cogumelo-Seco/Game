@@ -1,4 +1,4 @@
-import data from '../public/js/data.js';
+﻿import data from '../public/js/data.js';
 import createGame from '../public/js/Game/Game.js';
 import createListener from '../public/js/Game/Listener.js';
 import PageFunctions from '../public/js/Game/PageFunctions/index.js';
@@ -26,7 +26,7 @@ const Game = (props) => {
         const game = createGame(cookie);
         const Listener = createListener(socket, cookie);
 
-        game.state.tileSize = Number(cookie.pixelResolution)
+        game.state.tileSize = Number(cookie.pixelResolution) || 50
 
         function exit() {
             socket.emit('disconnectedPlayer')
