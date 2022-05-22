@@ -41,9 +41,10 @@ export default function renderScreen(canvas, game, requestAnimationFrame, Listen
         require('./RenderADMOptions')(canvas, game, Listener, scoreArr, cookie)
     }
 
-    let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
+    /*let rAF = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
 
     if (!game.state.router) rAF(() => {
         renderScreen(canvas, game, requestAnimationFrame, Listener, cookie)
-    })
+    })*/
+    setTimeout(() => renderScreen(canvas, game, requestAnimationFrame, Listener, cookie), 1000/Number(cookie.FPSLimit))
 }
